@@ -26,7 +26,7 @@ public class alignleftcoralstation extends Command {
     this.s_Swerve = s_Swerve;
     this.isrightscore = isrightscore;
   }
-
+  //test pr
   // Called when the command is initially scheduled.
   @Override
  public void initialize() {
