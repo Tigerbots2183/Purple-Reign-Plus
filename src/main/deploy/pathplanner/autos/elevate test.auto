@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "lfour"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralplace"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "lfourdown"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": null,
+  "choreoAuto": false
+}
