@@ -219,5 +219,36 @@ public static boolean [] reefl4 = {
   false, false, false, false, false, false, false, false, false, false, false}; 
 public static boolean [] reefl2 = {
   false, false, false, false, false, false, false, false, false, false, false};
+public static boolean [] algae = {
+  true, true, true, true, true, true};
+//a 0 b 1 c 2 d 3 e 4 f 5 g 6 h 7 i 8 j 9 k 10 l 11 
+public static class Priorities{
+  public static boolean rp = true;
+  public static boolean point = false;
+  public static boolean bothstations [] = {
+    reefl4[1], reefl4[0],reefl4[11],reefl4[10],reefl4[9],reefl4[8],reefl4[2],reefl4[3],reefl4[4],reefl4[5],reefl4[6],reefl4[7],
+    reefl3[1], reefl3[0],reefl3[11],reefl3[10],reefl3[9],reefl3[8],reefl3[2],reefl3[3],reefl3[4],reefl3[5],reefl3[6],reefl3[7],
+    reefl2[1], reefl2[0],reefl2[11],reefl2[10],reefl2[9],reefl2[8],reefl2[2],reefl2[3],reefl2[4],reefl2[5],reefl2[6],reefl2[7]};
+  public static boolean leftfull [] = {
+    reefl4[11], reefl4[10],reefl4[0],reefl4[9],reefl4[1],reefl4[8],reefl4[2],reefl4[7],reefl4[3],reefl4[6],reefl4[4],reefl4[5],
+    reefl3[11], reefl3[10],reefl3[0],reefl3[9],reefl3[1],reefl3[8],reefl3[2],reefl3[7],reefl3[3],reefl3[6],reefl3[4],reefl3[5],
+    reefl2[11], reefl2[10],reefl2[0],reefl2[9],reefl2[1],reefl2[8],reefl2[2],reefl2[7],reefl2[3],reefl2[6],reefl2[4],reefl2[5]};
+  public static boolean rightfull [] = {
+    reefl4[2], reefl4[3],reefl4[1],reefl4[4],reefl4[0],reefl4[5],reefl4[11],reefl4[6],reefl4[7],reefl4[10],reefl4[9],reefl4[8],
+    reefl3[2], reefl3[3],reefl3[1],reefl3[4],reefl3[0],reefl3[5],reefl3[11],reefl3[6],reefl3[7],reefl3[10],reefl3[9],reefl3[8],
+    reefl2[2], reefl2[3],reefl2[1],reefl2[4],reefl2[0],reefl2[5],reefl2[11],reefl2[6],reefl2[7],reefl2[10],reefl2[9],reefl2[8]};
+  public static boolean left [] = {
+    reefl4[11], reefl4[10],reefl4[0],reefl4[9],reefl4[8],reefl4[7],
+    reefl3[11], reefl3[10],reefl3[0],reefl3[9],reefl3[8],reefl3[7],
+    reefl2[11], reefl2[10],reefl2[0],reefl2[9],reefl2[8],reefl2[7]};
+  public static boolean right [] = {
+    reefl4[2], reefl4[3],reefl4[1],reefl4[4],reefl4[5],reefl4[6],
+    reefl3[2], reefl3[3],reefl3[1],reefl3[4],reefl3[5],reefl3[6],
+    reefl2[2], reefl2[3],reefl2[1],reefl2[4],reefl2[5],reefl2[6]};
+  public static boolean back [] = {
+    reefl4[8], reefl4[7],reefl4[6],reefl4[5],reefl4[9],reefl4[4],
+    reefl3[8], reefl3[7],reefl3[6],reefl3[5],reefl3[9],reefl3[4],
+    reefl2[8], reefl2[7],reefl2[6],reefl2[5],reefl2[9],reefl2[4]};
+}
 }
 }
