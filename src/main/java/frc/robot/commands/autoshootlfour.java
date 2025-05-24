@@ -47,18 +47,7 @@ public class autoshootlfour extends Command {
       if(elevator.elevatorLeftEncoder.getPosition() < -74.3 ){
         s_CoralCom.Coral(speed);
         reefstate.reefl4[lastpegsave.lastpegsaved] = true;
-          System.out.println((reefstate.reefl4 [0]));
-          System.out.println((reefstate.reefl4 [1]));
-          System.out.println((reefstate.reefl4 [2]));
-          System.out.println((reefstate.reefl4 [3]));
-          System.out.println((reefstate.reefl4 [4]));
-          System.out.println((reefstate.reefl4 [5]));
-          System.out.println((reefstate.reefl4 [6]));
-          System.out.println((reefstate.reefl4 [7]));
-          System.out.println((reefstate.reefl4 [8]));
-          System.out.println((reefstate.reefl4 [9]));
-          System.out.println((reefstate.reefl4 [10]));
-          System.out.println((reefstate.reefl4 [11]));
+        
       } 
     }
   }

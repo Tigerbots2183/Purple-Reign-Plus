@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.text.ParseException;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -15,7 +17,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.lib.math.Conversions;
 import frc.robot.Constants.reefstate;
+import frc.robot.Constants.reefstate.Priorities;
 import frc.robot.commands.Alignment;
 import frc.robot.commands.Alignmentleft;
 import frc.robot.commands.Alignmentright;
@@ -132,8 +136,12 @@ public class RobotContainer {
     // Auto Chooser
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
+
+    //SmartDashboard.putData("priority", Priorities.rp);
+
+
     //SmartDashboard.putBooleanArray("reefl4", reefstate.reefl4);
-  SmartDashboard.getBoolean("reefl4", reefstate.reefl4[0]);
+  //SmartDashboard.getBoolean("reefl4", reefstate.reefl4[0]);
 
     //import miracle.java
     //SmartDashboard.putData(reefl4, reefstate.reefl4);

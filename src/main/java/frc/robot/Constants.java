@@ -13,6 +13,8 @@
 
 package frc.robot;
 
+import java.util.Arrays;
+
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
@@ -24,6 +26,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.lib.util.COTSTalonFXSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
@@ -213,23 +216,21 @@ public static final Pose2d Left_coral_station = new Pose2d(0.56, 6.68, Rotation2
 } 
 public static class reefstate {
 public static boolean [] reefl4 = {
-  false, false, false, false, false, false, false, false, false, false, false};
+  false, false, false, false, false, false, false, false, false, false, false, false};
   
  public static boolean [] reefl3 = {
-  false, false, false, false, false, false, false, false, false, false, false}; 
+  false, false, false, false, false, false, false, false, false, false, false, false}; 
 public static boolean [] reefl2 = {
-  false, false, false, false, false, false, false, false, false, false, false};
+  false, false, false, false, false, false, false, false, false, false, false, false};
 public static boolean [] algae = {
   true, true, true, true, true, true};
 //a 0 b 1 c 2 d 3 e 4 f 5 g 6 h 7 i 8 j 9 k 10 l 11 
 public static class Priorities{
-  public static boolean rp = true;
-  public static boolean point = false;
-  public static boolean bothstations [] = {
-    reefl4[1], reefl4[0],reefl4[11],reefl4[10],reefl4[9],reefl4[8],reefl4[2],reefl4[3],reefl4[4],reefl4[5],reefl4[6],reefl4[7],
-    reefl3[1], reefl3[0],reefl3[11],reefl3[10],reefl3[9],reefl3[8],reefl3[2],reefl3[3],reefl3[4],reefl3[5],reefl3[6],reefl3[7],
-    reefl2[1], reefl2[0],reefl2[11],reefl2[10],reefl2[9],reefl2[8],reefl2[2],reefl2[3],reefl2[4],reefl2[5],reefl2[6],reefl2[7]};
-  public static boolean leftfull [] = {
+  public static Boolean rp = false;
+  public static boolean point = true;
+  public static int bothstations [] = { 1,0,11,10,9,8,2,3,4,5,6,7};
+
+ public static boolean leftfull [] = {
     reefl4[11], reefl4[10],reefl4[0],reefl4[9],reefl4[1],reefl4[8],reefl4[2],reefl4[7],reefl4[3],reefl4[6],reefl4[4],reefl4[5],
     reefl3[11], reefl3[10],reefl3[0],reefl3[9],reefl3[1],reefl3[8],reefl3[2],reefl3[7],reefl3[3],reefl3[6],reefl3[4],reefl3[5],
     reefl2[11], reefl2[10],reefl2[0],reefl2[9],reefl2[1],reefl2[8],reefl2[2],reefl2[7],reefl2[3],reefl2[6],reefl2[4],reefl2[5]};
@@ -249,6 +250,12 @@ public static class Priorities{
     reefl4[8], reefl4[7],reefl4[6],reefl4[5],reefl4[9],reefl4[4],
     reefl3[8], reefl3[7],reefl3[6],reefl3[5],reefl3[9],reefl3[4],
     reefl2[8], reefl2[7],reefl2[6],reefl2[5],reefl2[9],reefl2[4]};
+public static int i = 0;
+public static int o = 0; 
+public static int p = 0;
+public static int u = 0;
+public static boolean l4 = false;
+public static boolean l3 = false;
+public static boolean l2 = false;
 }
-}
-}
+}}
