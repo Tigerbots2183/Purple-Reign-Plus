@@ -30,6 +30,7 @@ public class autodrive extends Command {
     Priorities.o = 0;
     Priorities.p = 0;
     Priorities.u = 0;
+    Priorities.checklvl = 0;
 
     for (int i = 0; i < 12; i++) {
       if (reefstate.reefl4[i]) {
@@ -52,17 +53,22 @@ public class autodrive extends Command {
     if (Priorities.rp == true && Priorities.o >= 5 || Priorities.point == true && Priorities.o == 12) {
       Priorities.l4 = true;
       Priorities.i = 0;
+      Priorities.checklvl = 1;
+
     } else if (Priorities.rp == true && Priorities.p >= 5 || Priorities.point == true && Priorities.p == 12) {
       Priorities.l3 = true;
       Priorities.i = 0;
+      Priorities.checklvl = 2;
     } else if (Priorities.rp == true && Priorities.u >= 5 || Priorities.point == true && Priorities.u == 12) {
       Priorities.l2 = true;
       Priorities.i = 0;
+      Priorities.checklvl = 0;
     }
     if (Priorities.l4 == true && Priorities.l3 == true && Priorities.l2 == true)
       Priorities.rp = false;
     Priorities.point = true;
     Priorities.i = 0;
+    Priorities.checklvl = 0;
 
   }
 
@@ -72,85 +78,97 @@ public class autodrive extends Command {
     if (sensorsandleds.input.get() == true) {
       if (lastpegsave.lastpegsaved == 0 || lastpegsave.lastpegsaved == 11 || lastpegsave.lastpegsaved == 10
           || lastpegsave.lastpegsaved == 9 || lastpegsave.lastpegsaved == 8 || lastpegsave.lastpegsaved == 7) {
-        new alignleftcoralstation(false, s_Swerve);
+        new autoalignleftcoralstation(false, s_Swerve);
       } else {
-        // alignrightcoral station
+        new autoalignleftcoralstation(false, s_Swerve); //will change to align right station
       }
     } else {
-      if (reefstate.reefl4[0] == false && Priorities.bothstations[Priorities.i] == 0
-          || reefstate.reefl3[0] == false && Priorities.bothstations[Priorities.i] == 0
-          || reefstate.reefl2[0] == false && Priorities.bothstations[Priorities.i] == 0) {
+      if (reefstate.reefl4[0] == false && Priorities.bothstations[Priorities.i] == 0 && Priorities.checklvl == 0
+          || reefstate.reefl3[0] == false && Priorities.bothstations[Priorities.i] == 0 && Priorities.checklvl == 1 
+          || reefstate.reefl2[0] == false && Priorities.bothstations[Priorities.i] == 0 && Priorities.checklvl == 2) {
         Priorities.i++;
+        Priorities.check = 0;
         new alignpeg(POSES.REEF_A, false, s_Swerve);
         cancel();
-      } else if (reefstate.reefl4[1] == false && Priorities.bothstations[Priorities.i] == 1
-          || reefstate.reefl3[1] == false && Priorities.bothstations[Priorities.i] == 1
-          || reefstate.reefl2[1] == false && Priorities.bothstations[Priorities.i] == 1) {
+      } else if (reefstate.reefl4[1] == false && Priorities.bothstations[Priorities.i] == 1 && Priorities.checklvl == 0
+          || reefstate.reefl3[1] == false && Priorities.bothstations[Priorities.i] == 1 && Priorities.checklvl == 1
+          || reefstate.reefl2[1] == false && Priorities.bothstations[Priorities.i] == 1 && Priorities.checklvl == 2) {
         Priorities.i++;
+        Priorities.check = 1;
         new alignpeg(POSES.REEF_B, false, s_Swerve);
         cancel();
-      } else if (reefstate.reefl4[2] == false && Priorities.bothstations[Priorities.i] == 2
-          || reefstate.reefl3[2] == false && Priorities.bothstations[Priorities.i] == 2
-          || reefstate.reefl2[2] == false && Priorities.bothstations[Priorities.i] == 2) {
+      } else if (reefstate.reefl4[2] == false && Priorities.bothstations[Priorities.i] == 2 && Priorities.checklvl == 0
+          || reefstate.reefl3[2] == false && Priorities.bothstations[Priorities.i] == 2 && Priorities.checklvl == 1
+          || reefstate.reefl2[2] == false && Priorities.bothstations[Priorities.i] == 2 && Priorities.checklvl == 2) {
         Priorities.i++;
+        Priorities.check = 2;
         new alignpeg(POSES.REEF_C, false, s_Swerve);
         cancel();
-      } else if (reefstate.reefl4[3] == false && Priorities.bothstations[Priorities.i] == 3
-          || reefstate.reefl3[3] == false && Priorities.bothstations[Priorities.i] == 3
-          || reefstate.reefl2[3] == false && Priorities.bothstations[Priorities.i] == 3) {
+      } else if (reefstate.reefl4[3] == false && Priorities.bothstations[Priorities.i] == 3 && Priorities.checklvl == 0
+          || reefstate.reefl3[3] == false && Priorities.bothstations[Priorities.i] == 3 && Priorities.checklvl == 1
+          || reefstate.reefl2[3] == false && Priorities.bothstations[Priorities.i] == 3 && Priorities.checklvl == 2) {
         Priorities.i++;
+        Priorities.check = 3;
         new alignpeg(POSES.REEF_D, false, s_Swerve);
         cancel();
-      } else if (reefstate.reefl4[4] == false && Priorities.bothstations[Priorities.i] == 4
-          || reefstate.reefl3[4] == false && Priorities.bothstations[Priorities.i] == 4
-          || reefstate.reefl2[4] == false && Priorities.bothstations[Priorities.i] == 4) {
+      } else if (reefstate.reefl4[4] == false && Priorities.bothstations[Priorities.i] == 4 && Priorities.checklvl == 0
+          || reefstate.reefl3[4] == false && Priorities.bothstations[Priorities.i] == 4 && Priorities.checklvl == 1
+          || reefstate.reefl2[4] == false && Priorities.bothstations[Priorities.i] == 4 && Priorities.checklvl == 2) {
         Priorities.i++;
+        Priorities.check = 4;
         new alignpeg(POSES.REEF_E, false, s_Swerve);
         cancel();
-      } else if (reefstate.reefl4[5] == false && Priorities.bothstations[Priorities.i] == 5
-          || reefstate.reefl3[5] == false && Priorities.bothstations[Priorities.i] == 5
-          || reefstate.reefl2[5] == false && Priorities.bothstations[Priorities.i] == 1) {
+      } else if (reefstate.reefl4[5] == false && Priorities.bothstations[Priorities.i] == 5 && Priorities.checklvl == 0
+          || reefstate.reefl3[5] == false && Priorities.bothstations[Priorities.i] == 5 && Priorities.checklvl == 1
+          || reefstate.reefl2[5] == false && Priorities.bothstations[Priorities.i] == 5  && Priorities.checklvl == 2) {
         Priorities.i++;
+        Priorities.check = 5;
         new alignpeg(POSES.REEF_F, false, s_Swerve);
         cancel();
-      } else if (reefstate.reefl4[6] == false && Priorities.bothstations[Priorities.i] == 6
-          || reefstate.reefl3[6] == false && Priorities.bothstations[Priorities.i] == 6
-          || reefstate.reefl2[6] == false && Priorities.bothstations[Priorities.i] == 6) {
+      } else if (reefstate.reefl4[6] == false && Priorities.bothstations[Priorities.i] == 6 && Priorities.checklvl == 0
+          || reefstate.reefl3[6] == false && Priorities.bothstations[Priorities.i] == 6 && Priorities.checklvl == 1
+          || reefstate.reefl2[6] == false && Priorities.bothstations[Priorities.i] == 6 && Priorities.checklvl == 2) {
         Priorities.i++;
+        Priorities.check = 6;
         new alignpeg(POSES.REEF_G, false, s_Swerve);
         cancel();
-      } else if (reefstate.reefl4[7] == false && Priorities.bothstations[Priorities.i] == 7
-          || reefstate.reefl3[7] == false && Priorities.bothstations[Priorities.i] == 7
-          || reefstate.reefl2[7] == false && Priorities.bothstations[Priorities.i] == 7) {
+      } else if (reefstate.reefl4[7] == false && Priorities.bothstations[Priorities.i] == 7 && Priorities.checklvl == 0
+          || reefstate.reefl3[7] == false && Priorities.bothstations[Priorities.i] == 7 && Priorities.checklvl == 1
+          || reefstate.reefl2[7] == false && Priorities.bothstations[Priorities.i] == 7 && Priorities.checklvl == 2) {
         Priorities.i++;
+        Priorities.check = 7;
         new alignpeg(POSES.REEF_H, false, s_Swerve);
         cancel();
-      } else if (reefstate.reefl4[8] == false && Priorities.bothstations[Priorities.i] == 8
-          || reefstate.reefl3[8] == false && Priorities.bothstations[Priorities.i] == 8
-          || reefstate.reefl2[8] == false && Priorities.bothstations[Priorities.i] == 8) {
+      } else if (reefstate.reefl4[8] == false && Priorities.bothstations[Priorities.i] == 8 && Priorities.checklvl == 0
+          || reefstate.reefl3[8] == false && Priorities.bothstations[Priorities.i] == 8 && Priorities.checklvl == 1
+          || reefstate.reefl2[8] == false && Priorities.bothstations[Priorities.i] == 8 && Priorities.checklvl == 2) {
         Priorities.i++;
+        Priorities.check = 8;
         new alignpeg(POSES.REEF_I, false, s_Swerve);
         cancel();
-      } else if (reefstate.reefl4[9] == false && Priorities.bothstations[Priorities.i] == 9
-          || reefstate.reefl3[9] == false && Priorities.bothstations[Priorities.i] == 9
-          || reefstate.reefl2[9] == false && Priorities.bothstations[Priorities.i] == 9) {
+      } else if (reefstate.reefl4[9] == false && Priorities.bothstations[Priorities.i] == 9 && Priorities.checklvl == 0
+          || reefstate.reefl3[9] == false && Priorities.bothstations[Priorities.i] == 9 && Priorities.checklvl == 1
+          || reefstate.reefl2[9] == false && Priorities.bothstations[Priorities.i] == 9 && Priorities.checklvl == 2) {
         Priorities.i++;
+        Priorities.check = 9;
         new alignpeg(POSES.REEF_J, false, s_Swerve);
         cancel();
-      } else if (reefstate.reefl4[10] == false && Priorities.bothstations[Priorities.i] == 10
-          || reefstate.reefl3[10] == false && Priorities.bothstations[Priorities.i] == 10
-          || reefstate.reefl2[10] == false && Priorities.bothstations[Priorities.i] == 10) {
+      } else if (reefstate.reefl4[10] == false && Priorities.bothstations[Priorities.i] == 10 && Priorities.checklvl == 0
+          || reefstate.reefl3[10] == false && Priorities.bothstations[Priorities.i] == 10 && Priorities.checklvl == 1
+          || reefstate.reefl2[10] == false && Priorities.bothstations[Priorities.i] == 10 && Priorities.checklvl == 2) {
         Priorities.i++;
+        Priorities.check = 10;
         new alignpeg(POSES.REEF_K, false, s_Swerve);
         cancel();
-      } else if (reefstate.reefl4[11] == false && Priorities.bothstations[Priorities.i] == 11
-          || reefstate.reefl3[11] == false && Priorities.bothstations[Priorities.i] == 11
-          || reefstate.reefl2[11] == false && Priorities.bothstations[Priorities.i] == 11) {
+      } else if (reefstate.reefl4[11] == false && Priorities.bothstations[Priorities.i] == 11 && Priorities.checklvl == 0
+          || reefstate.reefl3[11] == false && Priorities.bothstations[Priorities.i] == 11 && Priorities.checklvl == 1
+          || reefstate.reefl2[11] == false && Priorities.bothstations[Priorities.i] == 11 && Priorities.checklvl == 2) {
         Priorities.i++;
+        Priorities.check = 11;
         new alignpeg(POSES.REEF_L, false, s_Swerve);
         cancel();
       } else {
-        cancel();
+        new autodrive(false, s_Swerve);
       }
     }
 

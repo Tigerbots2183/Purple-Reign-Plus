@@ -13,7 +13,7 @@ import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.coral;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class alignleftcoralstation extends Command {
+public class autoalignleftcoralstation extends Command {
   Swerve s_Swerve;
   boolean isrightscore;
   coral s_CoralCom;
@@ -23,7 +23,7 @@ public class alignleftcoralstation extends Command {
 
     private Pose2d Targetpose = null;
 
-  public alignleftcoralstation(Boolean isrightscore, Swerve s_Swerve) {
+  public autoalignleftcoralstation(Boolean isrightscore, Swerve s_Swerve) {
     this.s_Swerve = s_Swerve;
     this.isrightscore = isrightscore;
   }
@@ -84,6 +84,7 @@ public class alignleftcoralstation extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    new autocoralCom( -.07, s_CoralCom);
 
 
 

@@ -6,7 +6,6 @@ import com.pathplanner.lib.path.PathConstraints;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.POSES;
 import frc.robot.Constants.reefstate;
 import frc.robot.Constants.reefstate.Priorities;
 import frc.robot.subsystems.Swerve;
@@ -70,12 +69,12 @@ public class alignpeg extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if (Priorities.l4 == false) {
-      new autoshootlfour(-.12, 3, s_ElevatorCom, s_CoralCom, false);
-    } else if (Priorities.l4 == true && Priorities.l3 == false) {
-      // autoshootl3
-    } else if (Priorities.l4 == true && Priorities.l3 == true && Priorities.l2 == false) {
-      // autoshootl2
+    if (reefstate.reefl4[Priorities.check] == false && Priorities.l4 == false) {
+      new autol4(-.12, 3, s_ElevatorCom, s_CoralCom, false);
+    } else if (reefstate.reefl3[Priorities.check] == false && Priorities.l4 == true && Priorities.l3 == false) {
+      // autol3
+    } else if (reefstate.reefl2[Priorities.check] == false && Priorities.l4 == true && Priorities.l3 == true && Priorities.l2 == false) {
+      // autol2
     } else {
       new autodrive(false, s_Swerve);
     }

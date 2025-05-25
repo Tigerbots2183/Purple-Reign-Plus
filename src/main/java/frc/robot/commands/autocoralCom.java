@@ -7,19 +7,21 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.coral;
 import frc.robot.commands.elevatorCom;
 import frc.robot.subsystems.elevator;
 import frc.robot.subsystems.sensorsandleds;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class coralCom extends Command {
+public class autocoralCom extends Command {
   double speed;
   double var;
    Joystick copilot;
    coral s_CoralCom;
+  Swerve s_Swerve;
   /** Creates a new coralCom. */
-  public coralCom( double speed,coral s_CoralCom) {
+  public autocoralCom( double speed,coral s_CoralCom) {
     addRequirements (s_CoralCom);
     this.s_CoralCom = s_CoralCom;
    this.speed = speed;
@@ -44,6 +46,7 @@ public class coralCom extends Command {
   @Override
   public void end(boolean interrupted) {
     s_CoralCom.Coral(0);
+    new autodrive(false, s_Swerve);
     
   }
 

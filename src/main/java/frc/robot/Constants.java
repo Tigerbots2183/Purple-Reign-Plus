@@ -257,5 +257,7 @@ public static int u = 0;
 public static boolean l4 = false;
 public static boolean l3 = false;
 public static boolean l2 = false;
+public static int check = 0;
+public static int checklvl = 0;
 }
 }}
