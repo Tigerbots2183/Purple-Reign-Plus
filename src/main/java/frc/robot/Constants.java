@@ -13,8 +13,6 @@
 
 package frc.robot;
 
-import java.util.Arrays;
-
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
@@ -26,7 +24,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.lib.util.COTSTalonFXSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
@@ -228,28 +225,13 @@ public static boolean [] algae = {
 public static class Priorities{
   public static Boolean rp = false;
   public static boolean point = true;
-  public static int bothstations [] = { 1,0,11,10,9,8,2,3,4,5,6,7};
+  public static int [] bothstations  = { 1,0,11,10,9,8,2,3,4,5,6,7};
 
- public static boolean leftfull [] = {
-    reefl4[11], reefl4[10],reefl4[0],reefl4[9],reefl4[1],reefl4[8],reefl4[2],reefl4[7],reefl4[3],reefl4[6],reefl4[4],reefl4[5],
-    reefl3[11], reefl3[10],reefl3[0],reefl3[9],reefl3[1],reefl3[8],reefl3[2],reefl3[7],reefl3[3],reefl3[6],reefl3[4],reefl3[5],
-    reefl2[11], reefl2[10],reefl2[0],reefl2[9],reefl2[1],reefl2[8],reefl2[2],reefl2[7],reefl2[3],reefl2[6],reefl2[4],reefl2[5]};
-  public static boolean rightfull [] = {
-    reefl4[2], reefl4[3],reefl4[1],reefl4[4],reefl4[0],reefl4[5],reefl4[11],reefl4[6],reefl4[7],reefl4[10],reefl4[9],reefl4[8],
-    reefl3[2], reefl3[3],reefl3[1],reefl3[4],reefl3[0],reefl3[5],reefl3[11],reefl3[6],reefl3[7],reefl3[10],reefl3[9],reefl3[8],
-    reefl2[2], reefl2[3],reefl2[1],reefl2[4],reefl2[0],reefl2[5],reefl2[11],reefl2[6],reefl2[7],reefl2[10],reefl2[9],reefl2[8]};
-  public static boolean left [] = {
-    reefl4[11], reefl4[10],reefl4[0],reefl4[9],reefl4[8],reefl4[7],
-    reefl3[11], reefl3[10],reefl3[0],reefl3[9],reefl3[8],reefl3[7],
-    reefl2[11], reefl2[10],reefl2[0],reefl2[9],reefl2[8],reefl2[7]};
-  public static boolean right [] = {
-    reefl4[2], reefl4[3],reefl4[1],reefl4[4],reefl4[5],reefl4[6],
-    reefl3[2], reefl3[3],reefl3[1],reefl3[4],reefl3[5],reefl3[6],
-    reefl2[2], reefl2[3],reefl2[1],reefl2[4],reefl2[5],reefl2[6]};
-  public static boolean back [] = {
-    reefl4[8], reefl4[7],reefl4[6],reefl4[5],reefl4[9],reefl4[4],
-    reefl3[8], reefl3[7],reefl3[6],reefl3[5],reefl3[9],reefl3[4],
-    reefl2[8], reefl2[7],reefl2[6],reefl2[5],reefl2[9],reefl2[4]};
+ public static int [] leftfull  = {11,10,0,9,1,8,2,7,3,6,4,5};
+  public static int [] rightfull  = {2,3,1,4,0,5,11,6,7,10,9,8};
+  public static int [] left  = {11,10,0,9,8,7};
+  public static int [] right  = {2,3,1,4,5,6};
+  public static int back [] = {8,7,6,5,9,4};
 public static int i = 0;
 public static int o = 0; 
 public static int p = 0;
@@ -259,5 +241,10 @@ public static boolean l3 = false;
 public static boolean l2 = false;
 public static int check = 0;
 public static int checklvl = 0;
+public static boolean[][] highlight = 
+{{false, false, false, false, false, false, false, false, false, false, false, false},
+{false, false, false, false, false, false, false, false, false, false, false, false},
+{false, false, false, false, false, false, false, false, false, false, false, false}};
+
 }
 }}

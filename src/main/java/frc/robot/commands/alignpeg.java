@@ -78,7 +78,7 @@ public class alignpeg extends Command {
     } else {
       new autodrive(false, s_Swerve);
     }
-
+    Priorities.highlight[Priorities.checklvl][Priorities.check] = false;
     cancel();
 
   }
