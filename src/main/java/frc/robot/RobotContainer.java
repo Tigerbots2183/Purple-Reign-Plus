@@ -1,7 +1,5 @@
 package frc.robot;
 
-import java.text.ParseException;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -17,15 +15,20 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.lib.math.Conversions;
-import frc.robot.Constants.reefstate;
 import frc.robot.Constants.reefstate.Priorities;
 import frc.robot.commands.Alignment;
 import frc.robot.commands.Alignmentleft;
 import frc.robot.commands.Alignmentright;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.alignleftcoralstation;
+import frc.robot.commands.alignpeg;
 import frc.robot.commands.alignright;
+import frc.robot.commands.autoalignleftcoralstation;
+import frc.robot.commands.autocoralCom;
+import frc.robot.commands.autodrive;
+import frc.robot.commands.autol2;
+import frc.robot.commands.autol3;
+import frc.robot.commands.autol4;
 import frc.robot.commands.autoshootlfour;
 import frc.robot.commands.climberCom;
 import frc.robot.commands.coralCom;
@@ -157,6 +160,7 @@ public class RobotContainer {
 
     
     /* Driver Buttons */
+    
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
 
     align.whileTrue(new Alignment(false,s_Swerve));
@@ -198,7 +202,24 @@ public class RobotContainer {
      manual.whileTrue(new manualElevate(s_ElevatorCom, copilot));
      //manual2.whileTrue(new hopperCom(.5,s_HopperCom, copilot));
     // manual.whileTrue(new removalcom(.5,s_algieCom, copilot));
-  }
+    if (Priorities.autodrive == true){
+      autodrive.whileTrue(new autodrive(false, s_Swerve));
+    }else if (Priorities.leftstation == true){
+      autodrive.whileTrue(new autoalignleftcoralstation(false, s_Swerve));
+    }else if  (Priorities.rightstation == true){
+      autodrive.whileTrue(new autoalignleftcoralstation(false, s_Swerve));
+    }else if (Priorities.align == true){
+      autodrive.whileTrue(new alignpeg(false, s_Swerve));
+    }else if (Priorities.shootl4 == true){
+      autodrive.whileTrue(new autol4(-.12,3, s_ElevatorCom,s_CoralCom,false));
+    }else if (Priorities.shootl3 == true){
+      autodrive.whileTrue(new autol3(-.12,3, s_ElevatorCom,s_CoralCom,false));
+    }else if (Priorities.shootl2 == true){
+      autodrive.whileTrue(new autol2(-.12,3, s_ElevatorCom,s_CoralCom,false));
+    }else if (Priorities.intake == true){
+      autodrive.whileTrue(new autocoralCom(-0.7, s_CoralCom));
+    }
+    }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.coral;
+import frc.robot.Constants.reefstate.Priorities;
 import frc.robot.commands.elevatorCom;
 import frc.robot.subsystems.elevator;
 import frc.robot.subsystems.sensorsandleds;
@@ -46,7 +47,8 @@ public class autocoralCom extends Command {
   @Override
   public void end(boolean interrupted) {
     s_CoralCom.Coral(0);
-    new autodrive(false, s_Swerve);
+    Priorities.intake = false;
+    Priorities.autodrive = true;
     
   }
 

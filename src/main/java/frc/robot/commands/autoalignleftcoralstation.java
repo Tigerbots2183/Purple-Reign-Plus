@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.StationPOSES;
+import frc.robot.Constants.reefstate.Priorities;
 import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.coral;
@@ -84,7 +85,9 @@ public class autoalignleftcoralstation extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    new autocoralCom( -.07, s_CoralCom);
+    Priorities.leftstation = false;
+    Priorities.rightstation = false; // wil not need to be here after right station is established
+    Priorities.intake = true;
 
 
 

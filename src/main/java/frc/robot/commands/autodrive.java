@@ -79,112 +79,17 @@ public class autodrive extends Command {
     if (sensorsandleds.input.get() == true) {
       if (lastpegsave.lastpegsaved == 0 || lastpegsave.lastpegsaved == 11 || lastpegsave.lastpegsaved == 10
           || lastpegsave.lastpegsaved == 9 || lastpegsave.lastpegsaved == 8 || lastpegsave.lastpegsaved == 7) {
-        new autoalignleftcoralstation(false, s_Swerve);
+            Priorities.autodrive = false;
+            Priorities.leftstation = true;
         cancel();
       } else {
-        new autoalignleftcoralstation(false, s_Swerve); //will change to align right station
+        Priorities.autodrive = false;
+        Priorities.rightstation = true;
         cancel();
       }
     } else {
-      if (reefstate.reefl4[0] == false && Priorities.bothstations[Priorities.i] == 0 && Priorities.checklvl == 0
-          || reefstate.reefl3[0] == false && Priorities.bothstations[Priorities.i] == 0 && Priorities.checklvl == 1 
-          || reefstate.reefl2[0] == false && Priorities.bothstations[Priorities.i] == 0 && Priorities.checklvl == 2) {
-        Priorities.i++;
-        Priorities.check = 0;
-        Priorities.highlight[Priorities.checklvl][Priorities.check] = true;
-        new alignpeg(POSES.REEF_A, false, s_Swerve);
-        cancel();
-      } else if (reefstate.reefl4[1] == false && Priorities.bothstations[Priorities.i] == 1 && Priorities.checklvl == 0
-          || reefstate.reefl3[1] == false && Priorities.bothstations[Priorities.i] == 1 && Priorities.checklvl == 1
-          || reefstate.reefl2[1] == false && Priorities.bothstations[Priorities.i] == 1 && Priorities.checklvl == 2) {
-        Priorities.i++;
-        Priorities.check = 1;
-        Priorities.highlight[Priorities.checklvl][Priorities.check] = true;
-        new alignpeg(POSES.REEF_B, false, s_Swerve);
-        cancel();
-      } else if (reefstate.reefl4[2] == false && Priorities.bothstations[Priorities.i] == 2 && Priorities.checklvl == 0
-          || reefstate.reefl3[2] == false && Priorities.bothstations[Priorities.i] == 2 && Priorities.checklvl == 1
-          || reefstate.reefl2[2] == false && Priorities.bothstations[Priorities.i] == 2 && Priorities.checklvl == 2) {
-        Priorities.i++;
-        Priorities.check = 2;
-        Priorities.highlight[Priorities.checklvl][Priorities.check] = true;
-        new alignpeg(POSES.REEF_C, false, s_Swerve);
-        cancel();
-      } else if (reefstate.reefl4[3] == false && Priorities.bothstations[Priorities.i] == 3 && Priorities.checklvl == 0
-          || reefstate.reefl3[3] == false && Priorities.bothstations[Priorities.i] == 3 && Priorities.checklvl == 1
-          || reefstate.reefl2[3] == false && Priorities.bothstations[Priorities.i] == 3 && Priorities.checklvl == 2) {
-        Priorities.i++;
-        Priorities.check = 3;
-        Priorities.highlight[Priorities.checklvl][Priorities.check] = true;
-        new alignpeg(POSES.REEF_D, false, s_Swerve);
-        cancel();
-      } else if (reefstate.reefl4[4] == false && Priorities.bothstations[Priorities.i] == 4 && Priorities.checklvl == 0
-          || reefstate.reefl3[4] == false && Priorities.bothstations[Priorities.i] == 4 && Priorities.checklvl == 1
-          || reefstate.reefl2[4] == false && Priorities.bothstations[Priorities.i] == 4 && Priorities.checklvl == 2) {
-        Priorities.i++;
-        Priorities.check = 4;
-        Priorities.highlight[Priorities.checklvl][Priorities.check] = true;
-        new alignpeg(POSES.REEF_E, false, s_Swerve);
-        cancel();
-      } else if (reefstate.reefl4[5] == false && Priorities.bothstations[Priorities.i] == 5 && Priorities.checklvl == 0
-          || reefstate.reefl3[5] == false && Priorities.bothstations[Priorities.i] == 5 && Priorities.checklvl == 1
-          || reefstate.reefl2[5] == false && Priorities.bothstations[Priorities.i] == 5  && Priorities.checklvl == 2) {
-        Priorities.i++;
-        Priorities.check = 5;
-        Priorities.highlight[Priorities.checklvl][Priorities.check] = true;
-        new alignpeg(POSES.REEF_F, false, s_Swerve);
-        cancel();
-      } else if (reefstate.reefl4[6] == false && Priorities.bothstations[Priorities.i] == 6 && Priorities.checklvl == 0
-          || reefstate.reefl3[6] == false && Priorities.bothstations[Priorities.i] == 6 && Priorities.checklvl == 1
-          || reefstate.reefl2[6] == false && Priorities.bothstations[Priorities.i] == 6 && Priorities.checklvl == 2) {
-        Priorities.i++;
-        Priorities.check = 6;
-        Priorities.highlight[Priorities.checklvl][Priorities.check] = true;
-        new alignpeg(POSES.REEF_G, false, s_Swerve);
-        cancel();
-      } else if (reefstate.reefl4[7] == false && Priorities.bothstations[Priorities.i] == 7 && Priorities.checklvl == 0
-          || reefstate.reefl3[7] == false && Priorities.bothstations[Priorities.i] == 7 && Priorities.checklvl == 1
-          || reefstate.reefl2[7] == false && Priorities.bothstations[Priorities.i] == 7 && Priorities.checklvl == 2) {
-        Priorities.i++;
-        Priorities.check = 7;
-        Priorities.highlight[Priorities.checklvl][Priorities.check] = true;
-        new alignpeg(POSES.REEF_H, false, s_Swerve);
-        cancel();
-      } else if (reefstate.reefl4[8] == false && Priorities.bothstations[Priorities.i] == 8 && Priorities.checklvl == 0
-          || reefstate.reefl3[8] == false && Priorities.bothstations[Priorities.i] == 8 && Priorities.checklvl == 1
-          || reefstate.reefl2[8] == false && Priorities.bothstations[Priorities.i] == 8 && Priorities.checklvl == 2) {
-        Priorities.i++;
-        Priorities.check = 8;
-        Priorities.highlight[Priorities.checklvl][Priorities.check] = true;
-        new alignpeg(POSES.REEF_I, false, s_Swerve);
-        cancel();
-      } else if (reefstate.reefl4[9] == false && Priorities.bothstations[Priorities.i] == 9 && Priorities.checklvl == 0
-          || reefstate.reefl3[9] == false && Priorities.bothstations[Priorities.i] == 9 && Priorities.checklvl == 1
-          || reefstate.reefl2[9] == false && Priorities.bothstations[Priorities.i] == 9 && Priorities.checklvl == 2) {
-        Priorities.i++;
-        Priorities.check = 9;
-        Priorities.highlight[Priorities.checklvl][Priorities.check] = true;
-        new alignpeg(POSES.REEF_J, false, s_Swerve);
-        cancel();
-      } else if (reefstate.reefl4[10] == false && Priorities.bothstations[Priorities.i] == 10 && Priorities.checklvl == 0
-          || reefstate.reefl3[10] == false && Priorities.bothstations[Priorities.i] == 10 && Priorities.checklvl == 1
-          || reefstate.reefl2[10] == false && Priorities.bothstations[Priorities.i] == 10 && Priorities.checklvl == 2) {
-        Priorities.i++;
-        Priorities.check = 10;
-        Priorities.highlight[Priorities.checklvl][Priorities.check] = true;
-        new alignpeg(POSES.REEF_K, false, s_Swerve);
-        cancel();
-      } else if (reefstate.reefl4[11] == false && Priorities.bothstations[Priorities.i] == 11 && Priorities.checklvl == 0
-          || reefstate.reefl3[11] == false && Priorities.bothstations[Priorities.i] == 11 && Priorities.checklvl == 1
-          || reefstate.reefl2[11] == false && Priorities.bothstations[Priorities.i] == 11 && Priorities.checklvl == 2) {
-        Priorities.i++;
-        Priorities.check = 11;
-        Priorities.highlight[Priorities.checklvl][Priorities.check] = true;
-        new alignpeg(POSES.REEF_L, false, s_Swerve);
-        cancel();
-      } else {
-        new autodrive(false, s_Swerve);
-      }
+      Priorities.autodrive = false;
+      Priorities.align = true;
     }
 
   }

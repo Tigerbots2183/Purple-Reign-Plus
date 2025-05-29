@@ -245,6 +245,13 @@ public static boolean[][] highlight =
 {{false, false, false, false, false, false, false, false, false, false, false, false},
 {false, false, false, false, false, false, false, false, false, false, false, false},
 {false, false, false, false, false, false, false, false, false, false, false, false}};
-
+public static boolean autodrive = true;
+public static boolean align = false;
+public static boolean leftstation = false;
+public static boolean rightstation = false;
+public static boolean shootl4 = false;
+public static boolean shootl3 = false;
+public static boolean shootl2 = false;
+public static boolean intake = false;
 }
 }}
