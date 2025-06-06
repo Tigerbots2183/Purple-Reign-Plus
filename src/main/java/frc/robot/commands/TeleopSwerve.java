@@ -4,6 +4,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.coral;
 import frc.robot.subsystems.elevator;
@@ -13,14 +14,14 @@ import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 public class TeleopSwerve extends Command {
-  private Swerve s_Swerve;
+  private CommandSwerveDrivetrain s_Swerve;
   private DoubleSupplier translationSup;
   private DoubleSupplier strafeSup;
   private DoubleSupplier rotationSup;
   private BooleanSupplier robotCentricSup;
 
   public TeleopSwerve(
-      Swerve s_Swerve,
+      CommandSwerveDrivetrain s_Swerve,
       DoubleSupplier translationSup,
       DoubleSupplier strafeSup,
       DoubleSupplier rotationSup,
@@ -45,7 +46,7 @@ public class TeleopSwerve extends Command {
 
     /* Drive */
     if (sensorsandleds.wall.get() == false && sensorsandleds.input.get() == true) {
-      s_Swerve.drive(
+      s_Swerve.CommandSwerveDrivetrain(
         new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
         rotationVal * Constants.Swerve.maxAngularVelocity,
         !robotCentricSup.getAsBoolean(),
