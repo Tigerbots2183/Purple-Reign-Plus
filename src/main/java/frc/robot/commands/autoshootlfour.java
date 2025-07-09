@@ -5,8 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.reefstate;
-import frc.robot.commands.Alignmentleft.lastpegsave;
 import frc.robot.subsystems.coral;
 import frc.robot.subsystems.elevator;
 import frc.robot.subsystems.sensorsandleds;
@@ -50,7 +48,6 @@ public class autoshootlfour extends Command {
       s_ElevatorCom.setElevator(elevatePos);
       if (elevator.elevatorLeftEncoder.getPosition() < -74.3) {
         s_CoralCom.Coral(speed);
-        reefstate.reefl4[lastpegsave.lastpegsaved] = true;
         if (sensorsandleds.input.get() == true) {
           elevate = true;
         }
