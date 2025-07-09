@@ -12,6 +12,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class sensorsandleds extends SubsystemBase {
+  //Led and sensor subsystem. Sensors are mostly unused 
+  //Leds go to a arduino controller that i made that interperets pwm signal from the rio
+  //and goes to led animations that I hardcoded on the rio. Each animation has a range of 3
+
   public static  DigitalOutput leds= new DigitalOutput(6);
  public static DigitalInput input = new DigitalInput(2);
  public static DigitalInput wall = new DigitalInput(4);

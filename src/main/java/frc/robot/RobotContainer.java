@@ -142,7 +142,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("l2", new elevatorCom(1, s_ElevatorCom, true).withTimeout(1));
     NamedCommands.registerCommand("lfourfast", new elevatorCom(3, s_ElevatorCom, false).withTimeout(1.682));
     NamedCommands.registerCommand("lfourcorrect",
-        new autoshootlfour(-.12, 3, s_ElevatorCom, s_CoralCom, false).withTimeout(2));
+        new autoshootlfour(-.12, s_ElevatorCom, s_CoralCom, false).withTimeout(2));
 
     // Auto Chooser
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -167,8 +167,8 @@ public class RobotContainer {
     /* Driver Buttons */
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
 
-    align.whileTrue(new AlignmentLeftPeg(false, s_Swerve));
-    alignr.whileTrue(new AlignmentRightPeg(false, s_Swerve));
+    align.whileTrue(new AlignmentLeftPeg(s_Swerve));
+    alignr.whileTrue(new AlignmentRightPeg(s_Swerve));
 
 
     climberButton.whileTrue(new climberCom(-0.4, s_ClimberCom));
@@ -177,8 +177,8 @@ public class RobotContainer {
     intakeButton.whileTrue(new Intake(-.07, s_CoralCom));
     reverseCoral.whileTrue(new Shoot(-0.125, s_CoralCom));
 
-    l4Button.whileTrue(new autoshootlfour(-.12, 3, s_ElevatorCom, s_CoralCom, false));
-    l4Button.onFalse(new autoshootlfour(0, 3, s_ElevatorCom, s_CoralCom, true));
+    l4Button.whileTrue(new autoshootlfour(-.12, s_ElevatorCom, s_CoralCom, false));
+    l4Button.onFalse(new autoshootlfour(0, s_ElevatorCom, s_CoralCom, true));
     shootButton.whileTrue(new Shoot(0.07, s_CoralCom));
 
     uphopButton.whileTrue(new hopperCom(0.5, s_HopperCom));
@@ -238,7 +238,7 @@ public class RobotContainer {
         currentParralel = false;
       } else {
         if(a.contains("4")){
-          cmd = cmd.andThen(new autoshootlfour(-.12, 3, s_ElevatorCom, s_CoralCom, false).withTimeout(2));
+          cmd = cmd.andThen(new autoshootlfour(-.12, s_ElevatorCom, s_CoralCom, false).withTimeout(2));
         }else if(a.contains("I")){
           // cmd = cmd.andThen(Commands.runOnce(() -> System.out.println(a)));
           cmd = cmd.andThen(new Intake(1, s_CoralCom).withTimeout(2));

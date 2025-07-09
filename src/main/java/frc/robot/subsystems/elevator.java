@@ -23,6 +23,8 @@ public class elevator extends SubsystemBase {
   SparkMax elevatorLeft = new SparkMax(50, MotorType.kBrushless);
   SparkMax elevatorRight = new SparkMax(51, MotorType.kBrushless);
 
+  //GOOD LUCK
+
   public static RelativeEncoder elevatorLeftEncoder;
 
   private SparkMaxConfig elevatorConfig= new SparkMaxConfig();

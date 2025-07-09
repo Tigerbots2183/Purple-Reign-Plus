@@ -10,6 +10,8 @@ import frc.robot.subsystems.sensorsandleds;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
+//This is based on dirtbikerxz's swerve library (on github). We were trying to switch to ctre but didnt have enough time
+
 public class TeleopSwerve extends Command {
   private Swerve s_Swerve;
   private DoubleSupplier translationSup;

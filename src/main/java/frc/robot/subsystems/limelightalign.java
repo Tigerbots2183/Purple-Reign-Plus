@@ -38,6 +38,8 @@ public class limelightalign extends SubsystemBase {
 
   /** Creates a new limelightalign. */
   public limelightalign() {
+    //Limelight pos getter I think? we have two limelight 4s so
+
     limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
     tx = limelight.getEntry("tx");

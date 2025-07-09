@@ -10,45 +10,42 @@ import frc.robot.subsystems.elevator;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class autoshootlthree extends Command {
-  double speed;
+  double shooterSpeed;
   elevator s_ElevatorCom;
-  double posNum;
   double elevatePos = 0;
-  boolean returning;
+  boolean returnToZero;
   coral s_CoralCom;
-    /** Creates a new elevatorCom. */
-  public autoshootlthree( double speed, double posNum, elevator s_ElevatorCom, coral s_CoralCom, boolean returning) {
-    addRequirements (s_ElevatorCom);
-     this.s_ElevatorCom = s_ElevatorCom;
-     this.s_CoralCom = s_CoralCom;
-     this.speed = speed;
-     this.posNum = posNum;
-    this.returning = returning;
+
+  //Goes to elevator pos and then shoots when it gets there (Currently unused).
+  
+  public autoshootlthree(double shooterSpeed, elevator s_ElevatorCom, coral s_CoralCom, boolean returnToZero) {
+    addRequirements(s_ElevatorCom);
+    this.s_ElevatorCom = s_ElevatorCom;
+    this.s_CoralCom = s_CoralCom;
+    this.shooterSpeed = shooterSpeed;
+    this.returnToZero = returnToZero;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     if (posNum == 2){
-      elevatePos = -38.8;
-    }
-    }
+    elevatePos = -38.8;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(returning){
-      
+    if (returnToZero) {
+
       s_ElevatorCom.setElevator(0);
-    } else{
+    } else {
       s_ElevatorCom.setElevator(elevatePos);
-      if(elevator.elevatorLeftEncoder.getPosition() < -37.8 ){
-        s_CoralCom.Coral(speed);
+      if (elevator.elevatorLeftEncoder.getPosition() < -37.8) {
+        s_CoralCom.Coral(shooterSpeed);
       }
     }
   }
-  
 
   // Called once the command ends or is interrupted.
   @Override

@@ -8,196 +8,161 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.POSES;
 import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.Swerve;
+
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class AlignmentLeftPeg extends Command {
-  Swerve s_Swerve;
-  boolean isrightscore;
-
-        boolean isFinished = false;
-
+    Swerve s_Swerve;
+    //alignment for left peg, references poses constant
+    boolean isFinished = false;
 
     private Pose2d Targetpose = null;
     public static int lastpeg = 0;
 
-  public AlignmentLeftPeg(Boolean isrightscore, Swerve s_Swerve) {
-    this.s_Swerve = s_Swerve;
-    this.isrightscore = isrightscore;
-  }
+    public AlignmentLeftPeg(Swerve s_Swerve) {
+        this.s_Swerve = s_Swerve;
+    }
 
-  // Called when the command is initially scheduled.
-  @Override
- public void initialize() {
-        
-            System.out.println("leftBranchPathfinding method called.");
-        
-            double aprilTagID = LimelightHelpers.getFiducialID("limelight");
-            // Blue paths
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
 
-            switch ((int) aprilTagID) {
-            case 17:
-                 {
-                    Targetpose = POSES.REEF_C;
-                    lastpeg = 2;
-                }
+        System.out.println("leftBranchPathfinding method called.");
+        double aprilTagID = LimelightHelpers.getFiducialID("limelight");
+        // Blue paths
+
+        switch ((int) aprilTagID) {
+            case 17: {
+                Targetpose = POSES.REEF_C;
+                lastpeg = 2;
+            }
                 break;
 
-            case 18 :
-            {
+            case 18: {
                 Targetpose = POSES.REEF_A;
                 lastpeg = 0;
             }
                 break;
-            
 
-            case 19:
-            {
-                 Targetpose = POSES.REEF_K;
-                 lastpeg = 10;
+            case 19: {
+                Targetpose = POSES.REEF_K;
+                lastpeg = 10;
             }
                 break;
 
-            case 20:
-            {
-                 Targetpose = POSES.REEF_I;
-                 lastpeg = 8;
+            case 20: {
+                Targetpose = POSES.REEF_I;
+                lastpeg = 8;
             }
                 break;
 
-            case 21:
-            {
-                 Targetpose = POSES.REEF_G;
-                 lastpeg = 6;
+            case 21: {
+                Targetpose = POSES.REEF_G;
+                lastpeg = 6;
             }
                 break;
 
-            case 22:
-            {
+            case 22: {
                 Targetpose = POSES.REEF_E;
                 lastpeg = 4;
             }
                 break;
 
             // Red Paths
-            case 6:
-            {
-                 Targetpose = POSES.REEF_K;
-                 lastpeg = 10;
+            case 6: {
+                Targetpose = POSES.REEF_K;
+                lastpeg = 10;
             }
                 break;
 
-            case 7:
-            {
-                 Targetpose = POSES.REEF_A;
-                 lastpeg = 0;
+            case 7: {
+                Targetpose = POSES.REEF_A;
+                lastpeg = 0;
             }
                 break;
 
-            case 8:
-            {
-                 Targetpose = POSES.REEF_C;
-                 lastpeg = 2;
+            case 8: {
+                Targetpose = POSES.REEF_C;
+                lastpeg = 2;
             }
                 break;
 
-            case 9:
-            {
-                 Targetpose = POSES.REEF_E;
-                 lastpeg = 4;
+            case 9: {
+                Targetpose = POSES.REEF_E;
+                lastpeg = 4;
             }
                 break;
 
-            case 10:
-            {
-                 Targetpose = POSES.REEF_G;
-                 lastpeg = 6;
+            case 10: {
+                Targetpose = POSES.REEF_G;
+                lastpeg = 6;
             }
                 break;
 
-            case 11:
-                 {
-                 Targetpose = POSES.REEF_I;
-                 lastpeg = 8;
-               
-                }
+            case 11: {
+                Targetpose = POSES.REEF_I;
+                lastpeg = 8;
+
+            }
                 break;
 
             default:
 
                 break;
-            }
-           
-            return;
-        
         }
-        
-          
-          @Override
-          public void execute() {
-            addRequirements(s_Swerve);
-        
-            
-            PathConstraints constraints= new PathConstraints(
-        
-                    1,
-        
-                    4,
-        
-                    9.42478,
-        
-                    12.5664
-        
-            );
 
-        
+        return;
 
-    if (Targetpose != null) {
+    }
 
-        
-        Command followLeftPath = AutoBuilder.pathfindToPose(
-            Targetpose,
-            constraints,
-            0.00
-    );
+    @Override
+    public void execute() {
+        addRequirements(s_Swerve);
+
+        PathConstraints constraints = new PathConstraints(
+
+                1,
+
+                4,
+
+                9.42478,
+
+                12.5664
+
+        );
+
+        if (Targetpose != null) {
+
+            Command followLeftPath = AutoBuilder.pathfindToPose(
+                    Targetpose,
+                    constraints,
+                    0.00);
             followLeftPath.schedule();
-            
 
-        
-    }}
-
-   
-    
-    
-
-
-
-
-    
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-
-
-
-    cancel();
-  }
-    
-    
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-
-    if (isFinished == true){  
-        return true ;
+        }
     }
 
-    else{
-        return false;
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+
+        cancel();
     }
 
-}
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
 
-public static class lastpegsave {
-    public static int lastpegsaved = lastpeg;
-}
+        if (isFinished == true) {
+            return true;
+        }
+
+        else {
+            return false;
+        }
+
+    }
+
+    public static class lastpegsave {
+        public static int lastpegsaved = lastpeg;
+    }
 }

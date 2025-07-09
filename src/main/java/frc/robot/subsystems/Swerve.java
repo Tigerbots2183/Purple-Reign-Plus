@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 import frc.robot.SwerveModule;
-
+//This is based on dirtbikerxz's swerve library (on github). We were trying to switch to ctre but didnt have enough time. Despite setup with mk4is we use mk4ns.
 public class Swerve extends SubsystemBase {
   public SwerveDriveOdometry swerveOdometry;
   public static SwerveModule[] mSwerveMods;

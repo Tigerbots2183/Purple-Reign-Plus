@@ -10,41 +10,40 @@ import frc.robot.subsystems.elevator;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class autoshootltwo extends Command {
-  double speed;
+  double shooterSpeed;
   elevator s_ElevatorCom;
-  double posNum;
   double elevatePos = 0;
-  boolean returning;
+  boolean returnToZero;
   coral s_CoralCom;
     /** Creates a new elevatorCom. */
-  public autoshootltwo( double speed, double posNum, elevator s_ElevatorCom,  coral s_CoralCom, boolean returning) {
+
+  //Goes to elevator pos and then shoots when it gets there (Currently unused).
+
+  public autoshootltwo( double shooterSpeed, elevator s_ElevatorCom,  coral s_CoralCom, boolean returnToZero) {
     addRequirements (s_ElevatorCom);
      this.s_ElevatorCom = s_ElevatorCom;
      this.s_CoralCom = s_CoralCom;
-     this.speed = speed;
-     this.posNum = posNum;
-    this.returning = returning;
+     this.shooterSpeed = shooterSpeed;
+    this.returnToZero = returnToZero;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     if (posNum == 1){
       elevatePos = -16.3;
-    }
     }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(returning){
+    if(returnToZero){
       
       s_ElevatorCom.setElevator(0);
     } else{
       s_ElevatorCom.setElevator(elevatePos);
       if(elevator.elevatorLeftEncoder.getPosition() < -15.3 ){
-        s_CoralCom.Coral(speed);
+        s_CoralCom.Coral(shooterSpeed);
       }
     }
   }

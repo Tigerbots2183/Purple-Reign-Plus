@@ -18,8 +18,7 @@ public class coral extends SubsystemBase {
   SparkMaxConfig coralLeftConfig = new SparkMaxConfig();
   SparkMaxConfig coralRightConfig = new SparkMaxConfig();
 
- 
-  /** Creates a new coral. */
+  //All intake and shooter commands control our two shooter motors with coral subsystem
   public coral() {
     coralLeftConfig.smartCurrentLimit(30);
   

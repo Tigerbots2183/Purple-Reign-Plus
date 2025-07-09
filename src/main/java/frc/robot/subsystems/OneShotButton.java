@@ -15,6 +15,11 @@ import edu.wpi.first.networktables.*;
 
 public class OneShotButton extends SubsystemBase {
   /** Creates a new OneShotButton. */
+
+  //This is for our touchscreen buttonboard that I made, once network table topic is set to true by the 
+  //touchboard, the subscriber reads it, goes to the pose, and sets it back to false, (in which the touchboard
+  //animates the button to show that the action was successfull.)
+
   final BooleanSubscriber dT;
   final BooleanPublisher dP;
   String buttonName;

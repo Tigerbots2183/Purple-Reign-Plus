@@ -15,6 +15,9 @@ public class algeremover extends SubsystemBase {
   SparkMax removal= new SparkMax(58, MotorType.kBrushed);
   
   SparkMaxConfig removalConfig= new SparkMaxConfig();
+  
+  //Linear actuator move in and out 
+  
   public algeremover() {
     removalConfig.smartCurrentLimit(30);
   }

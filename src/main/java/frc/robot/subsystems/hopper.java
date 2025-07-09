@@ -16,6 +16,8 @@ public class hopper extends SubsystemBase {
   SparkMax funnel = new SparkMax(25, MotorType.kBrushless);
   SparkMaxConfig funnalConfig = new SparkMaxConfig();;
 
+  //Moves hopper out of way for climb
+
   public hopper() {
     funnalConfig.smartCurrentLimit(30);
   }

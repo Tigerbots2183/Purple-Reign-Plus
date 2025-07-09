@@ -11,43 +11,35 @@ import frc.robot.subsystems.sensorsandleds;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class autoshootlfour extends Command {
-  double speed;
+  double shooterSpeed;
   elevator s_ElevatorCom;
-  double posNum;
   double elevatePos = 0;
-  boolean returning;
+  boolean returnToZero;
   coral s_CoralCom;
   boolean elevate = false;
 
-  /** Creates a new elevatorCom. */
-  public autoshootlfour(double speed, double posNum, elevator s_ElevatorCom, coral s_CoralCom, boolean returning) {
+  //Goes to elevator pos and then shoots when it gets there. Elevator is a two stage thrifty kit elevator
+  public autoshootlfour(double shooterSpeed, elevator s_ElevatorCom, coral s_CoralCom, boolean returnToZero) {
     addRequirements(s_ElevatorCom);
     this.s_ElevatorCom = s_ElevatorCom;
     this.s_CoralCom = s_CoralCom;
-    this.speed = speed;
-    this.posNum = posNum;
-    this.returning = returning;
+    this.returnToZero = returnToZero;
   }
-  // Use addRequirements() here to declare subsystem dependencies.
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (posNum == 3) {
-      elevatePos = -75;
-    }
+    elevatePos = -75;
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (returning) {
+    if (returnToZero) {
 
       s_ElevatorCom.setElevator(0);
     } else {
       s_ElevatorCom.setElevator(elevatePos);
       if (elevator.elevatorLeftEncoder.getPosition() < -74.3) {
-        s_CoralCom.Coral(speed);
+        s_CoralCom.Coral(shooterSpeed);
         if (sensorsandleds.input.get() == true) {
           elevate = true;
         }
@@ -55,7 +47,6 @@ public class autoshootlfour extends Command {
     }
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     s_ElevatorCom.Elevator(0);
@@ -63,7 +54,6 @@ public class autoshootlfour extends Command {
 
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;// elevate;
