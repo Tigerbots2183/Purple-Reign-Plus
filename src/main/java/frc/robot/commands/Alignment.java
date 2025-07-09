@@ -5,6 +5,7 @@ import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.POSES;
 import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.Swerve;
@@ -12,7 +13,6 @@ import frc.robot.subsystems.Swerve;
 public class Alignment extends Command {
   Swerve s_Swerve;
   boolean isrightscore;
-
 
         boolean isFinished = false;
 
@@ -134,17 +134,18 @@ public class Alignment extends Command {
           
           @Override
           public void execute() {
+            addRequirements(s_Swerve);
         
             
             PathConstraints constraints= new PathConstraints(
         
-                    5,
-        
-                    3,
+                    1,
         
                     4,
         
-                    3
+                    9.42478,
+        
+                    12.5664
         
             );
 
@@ -179,7 +180,6 @@ public class Alignment extends Command {
 
 
     cancel();
-
   }
     
     
