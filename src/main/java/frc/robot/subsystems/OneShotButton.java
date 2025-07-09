@@ -21,10 +21,10 @@ public class OneShotButton extends SubsystemBase {
   boolean prev = false;
   final Pose2d sentPos;
   PathConstraints constraints = new PathConstraints(
-      5,
-      3,
-      4,
-      3);
+    1,
+    4,
+    9.42478,
+    12.5664);
 
   public OneShotButton(String buttonName, Pose2d Pose) {
     // get the default instance of NetworkTables

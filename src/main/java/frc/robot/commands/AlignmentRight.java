@@ -10,7 +10,7 @@ import frc.robot.Constants.POSES;
 import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.Swerve;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class alignright extends Command {
+public class AlignmentRight extends Command {
   Swerve s_Swerve;
   boolean isrightscore;
 
@@ -20,7 +20,7 @@ public class alignright extends Command {
 
     private Pose2d Targetpose = null;
 
-  public alignright(Boolean isrightscore, Swerve s_Swerve) {
+  public AlignmentRight(Boolean isrightscore, Swerve s_Swerve) {
     this.s_Swerve = s_Swerve;
     this.isrightscore = isrightscore;
   }
@@ -125,18 +125,27 @@ public class alignright extends Command {
         
             s_Swerve.drive(new Translation2d(0,0), 0, false,false);
             PathConstraints constraints= new PathConstraints(
+            1,
         
-                    5,
-        
-                    3,
-        
-                    4,
-        
-                    3
+            4,
+
+            9.42478,
+
+            12.5664
         
             );
 
+    //         = new PathConstraints(
         
+    //         5,
+
+    //         3,
+
+    //         4,
+
+    //         3
+
+    // );
 
     if (Targetpose != null) {
 

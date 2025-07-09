@@ -21,7 +21,7 @@ import frc.robot.Constants.POSES;
 import frc.robot.Constants.reefstate;
 import frc.robot.commands.AlignmentLeft;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.alignright;
+import frc.robot.commands.AlignmentRight;
 import frc.robot.commands.autoshootlfour;
 import frc.robot.commands.climberCom;
 import frc.robot.commands.coralCom;
@@ -83,7 +83,7 @@ public class RobotContainer {
   // private final POVButton removeoutButton = new POVButton(driver, 90);
   // private final POVButton removeinButton = new POVButton(driver, 270);
 
-  // private final JoystickButton align = new JoystickButton(driver, 5);
+  private final JoystickButton align = new JoystickButton(driver, 5);
   private final JoystickButton alignr = new JoystickButton(driver, 6);
   // private final POVButton leftcoralalign = new POVButton(driver, 270);
   // private final JoystickButton autodrive = new JoystickButton(driver, 3);
@@ -167,8 +167,8 @@ public class RobotContainer {
     /* Driver Buttons */
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
 
-    // align.whileTrue(new Alignment(false, s_Swerve));
-    alignr.whileTrue(new alignright(false, s_Swerve));
+    align.whileTrue(new AlignmentLeft(false, s_Swerve));
+    alignr.whileTrue(new AlignmentRight(false, s_Swerve));
 
 
     climberButton.whileTrue(new climberCom(-0.4, s_ClimberCom));
