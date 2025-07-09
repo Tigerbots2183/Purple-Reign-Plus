@@ -24,8 +24,8 @@ import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.AlignmentRightPeg;
 import frc.robot.commands.autoshootlfour;
 import frc.robot.commands.climberCom;
-import frc.robot.commands.coralCom;
-import frc.robot.commands.coraldeployCom;
+import frc.robot.commands.Intake;
+import frc.robot.commands.Shoot;
 import frc.robot.commands.elevatorCom;
 import frc.robot.commands.hopperCom;
 import frc.robot.commands.manualElevate;
@@ -69,10 +69,10 @@ public class RobotContainer {
   private final JoystickButton climberButton = new JoystickButton(driver, 2);
   private final JoystickButton rclimberButton = new JoystickButton(driver, 3);
 
-  private final JoystickButton coralButton = new JoystickButton(copilot, 6);
-  private final JoystickButton backcoralButton = new JoystickButton(copilot, 5);
+  private final JoystickButton intakeButton = new JoystickButton(copilot, 6);
+  private final JoystickButton reverseCoral = new JoystickButton(copilot, 5);
   // private final JoystickButton onecoralButton = new JoystickButton(copilot, 7);
-  private final JoystickButton twocoralButton = new JoystickButton(copilot, 8);
+  private final JoystickButton shootButton = new JoystickButton(copilot, 8);
 
   private final JoystickButton l2Button = new JoystickButton(copilot, 2);
   private final JoystickButton l3Button = new JoystickButton(copilot, 3);
@@ -133,9 +133,9 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    NamedCommands.registerCommand("coral", new coralCom(-.075, s_CoralCom).withTimeout(.5));
-    NamedCommands.registerCommand("coralfast", new coralCom(-.075, s_CoralCom).withTimeout(.15));
-    NamedCommands.registerCommand("coralplace", new coraldeployCom(-0.12, s_CoralCom).withTimeout(.3));
+    NamedCommands.registerCommand("coral", new Intake(-.075, s_CoralCom).withTimeout(.5));
+    NamedCommands.registerCommand("coralfast", new Intake(-.075, s_CoralCom).withTimeout(.15));
+    NamedCommands.registerCommand("coralplace", new Shoot(-0.12, s_CoralCom).withTimeout(.3));
     NamedCommands.registerCommand("lfour", new elevatorCom(3, s_ElevatorCom, false).withTimeout(2));
     NamedCommands.registerCommand("lfourdown", new elevatorCom(3, s_ElevatorCom, true).withTimeout(2.2));
     NamedCommands.registerCommand("l3", new elevatorCom(2, s_ElevatorCom, true).withTimeout(1));
@@ -174,12 +174,12 @@ public class RobotContainer {
     climberButton.whileTrue(new climberCom(-0.4, s_ClimberCom));
     rclimberButton.whileTrue(new climberCom(-0.2, s_ClimberCom));
 
-    coralButton.whileTrue(new coralCom(-.07, s_CoralCom));
-    backcoralButton.whileTrue(new coraldeployCom(-0.125, s_CoralCom));
+    intakeButton.whileTrue(new Intake(-.07, s_CoralCom));
+    reverseCoral.whileTrue(new Shoot(-0.125, s_CoralCom));
 
     l4Button.whileTrue(new autoshootlfour(-.12, 3, s_ElevatorCom, s_CoralCom, false));
     l4Button.onFalse(new autoshootlfour(0, 3, s_ElevatorCom, s_CoralCom, true));
-    twocoralButton.whileTrue(new coraldeployCom(0.07, s_CoralCom));
+    shootButton.whileTrue(new Shoot(0.07, s_CoralCom));
 
     uphopButton.whileTrue(new hopperCom(0.5, s_HopperCom));
     downhopButton.whileTrue(new hopperCom(-.5, s_HopperCom));
@@ -218,7 +218,7 @@ public class RobotContainer {
     // return new PathPlannerAuto("example");
     // return autoChooser.getSelected();
     
-    String startString = "4-";
+    String startString = "4-I";
     String[] stringArr = startString.split("-");
     Command cmd = Commands.none();
     Command parralelCmd = Commands.none();
@@ -237,11 +237,14 @@ public class RobotContainer {
         parralelCmd = Commands.none();
         currentParralel = false;
       } else {
-        if(a == "4"){
-          cmd = cmd.andThen(new autoshootlfour(0, 3, s_ElevatorCom, s_CoralCom, true));
-        }else{
+        if(a.contains("4")){
+          cmd = cmd.andThen(new autoshootlfour(-.12, 3, s_ElevatorCom, s_CoralCom, false).withTimeout(2));
+        }else if(a.contains("I")){
           // cmd = cmd.andThen(Commands.runOnce(() -> System.out.println(a)));
-          cmd = cmd.andThen(new autoshootlfour(0, 3, s_ElevatorCom, s_CoralCom, true));
+          cmd = cmd.andThen(new Intake(1, s_CoralCom).withTimeout(2));
+
+        }else {
+          System.out.println(a + "UNDEFINED COMMAND");
 
         }
 

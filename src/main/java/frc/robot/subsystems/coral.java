@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -28,6 +29,8 @@ public class coral extends SubsystemBase {
   public void Coral(double speed) {
     coralLeft.set(speed);
     coralRight.set(speed);
+    SmartDashboard.putNumber("Coral Shooter", speed);
+    
   }
 
   @Override

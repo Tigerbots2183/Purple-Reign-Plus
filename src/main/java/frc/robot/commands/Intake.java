@@ -4,43 +4,39 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.coral;
 import frc.robot.subsystems.sensorsandleds;
+
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class coraldeployCom extends Command {
+public class Intake extends Command {
   double speed;
+  double var;
+   Joystick copilot;
    coral s_CoralCom;
-  //  private Joystick copilot;
-  /** Creates a new coraldeployCom. */
-  public coraldeployCom( double speed,coral s_CoralCom) {
+  /** Creates a new coralCom. */
+  public Intake( double speed,coral s_CoralCom) {
     addRequirements (s_CoralCom);
     this.s_CoralCom = s_CoralCom;
-    // this.copilot = copilot;
    this.speed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
   }
-
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
-
+  public void initialize() {
+    
+  }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(sensorsandleds.input.get() == true){
+    if(sensorsandleds.input.get() == false){
       s_CoralCom.Coral(0);
-    }
-    // else if(sensorsandleds.input.get() == false && elevator.elevatorLeftEncoder.getPosition() < -74 ){
-    //   s_CoralCom.Coral(speed);
-    // }
-    //else if(sensorsandleds.input.get() == false && elevator.elevatorLeftEncoder.getPosition() > -40 && elevator.elevatorLeftEncoder.getPosition() < -38 ){
-       // s_CoralCom.Coral(speed);
-    else{ 
-       s_CoralCom.Coral(speed);
+    }else {
+      s_CoralCom.Coral(speed);
     }
     }
-  
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {

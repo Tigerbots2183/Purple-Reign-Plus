@@ -18,7 +18,6 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.littletonrobotics.junction.Logger;
 
 public class elevator extends SubsystemBase {
   SparkMax elevatorLeft = new SparkMax(50, MotorType.kBrushless);
@@ -88,6 +87,7 @@ public class elevator extends SubsystemBase {
 
   public boolean setElevator(double pos) {
     elevatorLeftPID.setReference(pos, ControlType.kMAXMotionPositionControl);
+    SmartDashboard.putNumber("Elevator Pos", pos);
 
     if (Math.abs(Math.abs(pos) - Math.abs(elevatorLeftEncoder.getPosition())) < 2) {
       // check = true;
@@ -104,25 +104,21 @@ public class elevator extends SubsystemBase {
     if (!changeDone) {
       elevatorLeftPID.setReference(elevatorLeftEncoder.getPosition() + change, ControlType.kMAXMotionPositionControl);
       changeDone = true;
+
     }
   }
 
   public void Elevator(double speed) {
     elevatorLeft.set(speed);
     elevatorRight.set(speed);
+
   }
 
   @Override
   public void periodic() {
     elevate.get();
     elevatorLeftEncoder.getPosition();
-    Logger.recordOutput("elevator pos", elevatorLeftEncoder.getPosition());
-    SmartDashboard.putNumber("templ", elevatorLeft.getMotorTemperature());
-    SmartDashboard.putNumber("tempr", elevatorRight.getMotorTemperature());
-    SmartDashboard.putNumber("speedl", elevatorLeft.getOutputCurrent());
-    SmartDashboard.putNumber("speedr", elevatorRight.getOutputCurrent());
-    SmartDashboard.putNumber("r encoder value ", elevatorLeftEncoder.getPosition());
-    Logger.recordOutput("elevator max test", elevatorLeft.get());
+
     // SmartDashboard.putNumber("elevatePos", elevatorCom.elevatePos);
 
     // This method will be called once per scheduler run

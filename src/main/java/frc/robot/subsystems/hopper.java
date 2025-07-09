@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -21,6 +22,8 @@ public class hopper extends SubsystemBase {
 
   public void hop(double speed) {
     funnel.set(speed);
+    SmartDashboard.putNumber("Hopper", speed);
+
   }
 
   @Override

@@ -188,6 +188,7 @@ public class Robot extends LoggedRobot {
   @Override
   public void autonomousPeriodic() {
     sensorsandleds.leds.updateDutyCycle(.09);
+    CommandScheduler.getInstance().run();
   }
 
   /** This function is called once when teleop is enabled. */
