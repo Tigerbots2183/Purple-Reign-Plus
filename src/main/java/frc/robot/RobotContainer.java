@@ -19,9 +19,9 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.POSES;
 import frc.robot.Constants.reefstate;
-import frc.robot.commands.AlignmentLeft;
+import frc.robot.commands.AlignmentLeftPeg;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.AlignmentRight;
+import frc.robot.commands.AlignmentRightPeg;
 import frc.robot.commands.autoshootlfour;
 import frc.robot.commands.climberCom;
 import frc.robot.commands.coralCom;
@@ -167,8 +167,8 @@ public class RobotContainer {
     /* Driver Buttons */
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
 
-    align.whileTrue(new AlignmentLeft(false, s_Swerve));
-    alignr.whileTrue(new AlignmentRight(false, s_Swerve));
+    align.whileTrue(new AlignmentLeftPeg(false, s_Swerve));
+    alignr.whileTrue(new AlignmentRightPeg(false, s_Swerve));
 
 
     climberButton.whileTrue(new climberCom(-0.4, s_ClimberCom));
