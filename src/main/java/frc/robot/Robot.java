@@ -24,8 +24,6 @@ import com.pathplanner.lib.pathfinding.Pathfinding;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.commands.autoshootlfour;
 import frc.robot.subsystems.*;
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -43,10 +41,6 @@ public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-
-  private final elevator s_ElevatorCom = new elevator();
-
-  private final coral s_CoralCom = new coral();
 
 
   public Robot() {
@@ -106,7 +100,6 @@ public class Robot extends LoggedRobot {
     Pathfinding.setPathfinder(new LocalADStarAK());
 
     // ... remaining robot initialization
-    testCommand = new autoshootlfour(0, 3, s_ElevatorCom, s_CoralCom, true);
 
   }
 
@@ -146,6 +139,36 @@ public class Robot extends LoggedRobot {
 
     
 
+    // String startString = "4-";
+    // String[] stringArr = startString.split("-");
+    // Command cmd = Commands.none();
+    // Command parralelCmd = Commands.none();
+    // Boolean currentParralel = false;
+    // for (String a : stringArr) {
+    //   if (a.contains("+")) {
+    //     // cmd = cmd.andThen(Commands.runOnce(()->System.out.println(a +
+    //     // "Simultaneous")));
+    //     parralelCmd = parralelCmd.alongWith(Commands.runOnce(() -> System.out.print(a)));
+    //     currentParralel = true;
+
+    //     continue;
+    //   } else if (currentParralel) {
+    //     parralelCmd = parralelCmd.alongWith(Commands.runOnce(() -> System.out.println(a)));
+    //     cmd = cmd.andThen(parralelCmd);
+    //     parralelCmd = Commands.none();
+    //     currentParralel = false;
+    //   } else {
+    //     if(a == "4"){
+    //       cmd = cmd.andThen(new autoshootlfour(0, 3, s_ElevatorCom, s_CoralCom, true));
+    //     }else{
+    //       // cmd = cmd.andThen(Commands.runOnce(() -> System.out.println(a)));
+    //       cmd = cmd.andThen(new autoshootlfour(0, 3, s_ElevatorCom, s_CoralCom, true));
+
+    //     }
+
+    //   }
+    // }
+    // cmd.schedule();
    
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 

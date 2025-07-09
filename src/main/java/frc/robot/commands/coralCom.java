@@ -4,12 +4,9 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.coral;
-import frc.robot.commands.elevatorCom;
-import frc.robot.subsystems.elevator;
 import frc.robot.subsystems.sensorsandleds;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */

@@ -6,23 +6,18 @@ package frc.robot.subsystems;
 
 import org.littletonrobotics.junction.Logger;
 
-import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class sensorsandleds extends SubsystemBase {
-  public static  DigitalOutput leds;
- public static DigitalInput input;
- public static DigitalInput wall;
- public static DigitalInput reef;
+  public static  DigitalOutput leds= new DigitalOutput(6);
+ public static DigitalInput input = new DigitalInput(2);
+ public static DigitalInput wall = new DigitalInput(4);
+ public static DigitalInput reef= new DigitalInput(7);
   /** Creates a new sensorsandleds. */
   public sensorsandleds() {
-    reef = new DigitalInput(7);
-    input = new DigitalInput(2);
-    wall = new DigitalInput(4);
-    leds = new DigitalOutput(6);
     leds.setPWMRate(1000);
     leds.enablePWM(0);
   }

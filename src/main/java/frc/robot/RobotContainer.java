@@ -11,17 +11,16 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.POSES;
 import frc.robot.Constants.reefstate;
-import frc.robot.commands.Alignment;
-import frc.robot.commands.Alignmentleft;
-import frc.robot.commands.Alignmentright;
+import frc.robot.commands.AlignmentLeft;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.alignleftcoralstation;
 import frc.robot.commands.alignright;
 import frc.robot.commands.autoshootlfour;
 import frc.robot.commands.climberCom;
@@ -72,7 +71,7 @@ public class RobotContainer {
 
   private final JoystickButton coralButton = new JoystickButton(copilot, 6);
   private final JoystickButton backcoralButton = new JoystickButton(copilot, 5);
-  private final JoystickButton onecoralButton = new JoystickButton(copilot, 7);
+  // private final JoystickButton onecoralButton = new JoystickButton(copilot, 7);
   private final JoystickButton twocoralButton = new JoystickButton(copilot, 8);
 
   private final JoystickButton l2Button = new JoystickButton(copilot, 2);
@@ -81,13 +80,13 @@ public class RobotContainer {
 
   private final POVButton uphopButton = new POVButton(driver, 0);
   private final POVButton downhopButton = new POVButton(driver, 180);
-  private final POVButton removeoutButton = new POVButton(driver, 90);
-  private final POVButton removeinButton = new POVButton(driver, 270);
+  // private final POVButton removeoutButton = new POVButton(driver, 90);
+  // private final POVButton removeinButton = new POVButton(driver, 270);
 
-  private final JoystickButton align = new JoystickButton(driver, 5);
+  // private final JoystickButton align = new JoystickButton(driver, 5);
   private final JoystickButton alignr = new JoystickButton(driver, 6);
-  private final POVButton leftcoralalign = new POVButton(driver, 270);
-  private final JoystickButton autodrive = new JoystickButton(driver, 3);
+  // private final POVButton leftcoralalign = new POVButton(driver, 270);
+  // private final JoystickButton autodrive = new JoystickButton(driver, 3);
 
   private final JoystickButton manual = new JoystickButton(copilot, 1);
   private final Trigger acuatorin = new Trigger(() -> copilot.getRawAxis(0) > .2);
@@ -101,7 +100,7 @@ public class RobotContainer {
   // private final elevator s_ = new elevator();
   private final hopper s_HopperCom = new hopper();
   private final algeremover s_algieCom = new algeremover();
-  private final sensorsandleds s_ledCom = new sensorsandleds();
+  // private final sensorsandleds s_ledCom = new sensorsandleds();
 
   private final OneShotButton PAbtn = new OneShotButton("PAbtn", POSES.REEF_A);
   private final OneShotButton PBbtn = new OneShotButton("PBbtn", POSES.REEF_B);
@@ -144,8 +143,6 @@ public class RobotContainer {
     NamedCommands.registerCommand("lfourfast", new elevatorCom(3, s_ElevatorCom, false).withTimeout(1.682));
     NamedCommands.registerCommand("lfourcorrect",
         new autoshootlfour(-.12, 3, s_ElevatorCom, s_CoralCom, false).withTimeout(2));
-    NamedCommands.registerCommand("alignright", new Alignmentright(false, s_Swerve).withTimeout(4));
-    NamedCommands.registerCommand("alignleft", new Alignmentleft(false, s_Swerve).withTimeout(1.682));
 
     // Auto Chooser
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -173,7 +170,6 @@ public class RobotContainer {
     // align.whileTrue(new Alignment(false, s_Swerve));
     alignr.whileTrue(new alignright(false, s_Swerve));
 
-    leftcoralalign.whileTrue(new alignleftcoralstation(false, s_Swerve));
 
     climberButton.whileTrue(new climberCom(-0.4, s_ClimberCom));
     rclimberButton.whileTrue(new climberCom(-0.2, s_ClimberCom));
@@ -221,6 +217,36 @@ public class RobotContainer {
     // return new exampleAuto(s_Swerve);
     // return new PathPlannerAuto("example");
     // return autoChooser.getSelected();
-    return new Alignment(false, s_Swerve);
+    
+    String startString = "4-";
+    String[] stringArr = startString.split("-");
+    Command cmd = Commands.none();
+    Command parralelCmd = Commands.none();
+    Boolean currentParralel = false;
+    for (String a : stringArr) {
+      if (a.contains("+")) {
+        // cmd = cmd.andThen(Commands.runOnce(()->System.out.println(a +
+        // "Simultaneous")));
+        parralelCmd = parralelCmd.alongWith(Commands.runOnce(() -> System.out.print(a)));
+        currentParralel = true;
+
+        continue;
+      } else if (currentParralel) {
+        parralelCmd = parralelCmd.alongWith(Commands.runOnce(() -> System.out.println(a)));
+        cmd = cmd.andThen(parralelCmd);
+        parralelCmd = Commands.none();
+        currentParralel = false;
+      } else {
+        if(a == "4"){
+          cmd = cmd.andThen(new autoshootlfour(0, 3, s_ElevatorCom, s_CoralCom, true));
+        }else{
+          // cmd = cmd.andThen(Commands.runOnce(() -> System.out.println(a)));
+          cmd = cmd.andThen(new autoshootlfour(0, 3, s_ElevatorCom, s_CoralCom, true));
+
+        }
+
+      }
+    };
+    return cmd; 
   }
 }

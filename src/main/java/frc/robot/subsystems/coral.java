@@ -4,40 +4,31 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkFlex;
 
-
 public class coral extends SubsystemBase {
-  SparkFlex coralLeft;
-  SparkFlex coralRight;
+  SparkFlex coralLeft =new SparkFlex(54,MotorType.kBrushless);;
+  SparkFlex coralRight=new SparkFlex(55,MotorType.kBrushless);;
 
-  SparkMaxConfig coralLeftConfig;
-  SparkMaxConfig coralRightConfig;
+  SparkMaxConfig coralLeftConfig = new SparkMaxConfig();
+  SparkMaxConfig coralRightConfig = new SparkMaxConfig();
 
-
+ 
   /** Creates a new coral. */
   public coral() {
-    coralLeft = new SparkFlex(54, MotorType.kBrushless);
-    coralRight = new SparkFlex(55, MotorType.kBrushless);
-
-
-    coralLeftConfig = new SparkMaxConfig();
-    coralRightConfig = new SparkMaxConfig();
-
     coralLeftConfig.smartCurrentLimit(30);
-    coralRightConfig.smartCurrentLimit(30);
+  
+    coralRightConfig.smartCurrentLimit(30);  
   }
 
   public void Coral(double speed) {
     coralLeft.set(speed);
     coralRight.set(speed);
   }
-
 
   @Override
   public void periodic() {

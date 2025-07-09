@@ -1,109 +1,203 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commands;
 
-import java.util.logging.Logger;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathConstraints;
 
-//import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.POSES;
 import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.Swerve;
-//import frc.robot.subsystems.limelightalign;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class Alignmentleft extends Command {
+public class AlignmentLeft extends Command {
   Swerve s_Swerve;
-  PIDController pidx;
-  PIDController pidy;
-  PIDController pidrotation;
-  double tagID = -1;
   boolean isrightscore;
-  public boolean atRSetpoint;
-  public double rotationOutput;
 
-  /** Creates a new Alignment. */
-  public Alignmentleft(Boolean isrightscore, Swerve s_Swerve) {
-    pidx = new PIDController(3, 0.07, 0);
-    pidy = new PIDController(3, 0.07, 0);
-  pidrotation = new PIDController(0.1, 00, 0);
-    addRequirements(s_Swerve);
+        boolean isFinished = false;
+
+
+    private Pose2d Targetpose = null;
+    public static int lastpeg = 0;
+
+  public AlignmentLeft(Boolean isrightscore, Swerve s_Swerve) {
     this.s_Swerve = s_Swerve;
     this.isrightscore = isrightscore;
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    pidx.setSetpoint(-.20);
-    pidx.setTolerance(.01);
-    
-    pidy.setSetpoint(-.45);
-    pidy.setTolerance(.015);
+ public void initialize() {
+        
+            System.out.println("leftBranchPathfinding method called.");
+        
+            double aprilTagID = LimelightHelpers.getFiducialID("limelight");
+            // Blue paths
 
-    pidrotation.setSetpoint(-1.3);
-    pidrotation.setTolerance(.3);
+            switch ((int) aprilTagID) {
+            case 17:
+                 {
+                    Targetpose = POSES.REEF_C;
+                    lastpeg = 2;
+                }
+                break;
 
-    if (LimelightHelpers.getTV("limelight-right")){
-      tagID = LimelightHelpers.getFiducialID("limelight-right");
-    }else{
-      s_Swerve.drive(new Translation2d(0,0),0,false,false);
-    }
-
-  }
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    if(LimelightHelpers.getTV("limelight-right") && LimelightHelpers.getFiducialID("limelight-right") == tagID){
-      
-    double [] position = LimelightHelpers.getBotPose_TargetSpace("limelight-right");
-    //LimelightHelpers.getBotPose_TargetSpace("limelight-right");
-    double[] limelight2pos = LimelightHelpers.getBotPose_TargetSpace("");
-    //Logger.recordOutput(" rotate",position[4]);
-    // double[] positionr = LimelightHelpers.getTargetPose_CameraSpace("limelight-right");
-
-
-
-    double xSpeed = -pidx.calculate(position[0]);
-    double ySpeed = -pidy.calculate(position[2]);
-    // double rotValue = -pidrotation.calculate(position[4]);
-
-    boolean atXSetpoint = Math.abs(-position[0] - .20) <= .01;
-    boolean atYSetpoint = Math.abs(-position[2] -.45) <= .015;
-    // boolean atRSetpoint = Math.abs(-positionr[4] - 1.3) <= .3;
-    
-      if (!atXSetpoint && !atYSetpoint){
-        s_Swerve.drive(new Translation2d(
-        xSpeed,
-        ySpeed),
-        0,
-       false,false);
-      // }else if(!atXSetpoint && !atYSetpoint){
-      //   s_Swerve.drive(new Translation2d(xSpeed,ySpeed), 0, false,false);
-      // }else if(!atXSetpoint && !atRSetpoint){
-      //   s_Swerve.drive(new Translation2d(xSpeed,0), rotValue, false,false);
-      // }else if(!atYSetpoint && !atRSetpoint){
-      //   s_Swerve.drive(new Translation2d(0,ySpeed), rotValue, false,false);
-      }else if(!atXSetpoint){
-        s_Swerve.drive(new Translation2d(xSpeed,0), 0, false,false);
-      }else if(!atYSetpoint){
-        s_Swerve.drive(new Translation2d(0,ySpeed), 0, false,false);
-      // }else if(!atRSetpoint){
-      //   s_Swerve.drive(new Translation2d(0,0), rotValue, false,false);
-      }else{
-        s_Swerve.drive(new Translation2d(0,0), 0, false,false);}}
-      }      
+            case 18 :
+            {
+                Targetpose = POSES.REEF_A;
+                lastpeg = 0;
+            }
+                break;
             
+
+            case 19:
+            {
+                 Targetpose = POSES.REEF_K;
+                 lastpeg = 10;
+            }
+                break;
+
+            case 20:
+            {
+                 Targetpose = POSES.REEF_I;
+                 lastpeg = 8;
+            }
+                break;
+
+            case 21:
+            {
+                 Targetpose = POSES.REEF_G;
+                 lastpeg = 6;
+            }
+                break;
+
+            case 22:
+            {
+                Targetpose = POSES.REEF_E;
+                lastpeg = 4;
+            }
+                break;
+
+            // Red Paths
+            case 6:
+            {
+                 Targetpose = POSES.REEF_K;
+                 lastpeg = 10;
+            }
+                break;
+
+            case 7:
+            {
+                 Targetpose = POSES.REEF_A;
+                 lastpeg = 0;
+            }
+                break;
+
+            case 8:
+            {
+                 Targetpose = POSES.REEF_C;
+                 lastpeg = 2;
+            }
+                break;
+
+            case 9:
+            {
+                 Targetpose = POSES.REEF_E;
+                 lastpeg = 4;
+            }
+                break;
+
+            case 10:
+            {
+                 Targetpose = POSES.REEF_G;
+                 lastpeg = 6;
+            }
+                break;
+
+            case 11:
+                 {
+                 Targetpose = POSES.REEF_I;
+                 lastpeg = 8;
+               
+                }
+                break;
+
+            default:
+
+                break;
+            }
+           
+            return;
+        
+        }
+        
+          
+          @Override
+          public void execute() {
+            addRequirements(s_Swerve);
+        
+            
+            PathConstraints constraints= new PathConstraints(
+        
+                    1,
+        
+                    4,
+        
+                    9.42478,
+        
+                    12.5664
+        
+            );
+
+        
+
+    if (Targetpose != null) {
+
+        
+        Command followLeftPath = AutoBuilder.pathfindToPose(
+            Targetpose,
+            constraints,
+            0.00
+    );
+            followLeftPath.schedule();
+            
+
+        
+    }}
+
+   
+    
+    
+
+
+
+
+    
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+
+
+
+    cancel();
+  }
+    
+    
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
-  }
+
+    if (isFinished == true){  
+        return true ;
+    }
+
+    else{
+        return false;
+    }
+
+}
+
+public static class lastpegsave {
+    public static int lastpegsaved = lastpeg;
+}
 }

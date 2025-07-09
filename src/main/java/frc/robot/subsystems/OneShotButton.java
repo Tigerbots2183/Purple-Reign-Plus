@@ -20,25 +20,18 @@ public class OneShotButton extends SubsystemBase {
   String buttonName;
   boolean prev = false;
   final Pose2d sentPos;
-  PathConstraints constraints= new PathConstraints(
-        
-                    5,
-        
-                    3,
-        
-                    4,
-        
-                    3
-        
-            );
-
+  PathConstraints constraints = new PathConstraints(
+      5,
+      3,
+      4,
+      3);
 
   public OneShotButton(String buttonName, Pose2d Pose) {
     // get the default instance of NetworkTables
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
-    // get the subtable called "datatable"
+    // get the subtable called "touchboard"
     NetworkTable datatable = inst.getTable("touchboard");
-    // subscribe to the topic in "datatable" called "Y"
+    // subscribe to the topic in "touchboard" to start command when button pressed and set aback to false 
     BooleanTopic blTPC = datatable.getBooleanTopic(buttonName);
     dP = blTPC.publish();
     dT = datatable.getBooleanTopic(buttonName).subscribe(false);

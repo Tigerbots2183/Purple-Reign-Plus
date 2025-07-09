@@ -11,14 +11,10 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class algeremover extends SubsystemBase {
-  SparkMax removal;
-   SparkMaxConfig removalConfig;
-  /** Creates a new algeremover. */
+  SparkMax removal= new SparkMax(58, MotorType.kBrushed);
+  
+  SparkMaxConfig removalConfig= new SparkMaxConfig();
   public algeremover() {
-    removal = new SparkMax(58, MotorType.kBrushed);
-
-    removalConfig = new SparkMaxConfig();
-
     removalConfig.smartCurrentLimit(30);
   }
   public void remove(double speed) {
@@ -27,6 +23,5 @@ public class algeremover extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
   }
 }

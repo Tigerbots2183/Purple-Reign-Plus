@@ -4,21 +4,19 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.coral;
-import frc.robot.subsystems.elevator;
 import frc.robot.subsystems.sensorsandleds;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class coraldeployCom extends Command {
   double speed;
    coral s_CoralCom;
-   private Joystick copilot;
+  //  private Joystick copilot;
   /** Creates a new coraldeployCom. */
   public coraldeployCom( double speed,coral s_CoralCom) {
     addRequirements (s_CoralCom);
     this.s_CoralCom = s_CoralCom;
-    this.copilot = copilot;
+    // this.copilot = copilot;
    this.speed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
   }

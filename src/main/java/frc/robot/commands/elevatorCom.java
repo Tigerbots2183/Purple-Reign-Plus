@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.coral;
 import frc.robot.subsystems.elevator;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -15,12 +14,12 @@ public class elevatorCom extends Command {
   double posNum;
   double elevatePos = 0;
   boolean returning;
-  coral s_CoralCom;
+  // coral s_CoralCom;
     /** Creates a new elevatorCom. */
   public elevatorCom( double posNum, elevator s_ElevatorCom, boolean returning) {
     addRequirements (s_ElevatorCom);
      this.s_ElevatorCom = s_ElevatorCom;
-     this.s_CoralCom = s_CoralCom;
+    //  this.s_CoralCom = s_CoralCom;
      this.posNum = posNum;
     this.returning = returning;
     // Use addRequirements() here to declare subsystem dependencies.
