@@ -24,6 +24,8 @@ public class autoshootlfour extends Command {
     this.s_ElevatorCom = s_ElevatorCom;
     this.s_CoralCom = s_CoralCom;
     this.returnToZero = returnToZero;
+    this.shooterSpeed = shooterSpeed;
+    elevate = false;
   }
 
   @Override
@@ -56,6 +58,6 @@ public class autoshootlfour extends Command {
 
   @Override
   public boolean isFinished() {
-    return false;// elevate;
+    return elevate;
   }
 }

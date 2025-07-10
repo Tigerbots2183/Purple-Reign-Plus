@@ -13,7 +13,7 @@ import frc.robot.subsystems.Swerve;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class AlignmentRightPeg extends Command {
     Swerve s_Swerve;
-    //alignment for right peg, references poses constant
+    // alignment for right peg, references poses constant
     boolean isFinished = false;
 
     private Pose2d Targetpose = null;
@@ -108,14 +108,10 @@ public class AlignmentRightPeg extends Command {
 
         s_Swerve.drive(new Translation2d(0, 0), 0, false, false);
         PathConstraints constraints = new PathConstraints(
-                1,
-
+                5,
+                3,
                 4,
-
-                9.42478,
-
-                12.5664
-
+                3
         );
 
         // = new PathConstraints(

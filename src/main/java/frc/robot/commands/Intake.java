@@ -43,6 +43,10 @@ public class Intake extends Command {
 
   @Override
   public boolean isFinished() {
-    return false;
+    if(sensorsandleds.input.get() == false){
+      return true;
+    } else{
+      return false;
+    }
   }
 }

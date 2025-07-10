@@ -52,6 +52,11 @@ public class elevatorCom extends Command {
 
   @Override
   public boolean isFinished() {
-    return false;
+    if(returnToZero){
+      return elevator.elevatorLeftEncoder.getPosition() >= 0;
+    }else{
+      return elevator.elevatorLeftEncoder.getPosition() < elevatePos + 1;
+    }  
+
   }
 }

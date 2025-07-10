@@ -120,13 +120,13 @@ public class AlignmentLeftPeg extends Command {
 
         PathConstraints constraints = new PathConstraints(
 
-                1,
+        5,
 
-                4,
+        3,
 
-                9.42478,
+        4,
 
-                12.5664
+        3
 
         );
 

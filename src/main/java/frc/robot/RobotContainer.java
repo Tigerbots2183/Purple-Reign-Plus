@@ -2,7 +2,9 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.PathConstraints;
 
+import edu.wpi.first.math.geometry.Pose2d;
 // import com.pathplanner.lib.auto.NamedCommands;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -39,6 +41,9 @@ import frc.robot.subsystems.elevator;
 import frc.robot.subsystems.hopper;
 import frc.robot.subsystems.limelightalign;
 import frc.robot.subsystems.sensorsandleds;
+
+import java.security.DrbgParameters.NextBytes;
+import java.util.HashMap;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -115,7 +120,6 @@ public class RobotContainer {
   private final OneShotButton PKbtn = new OneShotButton("PKbtn", POSES.REEF_K);
   private final OneShotButton PLbtn = new OneShotButton("PLbtn", POSES.REEF_L);
 
-
   private final limelightalign limelightalign = new limelightalign();
 
   /**
@@ -170,7 +174,6 @@ public class RobotContainer {
     align.whileTrue(new AlignmentLeftPeg(s_Swerve));
     alignr.whileTrue(new AlignmentRightPeg(s_Swerve));
 
-
     climberButton.whileTrue(new climberCom(-0.4, s_ClimberCom));
     rclimberButton.whileTrue(new climberCom(-0.2, s_ClimberCom));
 
@@ -217,39 +220,76 @@ public class RobotContainer {
     // return new exampleAuto(s_Swerve);
     // return new PathPlannerAuto("example");
     // return autoChooser.getSelected();
-    
-    String startString = "4-I";
+    HashMap<String, Pose2d> poses = new HashMap<String, Pose2d>();
+
+    poses.put("A", POSES.REEF_A);
+    poses.put("B", POSES.REEF_B);
+    poses.put("C", POSES.REEF_C);
+    poses.put("D", POSES.REEF_D);
+    poses.put("E", POSES.REEF_E);
+    poses.put("F", POSES.REEF_F);
+    poses.put("G", POSES.REEF_G);
+    poses.put("H", POSES.REEF_H);
+    poses.put("I", POSES.REEF_I);
+    poses.put("J", POSES.REEF_J);
+    poses.put("K", POSES.REEF_K);
+    poses.put("L", POSES.REEF_L);
+    PathConstraints constraints = new PathConstraints(
+        5,
+        3,
+        4,
+        3);
+
+    String startString = "I-4-0";
     String[] stringArr = startString.split("-");
     Command cmd = Commands.none();
     Command parralelCmd = Commands.none();
+    Command nextCommand = Commands.none();
     Boolean currentParralel = false;
     for (String a : stringArr) {
+
+      if (a.contains("4")) {
+        nextCommand = new autoshootlfour(-.12, s_ElevatorCom, s_CoralCom, false).withTimeout(2);
+      } else if (a.contains("I")) {
+        // cmd = cmd.andThen(Commands.runOnce(() -> System.out.println(a)));
+        nextCommand = new Intake(-.07, s_CoralCom);
+
+      } else if (a.contains("S")) {
+        nextCommand =(new Shoot(-.12, s_CoralCom));
+
+      } else if (a.contains("3")) {
+        nextCommand =new elevatorCom(2, s_ElevatorCom, false);
+      } else if (a.contains("2")) {
+        nextCommand =new elevatorCom(1, s_ElevatorCom, false);
+      } else if (a.contains("0")) {
+        nextCommand =new elevatorCom(1, s_ElevatorCom, true);
+      } else if (a.matches("[A-L]")) {
+        nextCommand = AutoBuilder.pathfindToPose(
+            poses.get(a),
+            constraints,
+            0.00);
+      } else {
+        System.out.println(a + "UNDEFINED COMMAND");
+        nextCommand = Commands.none();
+      }
+
       if (a.contains("+")) {
         // cmd = cmd.andThen(Commands.runOnce(()->System.out.println(a +
         // "Simultaneous")));
-        parralelCmd = parralelCmd.alongWith(Commands.runOnce(() -> System.out.print(a)));
+        parralelCmd = parralelCmd.alongWith(nextCommand);
         currentParralel = true;
 
         continue;
       } else if (currentParralel) {
-        parralelCmd = parralelCmd.alongWith(Commands.runOnce(() -> System.out.println(a)));
+        parralelCmd = parralelCmd.alongWith(nextCommand);
         cmd = cmd.andThen(parralelCmd);
         parralelCmd = Commands.none();
         currentParralel = false;
       } else {
-        if(a.contains("4")){
-          cmd = cmd.andThen(new autoshootlfour(-.12, s_ElevatorCom, s_CoralCom, false).withTimeout(2));
-        }else if(a.contains("I")){
-          // cmd = cmd.andThen(Commands.runOnce(() -> System.out.println(a)));
-          cmd = cmd.andThen(new Intake(1, s_CoralCom).withTimeout(2));
-
-        }else {
-          System.out.println(a + "UNDEFINED COMMAND");
-
-        }
-
+        cmd = cmd.andThen(nextCommand);
       }
-    };
-    return cmd; 
+    }
+    ;
+    return cmd;
   }
 }

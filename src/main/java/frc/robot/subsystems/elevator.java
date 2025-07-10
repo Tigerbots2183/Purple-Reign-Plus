@@ -87,6 +87,10 @@ public class elevator extends SubsystemBase {
     return elevate.get();
   }
 
+  public double GetCurrentEncoder(){
+    return elevatorLeftEncoder.getPosition();
+  }
+
   public boolean setElevator(double pos) {
     elevatorLeftPID.setReference(pos, ControlType.kMAXMotionPositionControl);
     SmartDashboard.putNumber("Elevator Pos", pos);
@@ -120,7 +124,7 @@ public class elevator extends SubsystemBase {
   public void periodic() {
     elevate.get();
     elevatorLeftEncoder.getPosition();
-
+    SmartDashboard.putNumber("ElevatorCurPos", elevatorLeftEncoder.getPosition());
     // SmartDashboard.putNumber("elevatePos", elevatorCom.elevatePos);
 
     // This method will be called once per scheduler run
