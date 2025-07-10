@@ -240,7 +240,7 @@ public class RobotContainer {
         4,
         3);
 
-    String startString = "I-4-0";
+    String startString = "I-3+-L";
     String[] stringArr = startString.split("-");
     Command cmd = Commands.none();
     Command parralelCmd = Commands.none();
