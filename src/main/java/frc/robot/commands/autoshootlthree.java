@@ -17,7 +17,8 @@ public class autoshootlthree extends Command {
   coral s_CoralCom;
 
   //Goes to elevator pos and then shoots when it gets there (Currently unused).
-  
+  //Elevator is a two stage thriftybot kit elevator (cascading)
+
   public autoshootlthree(double shooterSpeed, elevator s_ElevatorCom, coral s_CoralCom, boolean returnToZero) {
     addRequirements(s_ElevatorCom);
     this.s_ElevatorCom = s_ElevatorCom;

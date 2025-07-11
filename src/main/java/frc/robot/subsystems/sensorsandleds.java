@@ -18,10 +18,10 @@ public class sensorsandleds extends SubsystemBase {
   // and goes to led animations that I hardcoded on the rio. Each animation has a
   // range of 3
 
-  public static DigitalOutput leds = new DigitalOutput(6);
-  public static DigitalInput input = new DigitalInput(2);
-  public static DigitalInput wall = new DigitalInput(4);
-  public static DigitalInput reef = new DigitalInput(7);
+  public static DigitalOutput leds;
+  public static DigitalInput input;
+  public static DigitalInput wall;
+  public static DigitalInput reef;
 
   /** Creates a new sensorsandleds. */
   public sensorsandleds() {
@@ -46,9 +46,7 @@ public class sensorsandleds extends SubsystemBase {
     return reef.get();
   }
 
-  public void led(double var) {
-    leds.updateDutyCycle(var);
-  }
+
 
   @Override
   public void periodic() {

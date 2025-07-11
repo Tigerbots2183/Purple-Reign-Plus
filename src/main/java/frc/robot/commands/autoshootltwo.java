@@ -18,6 +18,7 @@ public class autoshootltwo extends Command {
     /** Creates a new elevatorCom. */
 
   //Goes to elevator pos and then shoots when it gets there (Currently unused).
+  //Elevator is a two stage thriftybot kit elevator (cascading)
 
   public autoshootltwo( double shooterSpeed, elevator s_ElevatorCom,  coral s_CoralCom, boolean returnToZero) {
     addRequirements (s_ElevatorCom);

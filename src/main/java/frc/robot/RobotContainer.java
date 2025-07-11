@@ -40,8 +40,8 @@ import frc.robot.subsystems.coral;
 import frc.robot.subsystems.elevator;
 import frc.robot.subsystems.hopper;
 import frc.robot.subsystems.limelightalign;
+import frc.robot.subsystems.posePlotterUtil;
 import frc.robot.subsystems.sensorsandleds;
-
 import java.security.DrbgParameters.NextBytes;
 import java.util.HashMap;
 
@@ -105,8 +105,8 @@ public class RobotContainer {
   // private final elevator s_ = new elevator();
   private final hopper s_HopperCom = new hopper();
   private final algeremover s_algieCom = new algeremover();
-  // private final sensorsandleds s_ledCom = new sensorsandleds();
-
+  // public final sensorsandleds s_ledCom = new sensorsandleds();  
+  private final posePlotterUtil posePlotterValues = new posePlotterUtil();
   private final OneShotButton PAbtn = new OneShotButton("PAbtn", POSES.REEF_A);
   private final OneShotButton PBbtn = new OneShotButton("PBbtn", POSES.REEF_B);
   private final OneShotButton PCbtn = new OneShotButton("PCbtn", POSES.REEF_C);
@@ -240,7 +240,10 @@ public class RobotContainer {
         4,
         3);
 
-    String startString = "I-3+-L";
+    String startString = posePlotterValues.getAutoString();
+    // String startString = posePlotterValues.getAutoStringWithFallback(); //ENABLE FOR COMP I SWEAR PLEASE ENABLE FOR COMP YOU WILL FORGET SO ENABLE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+  
     String[] stringArr = startString.split("-");
     Command cmd = Commands.none();
     Command parralelCmd = Commands.none();
@@ -248,9 +251,12 @@ public class RobotContainer {
     Boolean currentParralel = false;
     for (String a : stringArr) {
 
-      if (a.contains("4")) {
+      if (a.contains("4S")) {
         nextCommand = new autoshootlfour(-.12, s_ElevatorCom, s_CoralCom, false).withTimeout(2);
-      } else if (a.contains("I")) {
+      } else if(a.contains("4")){
+        nextCommand = new elevatorCom(3, s_ElevatorCom, false);
+      }
+      else if (a.contains("I")) {
         // cmd = cmd.andThen(Commands.runOnce(() -> System.out.println(a)));
         nextCommand = new Intake(-.07, s_CoralCom);
 
@@ -268,10 +274,12 @@ public class RobotContainer {
             poses.get(a),
             constraints,
             0.00);
-      } else {
+      } else if (stringArr.length == 0){
+        System.out.println("No Command!! Consider turning on fallback if at competition!!!!!!!!!!!!!!!");
+      }else {
         System.out.println(a + "UNDEFINED COMMAND");
         nextCommand = Commands.none();
-      }
+      } 
 
       if (a.contains("+")) {
         // cmd = cmd.andThen(Commands.runOnce(()->System.out.println(a +

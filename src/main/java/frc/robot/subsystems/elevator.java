@@ -24,6 +24,7 @@ public class elevator extends SubsystemBase {
   SparkMax elevatorRight = new SparkMax(51, MotorType.kBrushless);
 
   //GOOD LUCK
+  //Elevator is a two stage thriftybot kit elevator (cascading)
 
   public static RelativeEncoder elevatorLeftEncoder;
 
@@ -87,10 +88,6 @@ public class elevator extends SubsystemBase {
     return elevate.get();
   }
 
-  public double GetCurrentEncoder(){
-    return elevatorLeftEncoder.getPosition();
-  }
-
   public boolean setElevator(double pos) {
     elevatorLeftPID.setReference(pos, ControlType.kMAXMotionPositionControl);
     SmartDashboard.putNumber("Elevator Pos", pos);
@@ -124,7 +121,7 @@ public class elevator extends SubsystemBase {
   public void periodic() {
     elevate.get();
     elevatorLeftEncoder.getPosition();
-    SmartDashboard.putNumber("ElevatorCurPos", elevatorLeftEncoder.getPosition());
+
     // SmartDashboard.putNumber("elevatePos", elevatorCom.elevatePos);
 
     // This method will be called once per scheduler run

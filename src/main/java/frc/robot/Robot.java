@@ -20,6 +20,7 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import com.pathplanner.lib.commands.PathfindingCommand;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -98,7 +99,7 @@ public class Robot extends LoggedRobot {
   public void robotInit() {
     // DO THIS FIRST
     Pathfinding.setPathfinder(new LocalADStarAK());
-
+    PathfindingCommand.warmupCommand().schedule();
     // ... remaining robot initialization
 
   }
@@ -137,38 +138,6 @@ public class Robot extends LoggedRobot {
   @Override
   public void autonomousInit() {
 
-    
-
-    // String startString = "4-";
-    // String[] stringArr = startString.split("-");
-    // Command cmd = Commands.none();
-    // Command parralelCmd = Commands.none();
-    // Boolean currentParralel = false;
-    // for (String a : stringArr) {
-    //   if (a.contains("+")) {
-    //     // cmd = cmd.andThen(Commands.runOnce(()->System.out.println(a +
-    //     // "Simultaneous")));
-    //     parralelCmd = parralelCmd.alongWith(Commands.runOnce(() -> System.out.print(a)));
-    //     currentParralel = true;
-
-    //     continue;
-    //   } else if (currentParralel) {
-    //     parralelCmd = parralelCmd.alongWith(Commands.runOnce(() -> System.out.println(a)));
-    //     cmd = cmd.andThen(parralelCmd);
-    //     parralelCmd = Commands.none();
-    //     currentParralel = false;
-    //   } else {
-    //     if(a == "4"){
-    //       cmd = cmd.andThen(new autoshootlfour(0, 3, s_ElevatorCom, s_CoralCom, true));
-    //     }else{
-    //       // cmd = cmd.andThen(Commands.runOnce(() -> System.out.println(a)));
-    //       cmd = cmd.andThen(new autoshootlfour(0, 3, s_ElevatorCom, s_CoralCom, true));
-
-    //     }
-
-    //   }
-    // }
-    // cmd.schedule();
    
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
@@ -188,7 +157,7 @@ public class Robot extends LoggedRobot {
   @Override
   public void autonomousPeriodic() {
     sensorsandleds.leds.updateDutyCycle(.09);
-    CommandScheduler.getInstance().run();
+    // CommandScheduler.getInstance().run();
   }
 
   /** This function is called once when teleop is enabled. */
