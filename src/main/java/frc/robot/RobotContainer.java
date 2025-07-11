@@ -243,7 +243,7 @@ public class RobotContainer {
     String startString = posePlotterValues.getAutoString();
     // String startString = posePlotterValues.getAutoStringWithFallback(); //ENABLE FOR COMP I SWEAR PLEASE ENABLE FOR COMP YOU WILL FORGET SO ENABLE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-  
+    System.out.println(startString);
     String[] stringArr = startString.split("-");
     Command cmd = Commands.none();
     Command parralelCmd = Commands.none();
@@ -256,7 +256,7 @@ public class RobotContainer {
       } else if(a.contains("4")){
         nextCommand = new elevatorCom(3, s_ElevatorCom, false);
       }
-      else if (a.contains("I")) {
+      else if (a.contains("T")) {
         // cmd = cmd.andThen(Commands.runOnce(() -> System.out.println(a)));
         nextCommand = new Intake(-.07, s_CoralCom);
 

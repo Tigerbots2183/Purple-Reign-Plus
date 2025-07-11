@@ -6,32 +6,26 @@ package frc.robot.subsystems;
 
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class sensorsandleds extends SubsystemBase {
-  // Led and sensor subsystem. Sensors are mostly unused
-  // Leds go to a arduino controller that i made that interperets pwm signal from
-  // the rio
-  // and goes to led animations that I hardcoded on the rio. Each animation has a
-  // range of 3
-
-  public static DigitalOutput leds;
+  public static DigitalOutput leds =new DigitalOutput(6);
   public static DigitalInput input;
   public static DigitalInput wall;
   public static DigitalInput reef;
 
   /** Creates a new sensorsandleds. */
   public sensorsandleds() {
-    leds = new DigitalOutput(6);
+    reef = new DigitalInput(7);
     input = new DigitalInput(2);
     wall = new DigitalInput(4);
-    reef = new DigitalInput(7);
+
     leds.setPWMRate(1000);
     leds.enablePWM(0);
-
   }
 
   public boolean DigitalInput() {
@@ -46,7 +40,9 @@ public class sensorsandleds extends SubsystemBase {
     return reef.get();
   }
 
-
+  public void led(double var) {
+    leds.updateDutyCycle(var);
+  }
 
   @Override
   public void periodic() {
