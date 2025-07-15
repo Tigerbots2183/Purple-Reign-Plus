@@ -1,29 +1,25 @@
 package frc.robot.commands;
 
-import java.nio.file.Path;
-
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.POSES;
 import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.Swerve;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class AlignmentRightPeg extends Command {
+public class Alignmentleft extends Command {
   Swerve s_Swerve;
   boolean isrightscore;
-
 
         boolean isFinished = false;
 
 
     private Pose2d Targetpose = null;
+    public static int lastpeg = 0;
 
-  public AlignmentRightPeg(Boolean isrightscore, Swerve s_Swerve) {
+  public Alignmentleft(Boolean isrightscore, Swerve s_Swerve) {
     this.s_Swerve = s_Swerve;
     this.isrightscore = isrightscore;
   }
@@ -32,7 +28,7 @@ public class AlignmentRightPeg extends Command {
   @Override
  public void initialize() {
         
-            System.out.println("rightBranchPathfinding method called.");
+            System.out.println("leftBranchPathfinding method called.");
         
             double aprilTagID = LimelightHelpers.getFiducialID("limelight");
             // Blue paths
@@ -40,75 +36,87 @@ public class AlignmentRightPeg extends Command {
             switch ((int) aprilTagID) {
             case 17:
                  {
-                    Targetpose = POSES.REEF_D;
+                    Targetpose = POSES.REEF_C;
+                    lastpeg = 2;
                 }
                 break;
 
             case 18 :
             {
-                Targetpose = POSES.REEF_B;
+                Targetpose = POSES.REEF_A;
+                lastpeg = 0;
             }
                 break;
             
 
             case 19:
             {
-                 Targetpose = POSES.REEF_L;
+                 Targetpose = POSES.REEF_K;
+                 lastpeg = 10;
             }
                 break;
 
             case 20:
             {
-                 Targetpose = POSES.REEF_J;
+                 Targetpose = POSES.REEF_I;
+                 lastpeg = 8;
             }
                 break;
 
             case 21:
             {
-                 Targetpose = POSES.REEF_H;
+                 Targetpose = POSES.REEF_G;
+                 lastpeg = 6;
             }
                 break;
 
             case 22:
             {
-                 Targetpose = POSES.REEF_F;
+                Targetpose = POSES.REEF_E;
+                lastpeg = 4;
             }
                 break;
 
             // Red Paths
             case 6:
             {
-                 Targetpose = POSES.REEF_L;
+                 Targetpose = POSES.REEF_K;
+                 lastpeg = 10;
             }
                 break;
 
             case 7:
             {
-                 Targetpose = POSES.REEF_B;
+                 Targetpose = POSES.REEF_A;
+                 lastpeg = 0;
             }
                 break;
 
             case 8:
             {
-                 Targetpose = POSES.REEF_D;
+                 Targetpose = POSES.REEF_C;
+                 lastpeg = 2;
             }
                 break;
 
             case 9:
             {
-                 Targetpose = POSES.REEF_F;
+                 Targetpose = POSES.REEF_E;
+                 lastpeg = 4;
             }
                 break;
 
             case 10:
             {
-                 Targetpose = POSES.REEF_H;
+                 Targetpose = POSES.REEF_G;
+                 lastpeg = 6;
             }
                 break;
 
             case 11:
                  {
-                 Targetpose = POSES.REEF_J;
+                 Targetpose = POSES.REEF_I;
+                 lastpeg = 8;
                
                 }
                 break;
@@ -125,44 +133,40 @@ public class AlignmentRightPeg extends Command {
           
           @Override
           public void execute() {
+            addRequirements(s_Swerve);
         
-            s_Swerve.drive(new Translation2d(0,0), 0, false,false);
+            
             PathConstraints constraints= new PathConstraints(
-            1,
         
-            4,
-
-            9.42478,
-
-            12.5664
+                    1,
+        
+                    4,
+        
+                    9.42478,
+        
+                    12.5664
         
             );
 
-    //         = new PathConstraints(
         
-    //         5,
-
-    //         3,
-
-    //         4,
-
-    //         3
-
-    // );
 
     if (Targetpose != null) {
 
         
-        Command followRightPath = AutoBuilder.pathfindToPose(
+        Command followLeftPath = AutoBuilder.pathfindToPose(
             Targetpose,
             constraints,
-            0.01
+            0.00
     );
-            followRightPath.schedule();
+            followLeftPath.schedule();
             
 
         
     }}
+
+   
+    
+    
 
 
 
@@ -175,7 +179,6 @@ public class AlignmentRightPeg extends Command {
 
 
     cancel();
-
   }
     
     
@@ -192,5 +195,9 @@ public class AlignmentRightPeg extends Command {
         return false;
     }
 
+}
+
+public static class lastpegsave {
+    public static int lastpegsaved = lastpeg;
 }
 }

@@ -202,6 +202,20 @@ public final class Constants {
   public static final Pose2d REEF_J = new Pose2d(5.002, 5.248, Rotation2d.fromDegrees(-30));
   public static final Pose2d REEF_K = new Pose2d(4, 5.28, Rotation2d.fromDegrees(30));
   public static final Pose2d REEF_L = new Pose2d(3.71, 5.07, Rotation2d.fromDegrees(30));
+
+  //Red branch poses
+  public static final Pose2d REEF_Ar = new Pose2d(3.18, 4.19, Rotation2d.fromDegrees(90)); //new Pose2d(3.18, 4.22, Rotation2d.fromDegrees(90));
+  public static final Pose2d REEF_Br = new Pose2d(3.18, 3.86, Rotation2d.fromDegrees(93.19));
+  public static final Pose2d REEF_Cr = new Pose2d(3.72, 2.97, Rotation2d.fromDegrees(150));
+  public static final Pose2d REEF_Dr = new Pose2d(3.98, 2.96, Rotation2d.fromDegrees(150));
+  public static final Pose2d REEF_Er = new Pose2d(5.00,  2.79, Rotation2d.fromDegrees(-150)); 
+  public static final Pose2d REEF_Fr = new Pose2d(5.285, 2.964, Rotation2d.fromDegrees(-150)); 
+  public static final Pose2d REEF_Gr = new Pose2d(5.805, 3.863, Rotation2d.fromDegrees(-90));
+  public static final Pose2d REEF_Hr = new Pose2d(5.805, 4.189, Rotation2d.fromDegrees(-90)); 
+  public static final Pose2d REEF_Ir = new Pose2d(5.288, 5.083, Rotation2d.fromDegrees(-30));
+  public static final Pose2d REEF_Jr = new Pose2d(5.002, 5.248, Rotation2d.fromDegrees(-30));
+  public static final Pose2d REEF_Kr = new Pose2d(4, 5.28, Rotation2d.fromDegrees(30));
+  public static final Pose2d REEF_Lr = new Pose2d(3.71, 5.07, Rotation2d.fromDegrees(30));
   
 }
 
@@ -209,7 +223,12 @@ public static class StationPOSES {
 public static final Pose2d RESET_POSE = new Pose2d(3.192, 4.025, new Rotation2d());
   
   
-public static final Pose2d Left_coral_station = new Pose2d(0.56, 6.68, Rotation2d.fromDegrees(43.80));
+public static final Pose2d Left_bot_coral_station = new Pose2d(0.56, 6.68, Rotation2d.fromDegrees(43.80));
+public static final Pose2d Left_mid_coral_station = new Pose2d(0.56, 6.68, Rotation2d.fromDegrees(43.80));
+public static final Pose2d Left_top_coral_station = new Pose2d(0.56, 6.68, Rotation2d.fromDegrees(43.80));
+public static final Pose2d Right_bot_coral_station = new Pose2d(0.56, 6.68, Rotation2d.fromDegrees(43.80));
+public static final Pose2d Right_mid_coral_station = new Pose2d(0.56, 6.68, Rotation2d.fromDegrees(43.80));
+public static final Pose2d Right_top_coral_station = new Pose2d(0.56, 6.68, Rotation2d.fromDegrees(43.80));
 } 
 public static class reefstate {
 public static boolean [] reefl4 = {
