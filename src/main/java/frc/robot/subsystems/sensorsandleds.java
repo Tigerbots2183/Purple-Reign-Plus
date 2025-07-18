@@ -25,10 +25,10 @@ public class sensorsandleds extends SubsystemBase {
 
   /** Creates a new sensorsandleds. */
   public sensorsandleds() {
-    leds = new DigitalOutput(6);
     input = new DigitalInput(2);
     wall = new DigitalInput(4);
     reef = new DigitalInput(7);
+    
     leds.setPWMRate(1000);
     leds.enablePWM(0);
 

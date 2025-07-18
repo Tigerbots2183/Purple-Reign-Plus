@@ -7,18 +7,19 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.POSES;
+import frc.robot.Constants.StationPOSES;
 import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.Swerve;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class AlignmentRightPeg extends Command {
+public class AlignLeftCoralStation extends Command {
     Swerve s_Swerve;
     // alignment for right peg, references poses constant
     boolean isFinished = false;
 
     private Pose2d Targetpose = null;
 
-    public AlignmentRightPeg(Swerve s_Swerve) {
+    public AlignLeftCoralStation(Swerve s_Swerve) {
         this.s_Swerve = s_Swerve;
     }
 
@@ -27,82 +28,8 @@ public class AlignmentRightPeg extends Command {
     public void initialize() {
 
         System.out.println("rightBranchPathfinding method called.");
-
-        double aprilTagID = LimelightHelpers.getFiducialID("limelight");
-        // Blue paths
-
-        switch ((int) aprilTagID) {
-            case 17: {
-                Targetpose = POSES.REEF_D;
-            }
-                break;
-
-            case 18: {
-                Targetpose = POSES.REEF_B;
-            }
-                break;
-
-            case 19: {
-                Targetpose = POSES.REEF_L;
-            }
-                break;
-
-            case 20: {
-                Targetpose = POSES.REEF_J;
-            }
-                break;
-
-            case 21: {
-                Targetpose = POSES.REEF_H;
-            }
-                break;
-
-            case 22: {
-                Targetpose = POSES.REEF_F;
-            }
-                break;
-
-            // Red Paths
-            case 6: {
-                Targetpose = POSES.REEF_Lr;
-            }
-                break;
-
-            case 7: {
-                Targetpose = POSES.REEF_Br;
-            }
-                break;
-
-            case 8: {
-                Targetpose = POSES.REEF_Dr;
-            }
-                break;
-
-            case 9: {
-                Targetpose = POSES.REEF_Fr;
-            }
-                break;
-
-            case 10: {
-                Targetpose = POSES.REEF_Hr;
-            }
-                break;
-
-            case 11: {
-                Targetpose = POSES.REEF_Jr;
-
-            }
-                break;
-
-            default:
-
-                break;
-        }
-
-        return;
-
+      Targetpose = StationPOSES.Left_coral_station;
     }
-
     @Override
     public void execute() {
 

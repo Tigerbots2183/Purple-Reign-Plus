@@ -69,37 +69,37 @@ public class AlignmentLeftPeg extends Command {
 
             // Red Paths
             case 6: {
-                Targetpose = POSES.REEF_K;
+                Targetpose = POSES.REEF_Kr;
                 lastpeg = 10;
             }
                 break;
 
             case 7: {
-                Targetpose = POSES.REEF_A;
+                Targetpose = POSES.REEF_Ar;
                 lastpeg = 0;
             }
                 break;
 
             case 8: {
-                Targetpose = POSES.REEF_C;
+                Targetpose = POSES.REEF_Cr;
                 lastpeg = 2;
             }
                 break;
 
             case 9: {
-                Targetpose = POSES.REEF_E;
+                Targetpose = POSES.REEF_Er;
                 lastpeg = 4;
             }
                 break;
 
             case 10: {
-                Targetpose = POSES.REEF_G;
+                Targetpose = POSES.REEF_Gr;
                 lastpeg = 6;
             }
                 break;
 
             case 11: {
-                Targetpose = POSES.REEF_I;
+                Targetpose = POSES.REEF_Ir;
                 lastpeg = 8;
 
             }
@@ -135,7 +135,7 @@ public class AlignmentLeftPeg extends Command {
             Command followLeftPath = AutoBuilder.pathfindToPose(
                     Targetpose,
                     constraints,
-                    0.00);
+                    0.01);
             followLeftPath.schedule();
 
         }
@@ -161,8 +161,4 @@ public class AlignmentLeftPeg extends Command {
         }
 
     }
-
-    public static class lastpegsave {
-        public static int lastpegsaved = lastpeg;
     }
-}

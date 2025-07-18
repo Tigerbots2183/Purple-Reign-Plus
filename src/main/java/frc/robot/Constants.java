@@ -133,7 +133,7 @@ public final class Constants {
       public static final int driveMotorID = 10;
       public static final int angleMotorID = 11;
       public static final int canCoderID = 12;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-95.537109375);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-93.867188);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
@@ -143,7 +143,7 @@ public final class Constants {
       public static final int driveMotorID = 13;
       public static final int angleMotorID = 14;
       public static final int canCoderID = 15;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-151.962890625);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-152.314453);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
@@ -153,7 +153,7 @@ public final class Constants {
       public static final int driveMotorID = 16;
       public static final int angleMotorID = 17;
       public static final int canCoderID = 18;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(30.937499999999996);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(32.607422);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
@@ -163,7 +163,7 @@ public final class Constants {
       public static final int driveMotorID = 19;
       public static final int angleMotorID = 20;
       public static final int canCoderID = 21;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-13.7109375);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-14.501953);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
@@ -190,18 +190,31 @@ public final class Constants {
   public static final Pose2d RESET_POSE = new Pose2d(3.192, 4.025, new Rotation2d());
 
   // Blue branch poses
-  public static final Pose2d REEF_A = new Pose2d(3.18, 4.19, Rotation2d.fromDegrees(90)); //new Pose2d(3.18, 4.22, Rotation2d.fromDegrees(90));
-  public static final Pose2d REEF_B = new Pose2d(3.18, 3.86, Rotation2d.fromDegrees(93.19));
-  public static final Pose2d REEF_C = new Pose2d(3.72, 2.97, Rotation2d.fromDegrees(150));
-  public static final Pose2d REEF_D = new Pose2d(3.98, 2.96, Rotation2d.fromDegrees(150));
+  public static final Pose2d REEF_A = new Pose2d(3.18, 4.21, Rotation2d.fromDegrees(90)); //new Pose2d(3.18, 4.22, Rotation2d.fromDegrees(90));
+  public static final Pose2d REEF_B = new Pose2d(3.18, 3.89, Rotation2d.fromDegrees(90));
+  public static final Pose2d REEF_C = new Pose2d(3.73, 2.95, Rotation2d.fromDegrees(156.07));
+  public static final Pose2d REEF_D = new Pose2d(4, 2.82, Rotation2d.fromDegrees(156.50));
   public static final Pose2d REEF_E = new Pose2d(5.00,  2.79, Rotation2d.fromDegrees(-150)); 
   public static final Pose2d REEF_F = new Pose2d(5.285, 2.964, Rotation2d.fromDegrees(-150)); 
   public static final Pose2d REEF_G = new Pose2d(5.805, 3.863, Rotation2d.fromDegrees(-90));
   public static final Pose2d REEF_H = new Pose2d(5.805, 4.189, Rotation2d.fromDegrees(-90)); 
   public static final Pose2d REEF_I = new Pose2d(5.288, 5.083, Rotation2d.fromDegrees(-30));
   public static final Pose2d REEF_J = new Pose2d(5.002, 5.248, Rotation2d.fromDegrees(-30));
-  public static final Pose2d REEF_K = new Pose2d(4, 5.28, Rotation2d.fromDegrees(30));
-  public static final Pose2d REEF_L = new Pose2d(3.71, 5.07, Rotation2d.fromDegrees(30));
+  public static final Pose2d REEF_K = new Pose2d(4.04, 5.24, Rotation2d.fromDegrees(30));
+  public static final Pose2d REEF_L = new Pose2d(3.74, 5.07, Rotation2d.fromDegrees(30));
+
+  public static final Pose2d REEF_Ar = new Pose2d(3.18, 4.21, Rotation2d.fromDegrees(90)); //new Pose2d(3.18, 4.22, Rotation2d.fromDegrees(90));
+  public static final Pose2d REEF_Br = new Pose2d(3.18, 3.89, Rotation2d.fromDegrees(90));
+  public static final Pose2d REEF_Cr = new Pose2d(3.73, 2.95, Rotation2d.fromDegrees(156.07));
+  public static final Pose2d REEF_Dr = new Pose2d(4, 2.82, Rotation2d.fromDegrees(156.50));
+  public static final Pose2d REEF_Er = new Pose2d(5.00,  2.79, Rotation2d.fromDegrees(-150)); 
+  public static final Pose2d REEF_Fr = new Pose2d(5.285, 2.964, Rotation2d.fromDegrees(-150)); 
+  public static final Pose2d REEF_Gr = new Pose2d(5.805, 3.863, Rotation2d.fromDegrees(-90));
+  public static final Pose2d REEF_Hr = new Pose2d(5.805, 4.189, Rotation2d.fromDegrees(-90)); 
+  public static final Pose2d REEF_Ir = new Pose2d(5.288, 5.083, Rotation2d.fromDegrees(-30));
+  public static final Pose2d REEF_Jr = new Pose2d(5.002, 5.248, Rotation2d.fromDegrees(-30));
+  public static final Pose2d REEF_Kr = new Pose2d(4.04, 5.24, Rotation2d.fromDegrees(30));
+  public static final Pose2d REEF_Lr = new Pose2d(3.74, 5.07, Rotation2d.fromDegrees(30));
   
 }
 

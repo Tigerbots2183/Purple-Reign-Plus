@@ -20,11 +20,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.POSES;
+import frc.robot.Constants.StationPOSES;
 import frc.robot.Constants.reefstate;
+import frc.robot.commands.AlignLeftCoralStation;
 import frc.robot.commands.AlignmentLeftPeg;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.AlignmentRightPeg;
 import frc.robot.commands.autoshootlfour;
+import frc.robot.commands.charlesalign;
 import frc.robot.commands.climberCom;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Shoot;
@@ -72,7 +75,7 @@ public class RobotContainer {
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
   private final JoystickButton climberButton = new JoystickButton(driver, 2);
-  private final JoystickButton rclimberButton = new JoystickButton(driver, 3);
+  private final JoystickButton stoppathfind = new JoystickButton(driver, 3);
 
   private final JoystickButton intakeButton = new JoystickButton(copilot, 6);
   private final JoystickButton reverseCoral = new JoystickButton(copilot, 5);
@@ -86,7 +89,7 @@ public class RobotContainer {
   private final POVButton uphopButton = new POVButton(driver, 0);
   private final POVButton downhopButton = new POVButton(driver, 180);
   // private final POVButton removeoutButton = new POVButton(driver, 90);
-  // private final POVButton removeinButton = new POVButton(driver, 270);
+  private final POVButton alignleftcoral = new POVButton(driver, 270);
 
   private final JoystickButton align = new JoystickButton(driver, 5);
   private final JoystickButton alignr = new JoystickButton(driver, 6);
@@ -175,14 +178,14 @@ public class RobotContainer {
     alignr.whileTrue(new AlignmentRightPeg(s_Swerve));
 
     climberButton.whileTrue(new climberCom(-0.4, s_ClimberCom));
-    rclimberButton.whileTrue(new climberCom(-0.2, s_ClimberCom));
+    stoppathfind.whileTrue(new charlesalign(false, s_Swerve));
 
     intakeButton.whileTrue(new Intake(-.07, s_CoralCom));
     reverseCoral.whileTrue(new Shoot(-0.125, s_CoralCom));
 
     l4Button.whileTrue(new autoshootlfour(-.12, s_ElevatorCom, s_CoralCom, false));
     l4Button.onFalse(new autoshootlfour(0, s_ElevatorCom, s_CoralCom, true));
-    shootButton.whileTrue(new Shoot(0.07, s_CoralCom));
+    shootButton.whileTrue(new Shoot(0.09, s_CoralCom));
 
     uphopButton.whileTrue(new hopperCom(0.5, s_HopperCom));
     downhopButton.whileTrue(new hopperCom(-.5, s_HopperCom));
@@ -206,6 +209,7 @@ public class RobotContainer {
     // downhopButton.whileTrue(new hopperCom(.5, s_HopperCom));
 
     manual.whileTrue(new manualElevate(s_ElevatorCom, copilot));
+    alignleftcoral.whileTrue(new AlignLeftCoralStation(s_Swerve));
     // manual2.whileTrue(new hopperCom(.5,s_HopperCom, copilot));
     // manual.whileTrue(new removalcom(.5,s_algieCom, copilot));
   }
@@ -234,6 +238,11 @@ public class RobotContainer {
     poses.put("J", POSES.REEF_J);
     poses.put("K", POSES.REEF_K);
     poses.put("L", POSES.REEF_L);
+    poses.put("LT", StationPOSES.Left_coral_station);
+    poses.put("LM", StationPOSES.Left_coral_station);
+    poses.put("LR", StationPOSES.Left_coral_station);
+    
+
     PathConstraints constraints = new PathConstraints(
         5,
         3,

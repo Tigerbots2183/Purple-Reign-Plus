@@ -58,6 +58,6 @@ public class autoshootlfour extends Command {
 
   @Override
   public boolean isFinished() {
-    return elevate;
+    return false;
   }
 }
