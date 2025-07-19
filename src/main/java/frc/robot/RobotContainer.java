@@ -181,7 +181,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     /* Driver Buttons */
-    zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+    zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading())
+      .ignoringDisable(true));
     align.whileTrue(new AlignmentLeftPeg(s_Swerve));
     alignr.whileTrue(new AlignmentRightPeg(s_Swerve));
 

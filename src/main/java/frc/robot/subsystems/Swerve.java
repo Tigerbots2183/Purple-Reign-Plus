@@ -1,5 +1,9 @@
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.Rotation;
+
+import java.util.Optional;
+
 import org.littletonrobotics.junction.Logger;
 // import com.pathplanner.lib.config.ModuleConfig;
 // import com.pathplanner.lib.config.PIDConstants;
@@ -24,6 +28,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -233,10 +238,30 @@ public class Swerve extends SubsystemBase {
   //       new Pose2d(getPose().getTranslation(), new Rotation2d()));
   // }
   public void zeroHeading() {
-    m_poseEstimator.resetPosition(
-        getGyroYaw(),
-        getModulePositions(),
-        new Pose2d(getPose().getTranslation(), new Rotation2d()));
+    Optional<Alliance> value = DriverStation.getAlliance();
+    if (value.isPresent()) {
+      if(value.get() == Alliance.Red) {
+        m_poseEstimator.resetPosition(
+          getGyroYaw(),
+          getModulePositions(),
+          new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(90.0))
+        );
+      }
+      if(value.get() == Alliance.Blue) {
+        m_poseEstimator.resetPosition(
+          getGyroYaw(),
+          getModulePositions(),
+          new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(-90.0))
+        );
+      }
+    } else{
+      m_poseEstimator.resetPosition(
+          getGyroYaw(),
+          getModulePositions(),
+          new Pose2d(getPose().getTranslation(), new Rotation2d())
+        );
+      
+    }
   }
 
   public static Rotation2d getGyroYaw() {
