@@ -3,6 +3,7 @@ package frc.robot;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.util.FlippingUtil;
 
 import edu.wpi.first.math.geometry.Pose2d;
 // import com.pathplanner.lib.auto.NamedCommands;
@@ -14,12 +15,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.POSES;
+import frc.robot.Constants.StationPOSES;
 import frc.robot.Constants.reefstate;
 import frc.robot.commands.AlignmentLeftPeg;
 import frc.robot.commands.TeleopSwerve;
@@ -32,6 +34,7 @@ import frc.robot.commands.elevatorCom;
 import frc.robot.commands.hopperCom;
 import frc.robot.commands.manualElevate;
 import frc.robot.commands.removalcom;
+import frc.robot.commands.stopPathfind;
 import frc.robot.subsystems.OneShotButton;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.algeremover;
@@ -44,6 +47,7 @@ import frc.robot.subsystems.posePlotterUtil;
 import frc.robot.subsystems.sensorsandleds;
 import java.security.DrbgParameters.NextBytes;
 import java.util.HashMap;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -105,7 +109,8 @@ public class RobotContainer {
   // private final elevator s_ = new elevator();
   private final hopper s_HopperCom = new hopper();
   private final algeremover s_algieCom = new algeremover();
-  // public final sensorsandleds s_ledCom = new sensorsandleds();  
+  public final sensorsandleds s_ledCom = new sensorsandleds();
+
   private final posePlotterUtil posePlotterValues = new posePlotterUtil();
   private final OneShotButton PAbtn = new OneShotButton("PAbtn", POSES.REEF_A);
   private final OneShotButton PBbtn = new OneShotButton("PBbtn", POSES.REEF_B);
@@ -119,6 +124,13 @@ public class RobotContainer {
   private final OneShotButton PJbtn = new OneShotButton("PJbtn", POSES.REEF_J);
   private final OneShotButton PKbtn = new OneShotButton("PKbtn", POSES.REEF_K);
   private final OneShotButton PLbtn = new OneShotButton("PLbtn", POSES.REEF_L);
+
+  private final OneShotButton PLTbtn = new OneShotButton("LTbtn", StationPOSES.Left_top_station);
+  private final OneShotButton PLMbtn = new OneShotButton("LMbtn", StationPOSES.Left_mid_station);
+  private final OneShotButton PLBbtn = new OneShotButton("LBbtn", StationPOSES.Left_bot_station);
+  private final OneShotButton PRBbtn = new OneShotButton("RBbtn", StationPOSES.Right_bot_station);
+  private final OneShotButton PRMbtn = new OneShotButton("RMbtn", StationPOSES.Right_mid_station);
+  private final OneShotButton PRTbtn = new OneShotButton("RTbtn", StationPOSES.Right_top_station);
 
   private final limelightalign limelightalign = new limelightalign();
 
@@ -170,12 +182,11 @@ public class RobotContainer {
 
     /* Driver Buttons */
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
-
     align.whileTrue(new AlignmentLeftPeg(s_Swerve));
     alignr.whileTrue(new AlignmentRightPeg(s_Swerve));
 
     climberButton.whileTrue(new climberCom(-0.4, s_ClimberCom));
-    rclimberButton.whileTrue(new climberCom(-0.2, s_ClimberCom));
+    rclimberButton.whileTrue(new stopPathfind(s_Swerve));
 
     intakeButton.whileTrue(new Intake(-.07, s_CoralCom));
     reverseCoral.whileTrue(new Shoot(-0.125, s_CoralCom));
@@ -234,6 +245,39 @@ public class RobotContainer {
     poses.put("J", POSES.REEF_J);
     poses.put("K", POSES.REEF_K);
     poses.put("L", POSES.REEF_L);
+
+    poses.put("LT", StationPOSES.Left_top_station);
+    poses.put("LM", StationPOSES.Left_mid_station);
+    poses.put("LB", StationPOSES.Left_bot_station);
+    poses.put("RT", StationPOSES.Right_top_station);
+    poses.put("RM", StationPOSES.Right_mid_station);
+    poses.put("RB", StationPOSES.Right_bot_station);
+
+    if (DriverStation.getAlliance().isPresent()) {
+      if (DriverStation.getAlliance().get() == Alliance.Red) {
+        System.out.println("red");
+        poses.put("A", FlippingUtil.flipFieldPose(POSES.REEF_A));
+        poses.put("B", FlippingUtil.flipFieldPose(POSES.REEF_B));
+        poses.put("C", FlippingUtil.flipFieldPose(POSES.REEF_C));
+        poses.put("D", FlippingUtil.flipFieldPose(POSES.REEF_D));
+        poses.put("E", FlippingUtil.flipFieldPose(POSES.REEF_E));
+        poses.put("F", FlippingUtil.flipFieldPose(POSES.REEF_F));
+        poses.put("G", FlippingUtil.flipFieldPose(POSES.REEF_G));
+        poses.put("H", FlippingUtil.flipFieldPose(POSES.REEF_H));
+        poses.put("I", FlippingUtil.flipFieldPose(POSES.REEF_I));
+        poses.put("J", FlippingUtil.flipFieldPose(POSES.REEF_J));
+        poses.put("K", FlippingUtil.flipFieldPose(POSES.REEF_K));
+        poses.put("L", FlippingUtil.flipFieldPose(POSES.REEF_L));
+
+        poses.put("LT", FlippingUtil.flipFieldPose(StationPOSES.Left_top_station));
+        poses.put("LM", FlippingUtil.flipFieldPose(StationPOSES.Left_mid_station));
+        poses.put("LB", FlippingUtil.flipFieldPose(StationPOSES.Left_bot_station));
+        poses.put("RT", FlippingUtil.flipFieldPose(StationPOSES.Right_top_station));
+        poses.put("RM", FlippingUtil.flipFieldPose(StationPOSES.Right_mid_station));
+        poses.put("RB", FlippingUtil.flipFieldPose(StationPOSES.Right_bot_station));
+      }
+    }
+
     PathConstraints constraints = new PathConstraints(
         5,
         3,
@@ -241,7 +285,9 @@ public class RobotContainer {
         3);
 
     String startString = posePlotterValues.getAutoString();
-    // String startString = posePlotterValues.getAutoStringWithFallback(); //ENABLE FOR COMP I SWEAR PLEASE ENABLE FOR COMP YOU WILL FORGET SO ENABLE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // String startString = posePlotterValues.getAutoStringWithFallback(); //ENABLE
+    // FOR COMP I SWEAR PLEASE ENABLE FOR COMP YOU WILL FORGET SO
+    // ENABLE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     System.out.println(startString);
     String[] stringArr = startString.split("-");
@@ -253,33 +299,65 @@ public class RobotContainer {
 
       if (a.contains("4S")) {
         nextCommand = new autoshootlfour(-.12, s_ElevatorCom, s_CoralCom, false).withTimeout(2);
-      } else if(a.contains("4")){
+      } else if (a.contains("4")) {
         nextCommand = new elevatorCom(3, s_ElevatorCom, false);
-      }
-      else if (a.contains("T")) {
+      } else if (a.contains("T")) {
         // cmd = cmd.andThen(Commands.runOnce(() -> System.out.println(a)));
         nextCommand = new Intake(-.07, s_CoralCom);
 
       } else if (a.contains("S")) {
-        nextCommand =(new Shoot(-.12, s_CoralCom));
+        nextCommand = (new Shoot(-.12, s_CoralCom));
 
       } else if (a.contains("3")) {
-        nextCommand =new elevatorCom(2, s_ElevatorCom, false);
+        nextCommand = new elevatorCom(2, s_ElevatorCom, false);
       } else if (a.contains("2")) {
-        nextCommand =new elevatorCom(1, s_ElevatorCom, false);
+        nextCommand = new elevatorCom(1, s_ElevatorCom, false);
       } else if (a.contains("0")) {
-        nextCommand =new elevatorCom(1, s_ElevatorCom, true);
+        nextCommand = new elevatorCom(1, s_ElevatorCom, true);
       } else if (a.matches("[A-L]")) {
         nextCommand = AutoBuilder.pathfindToPose(
             poses.get(a),
             constraints,
             0.00);
-      } else if (stringArr.length == 0){
+      } else if (a.contains("LT")) {
+        nextCommand = AutoBuilder.pathfindToPose(
+            poses.get(a),
+            constraints,
+            0.00);
+      } else if (a.contains("LM")) {
+        System.out.println(a);
+        nextCommand = AutoBuilder.pathfindToPose(
+            poses.get(a),
+            constraints,
+            0.00);
+      } else if (a.contains("LB")) {
+        nextCommand = AutoBuilder.pathfindToPose(
+            poses.get(a),
+            constraints,
+            0.00);
+      } else if (a.contains("RT")) {
+        nextCommand = AutoBuilder.pathfindToPose(
+            poses.get(a),
+            constraints,
+            0.00);
+      } else if (a.contains("RM")) {
+        nextCommand = AutoBuilder.pathfindToPose(
+            poses.get(a),
+            constraints,
+            0.00);
+      } else if (a.contains("RB")) {
+        nextCommand = AutoBuilder.pathfindToPose(
+            poses.get(a),
+            constraints,
+            0.00);
+      }
+
+      else if (stringArr.length == 0) {
         System.out.println("No Command!! Consider turning on fallback if at competition!!!!!!!!!!!!!!!");
-      }else {
+      } else {
         System.out.println(a + "UNDEFINED COMMAND");
         nextCommand = Commands.none();
-      } 
+      }
 
       if (a.contains("+")) {
         // cmd = cmd.andThen(Commands.runOnce(()->System.out.println(a +

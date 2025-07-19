@@ -20,12 +20,16 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathfindingCommand;
 import com.pathplanner.lib.pathfinding.Pathfinding;
+import com.pathplanner.lib.util.FlippingUtil;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.POSES;
 import frc.robot.subsystems.*;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to
@@ -42,7 +46,6 @@ public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-
 
   public Robot() {
     // Record metadata
@@ -93,8 +96,7 @@ public class Robot extends LoggedRobot {
     m_robotContainer = new RobotContainer();
   }
 
-    Command testCommand;
-
+  Command testCommand;
 
   public void robotInit() {
     // DO THIS FIRST
@@ -102,6 +104,7 @@ public class Robot extends LoggedRobot {
     PathfindingCommand.warmupCommand().schedule();
     // ... remaining robot initialization
 
+  
   }
 
   /** This function is called periodically during all modes. */
@@ -121,14 +124,38 @@ public class Robot extends LoggedRobot {
   /** This function is called once when the robot is disabled. */
   @Override
   public void disabledInit() {
-  
 
   }
 
   /** This function is called periodically when disabled. */
   @Override
   public void disabledPeriodic() {
-    sensorsandleds.leds.updateDutyCycle(.09);
+    // sensorsandleds;
+    if ((limelightaligntwo.tagValue2 == 9 || limelightaligntwo.tagValue2 == 10 || limelightaligntwo.tagValue2 == 11
+    || limelightaligntwo.tagValue2 == 6 || limelightaligntwo.tagValue2 == 7 || limelightaligntwo.tagValue2 == 8
+    || limelightaligntwo.tagValue2 == 20 || limelightaligntwo.tagValue2 == 21 || limelightaligntwo.tagValue2 == 22
+    || limelightaligntwo.tagValue2 == 17 || limelightaligntwo.tagValue2 == 18 || limelightaligntwo.tagValue2 == 19
+    || limelightalign.tagValue == 9 || limelightalign.tagValue == 10 || limelightalign.tagValue == 11
+    || limelightalign.tagValue == 6 || limelightalign.tagValue == 7 || limelightalign.tagValue == 8
+    || limelightalign.tagValue == 20 || limelightalign.tagValue == 21 || limelightalign.tagValue == 22
+    || limelightalign.tagValue == 17 || limelightalign.tagValue == 18 || limelightalign.tagValue == 19)
+    && sensorsandleds.wall.get() == false) {
+  // coral station
+  sensorsandleds.leds.updateDutyCycle(.07);
+} else if (limelightaligntwo.tagValue2 == 9 || limelightaligntwo.tagValue2 == 10
+    || limelightaligntwo.tagValue2 == 11 || limelightaligntwo.tagValue2 == 6 || limelightaligntwo.tagValue2 == 7
+    || limelightaligntwo.tagValue2 == 8 || limelightaligntwo.tagValue2 == 20 || limelightaligntwo.tagValue2 == 21
+    || limelightaligntwo.tagValue2 == 22 || limelightaligntwo.tagValue2 == 17 || limelightaligntwo.tagValue2 == 18
+    || limelightaligntwo.tagValue2 == 19 || limelightalign.tagValue == 9 || limelightalign.tagValue == 10
+    || limelightalign.tagValue == 11 || limelightalign.tagValue == 6 || limelightalign.tagValue == 7
+    || limelightalign.tagValue == 8 || limelightalign.tagValue == 20 || limelightalign.tagValue == 21
+    || limelightalign.tagValue == 22 || limelightalign.tagValue == 17 || limelightalign.tagValue == 18
+    || limelightalign.tagValue == 19) {
+  // coral station
+  sensorsandleds.leds.updateDutyCycle(.13);
+} else {
+  sensorsandleds.leds.updateDutyCycle(.09);
+}
   }
 
   /**
@@ -138,7 +165,6 @@ public class Robot extends LoggedRobot {
   @Override
   public void autonomousInit() {
 
-   
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -156,8 +182,32 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    sensorsandleds.leds.updateDutyCycle(.09);
-    // CommandScheduler.getInstance().run();
+
+    if ((limelightaligntwo.tagValue2 == 9 || limelightaligntwo.tagValue2 == 10 || limelightaligntwo.tagValue2 == 11
+        || limelightaligntwo.tagValue2 == 6 || limelightaligntwo.tagValue2 == 7 || limelightaligntwo.tagValue2 == 8
+        || limelightaligntwo.tagValue2 == 20 || limelightaligntwo.tagValue2 == 21 || limelightaligntwo.tagValue2 == 22
+        || limelightaligntwo.tagValue2 == 17 || limelightaligntwo.tagValue2 == 18 || limelightaligntwo.tagValue2 == 19
+        || limelightalign.tagValue == 9 || limelightalign.tagValue == 10 || limelightalign.tagValue == 11
+        || limelightalign.tagValue == 6 || limelightalign.tagValue == 7 || limelightalign.tagValue == 8
+        || limelightalign.tagValue == 20 || limelightalign.tagValue == 21 || limelightalign.tagValue == 22
+        || limelightalign.tagValue == 17 || limelightalign.tagValue == 18 || limelightalign.tagValue == 19)
+        && sensorsandleds.wall.get() == false) {
+      // coral station
+      sensorsandleds.leds.updateDutyCycle(.07);
+    } else if (limelightaligntwo.tagValue2 == 9 || limelightaligntwo.tagValue2 == 10
+        || limelightaligntwo.tagValue2 == 11 || limelightaligntwo.tagValue2 == 6 || limelightaligntwo.tagValue2 == 7
+        || limelightaligntwo.tagValue2 == 8 || limelightaligntwo.tagValue2 == 20 || limelightaligntwo.tagValue2 == 21
+        || limelightaligntwo.tagValue2 == 22 || limelightaligntwo.tagValue2 == 17 || limelightaligntwo.tagValue2 == 18
+        || limelightaligntwo.tagValue2 == 19 || limelightalign.tagValue == 9 || limelightalign.tagValue == 10
+        || limelightalign.tagValue == 11 || limelightalign.tagValue == 6 || limelightalign.tagValue == 7
+        || limelightalign.tagValue == 8 || limelightalign.tagValue == 20 || limelightalign.tagValue == 21
+        || limelightalign.tagValue == 22 || limelightalign.tagValue == 17 || limelightalign.tagValue == 18
+        || limelightalign.tagValue == 19) {
+      // coral station
+      sensorsandleds.leds.updateDutyCycle(.13);
+    } else {
+      sensorsandleds.leds.updateDutyCycle(.09);
+    }
   }
 
   /** This function is called once when teleop is enabled. */

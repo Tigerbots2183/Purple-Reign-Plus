@@ -26,10 +26,12 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.lib.util.COTSTalonFXSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
-
+import edu.wpi.first.wpilibj.DriverStation;
 /**
- * This class defines the runtime mode used by AdvantageKit. The mode is always "real" when running
- * on a roboRIO. Change the value of "simMode" to switch between "sim" (physics sim) and "replay"
+ * This class defines the runtime mode used by AdvantageKit. The mode is always
+ * "real" when running
+ * on a roboRIO. Change the value of "simMode" to switch between "sim" (physics
+ * sim) and "replay"
  * (log replay from a file).
  */
 public final class Constants {
@@ -52,26 +54,25 @@ public final class Constants {
   public static final class Swerve {
     public static final int pigeonID = 30;
 
-    public static final COTSTalonFXSwerveConstants
-        chosenModule = // TODO: This must be tuned to specific robot
+    public static final COTSTalonFXSwerveConstants chosenModule = // TODO: This must be tuned to specific robot
         COTSTalonFXSwerveConstants.SDS.MK4i.KrakenX60(
-                COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
+            COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
 
     /* Drivetrain Constants */
-    public static final double trackWidth =
-        Units.inchesToMeters(22.5); // TODO: This must be tuned to specific robot
-    public static final double wheelBase =
-        Units.inchesToMeters(22.5); // TODO: This must be tuned to specific robot
+    public static final double trackWidth = Units.inchesToMeters(22.5); // TODO: This must be tuned to specific robot
+    public static final double wheelBase = Units.inchesToMeters(22.5); // TODO: This must be tuned to specific robot
     public static final double wheelCircumference = chosenModule.wheelCircumference;
 
-    /* Swerve Kinematics
-     * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */
-    public static final SwerveDriveKinematics swerveKinematics =
-        new SwerveDriveKinematics(
-            new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
-            new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
-            new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
-            new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));
+    /*
+     * Swerve Kinematics
+     * No need to ever change this unless you are not doing a traditional
+     * rectangular/square 4 module swerve
+     */
+    public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
+        new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
+        new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
+        new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
+        new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));
 
     /* Module Gear Ratios */
     public static final double driveGearRatio = chosenModule.driveGearRatio;
@@ -95,8 +96,11 @@ public final class Constants {
     public static final double driveCurrentThresholdTime = 0.1;
     public static final boolean driveEnableCurrentLimit = true;
 
-    /* These values are used by the drive falcon to ramp in open loop and closed loop driving.
-     * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc */
+    /*
+     * These values are used by the drive falcon to ramp in open loop and closed
+     * loop driving.
+     * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc
+     */
     public static final double openLoopRamp = 0.25;
     public static final double closedLoopRamp = 0.0;
 
@@ -120,8 +124,7 @@ public final class Constants {
     /** Meters per Second */
     public static final double maxSpeed = 4; // TODO: This must be tuned to specific robot
     /** Radians per Second */
-    public static final double maxAngularVelocity =
-        5.0; // TODO: This must be tuned to specific robot
+    public static final double maxAngularVelocity = 5.0; // TODO: This must be tuned to specific robot
 
     /* Neutral Modes */
     public static final NeutralModeValue angleNeutralMode = NeutralModeValue.Coast;
@@ -134,8 +137,8 @@ public final class Constants {
       public static final int angleMotorID = 11;
       public static final int canCoderID = 12;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-95.537109375);
-      public static final SwerveModuleConstants constants =
-          new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
+          canCoderID, angleOffset);
     }
 
     /* Front Right Module - Module 1 */
@@ -144,8 +147,8 @@ public final class Constants {
       public static final int angleMotorID = 14;
       public static final int canCoderID = 15;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-151.962890625);
-      public static final SwerveModuleConstants constants =
-          new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
+          canCoderID, angleOffset);
     }
 
     /* Back Left Module - Module 2 */
@@ -154,8 +157,8 @@ public final class Constants {
       public static final int angleMotorID = 17;
       public static final int canCoderID = 18;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(30.937499999999996);
-      public static final SwerveModuleConstants constants =
-          new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
+          canCoderID, angleOffset);
     }
 
     /* Back Right Module - Module 3 */
@@ -164,13 +167,12 @@ public final class Constants {
       public static final int angleMotorID = 20;
       public static final int canCoderID = 21;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-13.7109375);
-      public static final SwerveModuleConstants constants =
-          new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
+          canCoderID, angleOffset);
     }
   }
 
-  public static final
-  class AutoConstants { // TODO: The below constants are used in the example auto, and must be tuned
+  public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be tuned
     // to specific robot
     public static final double kMaxSpeedMetersPerSecond = 4;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
@@ -182,42 +184,47 @@ public final class Constants {
     public static final double kPThetaController = 1;
 
     /* Constraint for the motion profilied robot angle controller */
-    public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
-        new TrapezoidProfile.Constraints(
-            kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+    public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
+        kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
-   public static class POSES {
-  public static final Pose2d RESET_POSE = new Pose2d(3.192, 4.025, new Rotation2d());
+  public static class POSES {
+    public static final Pose2d RESET_POSE = new Pose2d(3.192, 4.025, new Rotation2d());
 
-  // Blue branch poses
-  public static final Pose2d REEF_A = new Pose2d(3.18, 4.19, Rotation2d.fromDegrees(90)); //new Pose2d(3.18, 4.22, Rotation2d.fromDegrees(90));
-  public static final Pose2d REEF_B = new Pose2d(3.18, 3.86, Rotation2d.fromDegrees(93.19));
-  public static final Pose2d REEF_C = new Pose2d(3.72, 2.97, Rotation2d.fromDegrees(150));
-  public static final Pose2d REEF_D = new Pose2d(3.98, 2.96, Rotation2d.fromDegrees(150));
-  public static final Pose2d REEF_E = new Pose2d(5.00,  2.79, Rotation2d.fromDegrees(-150)); 
-  public static final Pose2d REEF_F = new Pose2d(5.285, 2.964, Rotation2d.fromDegrees(-150)); 
-  public static final Pose2d REEF_G = new Pose2d(5.805, 3.863, Rotation2d.fromDegrees(-90));
-  public static final Pose2d REEF_H = new Pose2d(5.805, 4.189, Rotation2d.fromDegrees(-90)); 
-  public static final Pose2d REEF_I = new Pose2d(5.288, 5.083, Rotation2d.fromDegrees(-30));
-  public static final Pose2d REEF_J = new Pose2d(5.002, 5.248, Rotation2d.fromDegrees(-30));
-  public static final Pose2d REEF_K = new Pose2d(4, 5.28, Rotation2d.fromDegrees(30));
-  public static final Pose2d REEF_L = new Pose2d(3.71, 5.07, Rotation2d.fromDegrees(30));
-  
-}
+    // Blue branch poses
+    public static Pose2d REEF_A = new Pose2d(3.22, 4.24, Rotation2d.fromDegrees(90)); // new Pose2d(3.18, 4.22,                                                                           // Rotation2d.fromDegrees(90));
+    public static Pose2d REEF_B = new Pose2d(3.19, 3.90, Rotation2d.fromDegrees(90));
+    public static Pose2d REEF_C = new Pose2d(3.67, 3.03, Rotation2d.fromDegrees(150));
+    public static Pose2d REEF_D = new Pose2d(3.96, 2.86, Rotation2d.fromDegrees(150));
+    public static Pose2d REEF_E = new Pose2d(4.95, 2.82, Rotation2d.fromDegrees(-150));
+    public static Pose2d REEF_F = new Pose2d(5.24, 2.98, Rotation2d.fromDegrees(-150));
+    public static Pose2d REEF_G = new Pose2d(5.76, 3.81, Rotation2d.fromDegrees(-90));
+    public static Pose2d REEF_H = new Pose2d(5.77, 4.16, Rotation2d.fromDegrees(-90));
+    public static Pose2d REEF_I = new Pose2d(5.36, 4.84, Rotation2d.fromDegrees(-30));
+    public static Pose2d REEF_J = new Pose2d(5.03, 5.19, Rotation2d.fromDegrees(-30));
+    public static Pose2d REEF_K = new Pose2d(4.02, 5.23, Rotation2d.fromDegrees(30));
+    public static Pose2d REEF_L = new Pose2d(3.73, 5.07, Rotation2d.fromDegrees(30));
 
-public static class StationPOSES {
-public static final Pose2d RESET_POSE = new Pose2d(3.192, 4.025, new Rotation2d());
-  
-  
-public static final Pose2d Left_coral_station = new Pose2d(0.56, 6.68, Rotation2d.fromDegrees(43.80));
-} 
-public static class reefstate {
-public static boolean [] reefl4 = {
-  false, false, false, false, false, false, false, false, false, false, false};
-  
- public static boolean [] reefl3 = {
-  false, false, false, false, false, false, false, false, false, false, false}; 
-public static boolean [] reefl2 = {
-  false, false, false, false, false, false, false, false, false, false, false};
-}
+  }
+
+  public static class StationPOSES {
+    public static final Pose2d RESET_POSE = new Pose2d(3.192, 4.025, new Rotation2d());
+
+    public static final Pose2d Left_top_station = new Pose2d(1.75, 7.33, Rotation2d.fromDegrees(30));
+    public static final Pose2d Left_mid_station = new Pose2d(1.35, 6.95, Rotation2d.fromDegrees(30));
+    public static final Pose2d Left_bot_station = new Pose2d(0.83, 6.68, Rotation2d.fromDegrees(30));
+    
+    public static final Pose2d Right_top_station = new Pose2d(1.41, 0.73, Rotation2d.fromDegrees(150));
+    public static final Pose2d Right_mid_station = new Pose2d(1.08, 1.19, Rotation2d.fromDegrees(150));
+    public static final Pose2d Right_bot_station = new Pose2d(0.61, 1.55, Rotation2d.fromDegrees(150));
+  }
+
+  public static class reefstate {
+    public static boolean[] reefl4 = {
+        false, false, false, false, false, false, false, false, false, false, false };
+
+    public static boolean[] reefl3 = {
+        false, false, false, false, false, false, false, false, false, false, false };
+    public static boolean[] reefl2 = {
+        false, false, false, false, false, false, false, false, false, false, false };
+  }
 }

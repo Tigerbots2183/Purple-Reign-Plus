@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.util.FlippingUtil;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -64,32 +65,32 @@ public class AlignmentRightPeg extends Command {
 
             // Red Paths
             case 6: {
-                Targetpose = POSES.REEF_L;
+                Targetpose = FlippingUtil.flipFieldPose(POSES.REEF_L);
             }
                 break;
 
             case 7: {
-                Targetpose = POSES.REEF_B;
+                Targetpose = FlippingUtil.flipFieldPose(POSES.REEF_B);
             }
                 break;
 
             case 8: {
-                Targetpose = POSES.REEF_D;
+                Targetpose = FlippingUtil.flipFieldPose(POSES.REEF_D);
             }
                 break;
 
             case 9: {
-                Targetpose = POSES.REEF_F;
+                Targetpose = FlippingUtil.flipFieldPose(POSES.REEF_F);
             }
                 break;
 
             case 10: {
-                Targetpose = POSES.REEF_H;
+                Targetpose = FlippingUtil.flipFieldPose(POSES.REEF_H);
             }
                 break;
 
             case 11: {
-                Targetpose = POSES.REEF_J;
+                Targetpose = FlippingUtil.flipFieldPose(POSES.REEF_J);
 
             }
                 break;

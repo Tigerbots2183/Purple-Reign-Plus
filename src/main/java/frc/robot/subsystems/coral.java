@@ -26,7 +26,7 @@ public class coral extends SubsystemBase {
   }
 
   public void Coral(double speed) {
-    coralLeft.set(speed);
+    coralLeft.set(-speed);
     coralRight.set(speed);
     SmartDashboard.putNumber("Coral Shooter", speed);
     

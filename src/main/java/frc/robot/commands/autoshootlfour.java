@@ -31,6 +31,7 @@ public class autoshootlfour extends Command {
   @Override
   public void initialize() {
     elevatePos = -75;
+    elevate = false;
   }
 
   @Override
@@ -51,13 +52,18 @@ public class autoshootlfour extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    s_ElevatorCom.Elevator(0);
+    // s_ElevatorCom.Elevator(0);
     s_CoralCom.Coral(0);
 
   }
 
   @Override
   public boolean isFinished() {
-    return elevate;
+    if(returnToZero){
+      return false;
+    } else {
+      return elevate;
+
+    }
   }
 }

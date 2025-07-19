@@ -51,6 +51,10 @@ public class Shoot extends Command {
 
   @Override
   public boolean isFinished() {
-    return sensorsandleds.input.get();
+    if(sensorsandleds.input.get() == false){
+      return false;
+
+    }
+    return true;
   }
 }
