@@ -13,6 +13,8 @@
 
 package frc.robot;
 
+import java.security.PrivateKey;
+
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -25,6 +27,8 @@ import com.pathplanner.lib.commands.PathfindingCommand;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.FlippingUtil;
 
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.POSES;
@@ -97,13 +101,14 @@ public class Robot extends LoggedRobot {
   }
 
   Command testCommand;
+  private final Field2d m_field = new Field2d();
 
   public void robotInit() {
     // DO THIS FIRST
     Pathfinding.setPathfinder(new LocalADStarAK());
     PathfindingCommand.warmupCommand().schedule();
-    // ... remaining robot initialization
-
+    // ... remaining robot initializatio
+    SmartDashboard.putData("Field", m_field);
   
   }
 
@@ -111,6 +116,7 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void robotPeriodic() {
+    // m_field.setRobotPose(s_Swerve.getPose());
     // Runs the Scheduler. This is responsible for polling buttons, adding
     // newly-scheduled
     // commands, running already-scheduled commands, removing finished or

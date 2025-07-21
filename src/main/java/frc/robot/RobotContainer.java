@@ -280,10 +280,11 @@ public class RobotContainer {
     }
 
     PathConstraints constraints = new PathConstraints(
-        5,
         3,
+        2,
         4,
         3);
+        // new PathConstraints(null, null, null, null)
 
     String startString = posePlotterValues.getAutoString();
     // String startString = posePlotterValues.getAutoStringWithFallback(); //ENABLE
