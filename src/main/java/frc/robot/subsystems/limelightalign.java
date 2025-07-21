@@ -21,7 +21,7 @@ public class limelightalign extends SubsystemBase {
   public static double areaValue;
   public static double tagValue;
   public static double redDistance;
-  public static  NetworkTableEntry botposEntry;
+  public static NetworkTableEntry botposEntry;
   public static NetworkTableEntry tx;
   public static NetworkTableEntry ty;
   public static NetworkTableEntry ta;
@@ -38,6 +38,8 @@ public class limelightalign extends SubsystemBase {
 
   /** Creates a new limelightalign. */
   public limelightalign() {
+    //Limelight pos getter I think? we have two limelight 4s so
+
     limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
     tx = limelight.getEntry("tx");
@@ -46,30 +48,32 @@ public class limelightalign extends SubsystemBase {
     tid = limelight.getEntry("tid");
     distances = limelight.getEntry("camerapose_targetspace");
     Ty = limelight.getEntry("Camerapose_targetspace");
-    
+
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     tagposs = LimelightHelpers.getCameraPose_TargetSpace("");
-    double x = tx.getDouble(0);
-    double y = ty.getDouble(0.0);
-    double area = ta.getDouble(0.0);
-    double ID = tid.getDouble(0.0);
-    double tagposx = tagposs[0];
-    double tagposy = tagposs[2];
-    xValue = x;
-    yValue = y;
-    areaValue = area;
-    tagValue = ID;
-    SmartDashboard.putNumber("Limelight Yvalue", limelightalign.yValue);
-    SmartDashboard.putNumber("Limelight value", limelightalign.xValue);
-    SmartDashboard.putNumber("Limelight value tag", limelightalign.tagValue);
-    SmartDashboard.putNumber("Limelight distance to tage", tagposx);
-    Logger.recordOutput("x", tagposx);
-    Logger.recordOutput("y", tagposy);
 
+    if (tagposs.length > 0) {
+      double x = tx.getDouble(0);
+      double y = ty.getDouble(0.0);
+      double area = ta.getDouble(0.0);
+      double ID = tid.getDouble(0.0);
+      double tagposx = tagposs[0];
+      double tagposy = tagposs[2];
+      xValue = x;
+      yValue = y;
+      areaValue = area;
+      tagValue = ID;
+      SmartDashboard.putNumber("Limelight Yvalue", limelightalign.yValue);
+      SmartDashboard.putNumber("Limelight value", limelightalign.xValue);
+      SmartDashboard.putNumber("Limelight value tag", limelightalign.tagValue);
+      SmartDashboard.putNumber("Limelight distance to tage", tagposx);
+      Logger.recordOutput("x", tagposx);
+      Logger.recordOutput("y", tagposy);
+    }
 
   }
 }

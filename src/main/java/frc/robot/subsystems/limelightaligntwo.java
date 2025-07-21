@@ -4,12 +4,10 @@
 
 package frc.robot.subsystems;
 
-import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
 
@@ -38,6 +36,8 @@ public class limelightaligntwo extends SubsystemBase {
 
   /** Creates a new limelightalign. */
   public limelightaligntwo() {
+    //Limelight pos getter I think? we have two limelight 4s so
+
     limelight = NetworkTableInstance.getDefault().getTable("limelight-right");
 
     tx = limelight.getEntry("tx");
@@ -57,8 +57,8 @@ public class limelightaligntwo extends SubsystemBase {
     double y = ty.getDouble(0.0);
     double area = ta.getDouble(0.0);
     double ID2 = tid.getDouble(0.0);
-    double tagposx = tagposs[0];
-    double tagposy = tagposs[2];
+    // double tagposx = tagposs[0];
+    // double tagposy = tagposs[2];
     xValue = x;
     yValue = y;
     areaValue = area;

@@ -13,16 +13,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.limelightalign;
-import frc.robot.subsystems.limelightaligntwo;
-import frc.robot.subsystems.sensorsandleds;
-
-import com.ctre.phoenix6.Orchestra;
-import com.ctre.phoenix6.hardware.TalonFX;
-import com.pathplanner.lib.pathfinding.Pathfinding;
-
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -30,6 +20,12 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import com.pathplanner.lib.commands.PathfindingCommand;
+import com.pathplanner.lib.pathfinding.Pathfinding;
+
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.*;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to
@@ -46,6 +42,7 @@ public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
 
   public Robot() {
     // Record metadata
@@ -96,11 +93,15 @@ public class Robot extends LoggedRobot {
     m_robotContainer = new RobotContainer();
   }
 
+    Command testCommand;
+
+
   public void robotInit() {
     // DO THIS FIRST
     Pathfinding.setPathfinder(new LocalADStarAK());
-
+    PathfindingCommand.warmupCommand().schedule();
     // ... remaining robot initialization
+
   }
 
   /** This function is called periodically during all modes. */
@@ -120,28 +121,7 @@ public class Robot extends LoggedRobot {
   /** This function is called once when the robot is disabled. */
   @Override
   public void disabledInit() {
-    // TalonFX m_motor1 = new TalonFX(10, "base");
-    // TalonFX m_motor2 = new TalonFX(11, "base");
-    // TalonFX m_motor3 = new TalonFX(13, "base");
-    // TalonFX m_motor4 = new TalonFX(14, "base");
-    // TalonFX m_motor5 = new TalonFX(16, "base");
-    // TalonFX m_motor6 = new TalonFX(17, "base");
-    // TalonFX m_motor7 = new TalonFX(19, "base");
-    // TalonFX m_motor8 = new TalonFX(20, "base");
-    // Orchestra m_Orchestra = new Orchestra();
-    // m_Orchestra.addInstrument(m_motor1);
-    // m_Orchestra.addInstrument(m_motor2);
-    // m_Orchestra.addInstrument(m_motor3);
-    // m_Orchestra.addInstrument(m_motor4);
-    // m_Orchestra.addInstrument(m_motor5);
-    // m_Orchestra.addInstrument(m_motor6);
-    // m_Orchestra.addInstrument(m_motor7);
-    // m_Orchestra.addInstrument(m_motor8);
-
-    // m_Orchestra.loadMusic("spj.chrp");
-
-    // m_Orchestra.play();
-    // new orchestraCom("spj.chrp",s_Orchestra );
+  
 
   }
 
@@ -157,6 +137,14 @@ public class Robot extends LoggedRobot {
    */
   @Override
   public void autonomousInit() {
+
+   
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+
+    // schedule the autonomous command (example)
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
+    }
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -169,6 +157,7 @@ public class Robot extends LoggedRobot {
   @Override
   public void autonomousPeriodic() {
     sensorsandleds.leds.updateDutyCycle(.09);
+    // CommandScheduler.getInstance().run();
   }
 
   /** This function is called once when teleop is enabled. */

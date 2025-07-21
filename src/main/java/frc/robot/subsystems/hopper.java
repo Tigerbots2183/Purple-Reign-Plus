@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -12,19 +13,21 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 public class hopper extends SubsystemBase {
-  SparkMax funnel;
-   SparkMaxConfig funnalConfig;
-  /** Creates a new coral. */
+  SparkMax funnel = new SparkMax(25, MotorType.kBrushless);
+  SparkMaxConfig funnalConfig = new SparkMaxConfig();;
+
+  //Moves hopper out of way for climb
+
   public hopper() {
-    funnel = new SparkMax(25, MotorType.kBrushless);
-
-    funnalConfig = new SparkMaxConfig();
-
     funnalConfig.smartCurrentLimit(30);
   }
+
   public void hop(double speed) {
     funnel.set(speed);
+    SmartDashboard.putNumber("Hopper", speed);
+
   }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

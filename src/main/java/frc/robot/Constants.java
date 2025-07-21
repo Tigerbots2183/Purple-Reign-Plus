@@ -85,12 +85,12 @@ public final class Constants {
     public static final SensorDirectionValue cancoderInvert = chosenModule.cancoderInvert;
 
     /* Swerve Current Limiting */
-    public static final int angleCurrentLimit = 25;
+    public static final int angleCurrentLimit = 35;
     public static final int angleCurrentThreshold = 40;
     public static final double angleCurrentThresholdTime = 0.1;
     public static final boolean angleEnableCurrentLimit = true;
 
-    public static final int driveCurrentLimit = 35;
+    public static final int driveCurrentLimit = 55;
     public static final int driveCurrentThreshold = 120;
     public static final double driveCurrentThresholdTime = 0.1;
     public static final boolean driveEnableCurrentLimit = true;
@@ -191,17 +191,17 @@ public final class Constants {
 
   // Blue branch poses
   public static final Pose2d REEF_A = new Pose2d(3.18, 4.19, Rotation2d.fromDegrees(90)); //new Pose2d(3.18, 4.22, Rotation2d.fromDegrees(90));
-  public static final Pose2d REEF_B = new Pose2d(3.18, 3.87, Rotation2d.fromDegrees(90));
-  public static final Pose2d REEF_C = new Pose2d(3.688, 2.968, Rotation2d.fromDegrees(150));
-  public static final Pose2d REEF_D = new Pose2d(3.975, 2.803, Rotation2d.fromDegrees(150));
-  public static final Pose2d REEF_E = new Pose2d(5.000,  2.790, Rotation2d.fromDegrees(-150)); 
+  public static final Pose2d REEF_B = new Pose2d(3.18, 3.86, Rotation2d.fromDegrees(93.19));
+  public static final Pose2d REEF_C = new Pose2d(3.72, 2.97, Rotation2d.fromDegrees(150));
+  public static final Pose2d REEF_D = new Pose2d(3.98, 2.96, Rotation2d.fromDegrees(150));
+  public static final Pose2d REEF_E = new Pose2d(5.00,  2.79, Rotation2d.fromDegrees(-150)); 
   public static final Pose2d REEF_F = new Pose2d(5.285, 2.964, Rotation2d.fromDegrees(-150)); 
   public static final Pose2d REEF_G = new Pose2d(5.805, 3.863, Rotation2d.fromDegrees(-90));
   public static final Pose2d REEF_H = new Pose2d(5.805, 4.189, Rotation2d.fromDegrees(-90)); 
   public static final Pose2d REEF_I = new Pose2d(5.288, 5.083, Rotation2d.fromDegrees(-30));
   public static final Pose2d REEF_J = new Pose2d(5.002, 5.248, Rotation2d.fromDegrees(-30));
-  public static final Pose2d REEF_K = new Pose2d(3.98, 5.23, Rotation2d.fromDegrees(30));
-  public static final Pose2d REEF_L = new Pose2d(3.69, 5.04, Rotation2d.fromDegrees(30));
+  public static final Pose2d REEF_K = new Pose2d(4, 5.28, Rotation2d.fromDegrees(30));
+  public static final Pose2d REEF_L = new Pose2d(3.71, 5.07, Rotation2d.fromDegrees(30));
   
 }
 

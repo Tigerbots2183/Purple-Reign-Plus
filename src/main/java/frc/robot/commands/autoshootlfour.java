@@ -5,66 +5,50 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.reefstate;
-import frc.robot.commands.Alignment.lastpegsave;
 import frc.robot.subsystems.coral;
 import frc.robot.subsystems.elevator;
+import frc.robot.subsystems.sensorsandleds;
+
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class autoshootlfour extends Command {
-  double speed;
+  double shooterSpeed;
   elevator s_ElevatorCom;
-  double posNum;
   double elevatePos = 0;
-  boolean returning;
+  boolean returnToZero;
   coral s_CoralCom;
-    /** Creates a new elevatorCom. */
-  public autoshootlfour( double speed, double posNum, elevator s_ElevatorCom,  coral s_CoralCom, boolean returning) {
-    addRequirements (s_ElevatorCom);
-     this.s_ElevatorCom = s_ElevatorCom;
-     this.s_CoralCom = s_CoralCom;
-     this.speed = speed;
-     this.posNum = posNum;
-    this.returning = returning;
-  }
-    // Use addRequirements() here to declare subsystem dependencies.
+  boolean elevate = false;
 
-  // Called when the command is initially scheduled.
+  //Goes to elevator pos and then shoots when it gets there. Elevator is a two stage thrifty kit elevator
+  public autoshootlfour(double shooterSpeed, elevator s_ElevatorCom, coral s_CoralCom, boolean returnToZero) {
+    addRequirements(s_ElevatorCom);
+    this.s_ElevatorCom = s_ElevatorCom;
+    this.s_CoralCom = s_CoralCom;
+    this.returnToZero = returnToZero;
+    this.shooterSpeed = shooterSpeed;
+    elevate = false;
+  }
+
   @Override
   public void initialize() {
-     if (posNum == 3){
-      elevatePos = -75;
-    }
-    }
+    elevatePos = -75;
+  }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(returning){
-      
+    if (returnToZero) {
+
       s_ElevatorCom.setElevator(0);
-    } else{
+    } else {
       s_ElevatorCom.setElevator(elevatePos);
-      if(elevator.elevatorLeftEncoder.getPosition() < -74.3 ){
-        s_CoralCom.Coral(speed);
-        reefstate.reefl4[lastpegsave.lastpegsaved] = true;
-          System.out.println((reefstate.reefl4 [0]));
-          System.out.println((reefstate.reefl4 [1]));
-          System.out.println((reefstate.reefl4 [2]));
-          System.out.println((reefstate.reefl4 [3]));
-          System.out.println((reefstate.reefl4 [4]));
-          System.out.println((reefstate.reefl4 [5]));
-          System.out.println((reefstate.reefl4 [6]));
-          System.out.println((reefstate.reefl4 [7]));
-          System.out.println((reefstate.reefl4 [8]));
-          System.out.println((reefstate.reefl4 [9]));
-          System.out.println((reefstate.reefl4 [10]));
-          System.out.println((reefstate.reefl4 [11]));
-      } 
+      if (elevator.elevatorLeftEncoder.getPosition() < -74.3) {
+        s_CoralCom.Coral(shooterSpeed);
+        if (sensorsandleds.input.get() == true) {
+          elevate = true;
+        }
+      }
     }
   }
-  
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     s_ElevatorCom.Elevator(0);
@@ -72,9 +56,8 @@ public class autoshootlfour extends Command {
 
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return elevate;
   }
 }

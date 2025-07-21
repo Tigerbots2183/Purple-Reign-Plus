@@ -15,52 +15,39 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.AnalogEncoder;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.littletonrobotics.junction.Logger;
 
 public class elevator extends SubsystemBase {
-  SparkMax elevatorLeft;
-  SparkMax elevatorRight;
+  SparkMax elevatorLeft = new SparkMax(50, MotorType.kBrushless);
+  SparkMax elevatorRight = new SparkMax(51, MotorType.kBrushless);
+
+  //GOOD LUCK
+  //Elevator is a two stage thriftybot kit elevator (cascading)
 
   public static RelativeEncoder elevatorLeftEncoder;
-   private RelativeEncoder elevatorRightEncoder;
 
-   private SparkMaxConfig elevatorConfig;
-   private SparkMaxConfig lelevatorConfig;
+  private SparkMaxConfig elevatorConfig= new SparkMaxConfig();
+  private SparkMaxConfig lelevatorConfig = new SparkMaxConfig();
 
   private SparkClosedLoopController elevatorLeftPID;
-  private SparkClosedLoopController elevatorRightPID;
 
-  private boolean check; 
+  // private boolean check;
 
-  private DutyCycleEncoder elevate;
-
- 
+  private DutyCycleEncoder elevate = new DutyCycleEncoder(1);
 
   /** Creates a new elevator. */
   public elevator() {
-elevatorLeft = new SparkMax(50, MotorType.kBrushless);
-elevatorRight = new SparkMax(51, MotorType.kBrushless);
-elevatorLeftEncoder = elevatorLeft.getEncoder();
+    
+    elevatorLeftEncoder = elevatorLeft.getEncoder();
 
 
-elevate = new DutyCycleEncoder(1);
+    lelevatorConfig.smartCurrentLimit(50);
+    elevatorLeftPID = elevatorLeft.getClosedLoopController();
 
-
-
-elevatorConfig = new SparkMaxConfig(); 
-lelevatorConfig = new SparkMaxConfig(); 
-lelevatorConfig.smartCurrentLimit(50);
-elevatorLeftPID = elevatorLeft.getClosedLoopController();
-
-elevatorConfig.closedLoop
- .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+    elevatorConfig.closedLoop
+        .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
         // Set PID values for position control. We don't need to pass a closed loop
         // slot, as it will default to slot 0.
         .p(.01)
@@ -73,71 +60,70 @@ elevatorConfig.closedLoop
         .d(0, ClosedLoopSlot.kSlot1)
         .velocityFF(1 / 5767, ClosedLoopSlot.kSlot1)
         .outputRange(-1, 1, ClosedLoopSlot.kSlot1);
-elevatorConfig.smartCurrentLimit(50);
-elevatorConfig
-.closedLoop
-.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-// Set PID values for position control
-.p(0.004)
-.i(0)
-.d(0.001)
-.outputRange(-.5, .5)
-.maxMotion
-// Set MAXMotion parameters for position control
-.maxVelocity(1000000)
-.maxAcceleration(650000)
-.allowedClosedLoopError(0.25).allowedClosedLoopError(0.3);
+    elevatorConfig.smartCurrentLimit(50);
+    elevatorConfig.closedLoop
+        .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+        // Set PID values for position control
+        .p(0.004)
+        .i(0)
+        .d(0.001)
+        .outputRange(-.5, .5).maxMotion
+        // Set MAXMotion parameters for position control
+        .maxVelocity(1000000)
+        .maxAcceleration(650000)
+        .allowedClosedLoopError(0.25).allowedClosedLoopError(0.3);
 
-elevatorLeft.configure(
-  elevatorConfig,
-  ResetMode.kResetSafeParameters, 
-  PersistMode.kPersistParameters);
+    elevatorLeft.configure(
+        elevatorConfig,
+        ResetMode.kResetSafeParameters,
+        PersistMode.kPersistParameters);
 
-elevatorRight.configure(
-elevatorConfig.follow(elevatorLeft, false),
-ResetMode.kResetSafeParameters, 
-PersistMode.kPersistParameters);
+    elevatorRight.configure(
+        elevatorConfig.follow(elevatorLeft, false),
+        ResetMode.kResetSafeParameters,
+        PersistMode.kPersistParameters);
   }
-  public double DutyCycleEncoder(){
+
+  public double DutyCycleEncoder() {
     return elevate.get();
   }
 
-  public boolean setElevator(double pos){
+  public boolean setElevator(double pos) {
     elevatorLeftPID.setReference(pos, ControlType.kMAXMotionPositionControl);
+    SmartDashboard.putNumber("Elevator Pos", pos);
 
-    if(Math.abs(Math.abs(pos) - Math.abs(elevatorLeftEncoder.getPosition())) < 2){
-      check = true;
+    if (Math.abs(Math.abs(pos) - Math.abs(elevatorLeftEncoder.getPosition())) < 2) {
+      // check = true;
       return true;
-    }else{
-      check = false;
+    } else {
+      // check = false;
       return false;
     }
   }
-  public void changeElevate(double change){
+
+  public void changeElevate(double change) {
     boolean changeDone = false;
 
-    if(!changeDone){
+    if (!changeDone) {
       elevatorLeftPID.setReference(elevatorLeftEncoder.getPosition() + change, ControlType.kMAXMotionPositionControl);
       changeDone = true;
+
     }
   }
-  public void Elevator(double speed){
-elevatorLeft.set(speed);
-elevatorRight.set(speed);
+
+  public void Elevator(double speed) {
+    elevatorLeft.set(speed);
+    elevatorRight.set(speed);
+
   }
+
   @Override
   public void periodic() {
     elevate.get();
     elevatorLeftEncoder.getPosition();
-    Logger.recordOutput("elevator pos", elevatorLeftEncoder.getPosition());
-  SmartDashboard.putNumber("templ", elevatorLeft.getMotorTemperature());
-  SmartDashboard.putNumber("tempr", elevatorRight.getMotorTemperature());
-  SmartDashboard.putNumber("speedl", elevatorLeft.getOutputCurrent());
-  SmartDashboard.putNumber("speedr", elevatorRight.getOutputCurrent());
-    SmartDashboard.putNumber("r encoder value ", elevatorLeftEncoder.getPosition());
-    Logger.recordOutput("elevator max test", elevatorLeft.get());
-  // SmartDashboard.putNumber("elevatePos", elevatorCom.elevatePos);
-    
+
+    // SmartDashboard.putNumber("elevatePos", elevatorCom.elevatePos);
+
     // This method will be called once per scheduler run
   }
 }

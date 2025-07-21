@@ -5,12 +5,12 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
-import frc.robot.subsystems.coral;
-import frc.robot.subsystems.elevator;
 import frc.robot.subsystems.sensorsandleds;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
+
+//This is based on dirtbikerxz's swerve library (on github). We were trying to switch to ctre but didnt have enough time
 
 public class TeleopSwerve extends Command {
   private Swerve s_Swerve;

@@ -13,35 +13,40 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class sensorsandleds extends SubsystemBase {
-  public static  DigitalOutput leds;
- public static DigitalInput input;
- public static DigitalInput wall;
- public static DigitalInput reef;
+  public static DigitalOutput leds =new DigitalOutput(6);
+  public static DigitalInput input;
+  public static DigitalInput wall;
+  public static DigitalInput reef;
+
   /** Creates a new sensorsandleds. */
   public sensorsandleds() {
     reef = new DigitalInput(7);
     input = new DigitalInput(2);
     wall = new DigitalInput(4);
-    leds = new DigitalOutput(6);
+
     leds.setPWMRate(1000);
     leds.enablePWM(0);
   }
-  public boolean DigitalInput(){
+
+  public boolean DigitalInput() {
     return input.get();
   }
-  public boolean DigitalInput2(){
+
+  public boolean DigitalInput2() {
     return wall.get();
   }
-  public boolean DigitalInput3(){
+
+  public boolean DigitalInput3() {
     return reef.get();
   }
-  public void led (double var){
+
+  public void led(double var) {
     leds.updateDutyCycle(var);
   }
-  
+
   @Override
   public void periodic() {
-    //leds.updateDutyCycle(0);
+    // leds.updateDutyCycle(0);
     input.get();
     wall.get();
     reef.get();

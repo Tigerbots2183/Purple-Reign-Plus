@@ -4,37 +4,23 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkMaxConfig;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.config.SparkMaxConfig;
 
 public class climber extends SubsystemBase {
-  // SparkMax climberLeft;
-  // SparkMax climberRight;
   
-  TalonFX climberleft;
-  TalonFX climberright;
+  TalonFX climberleft= new TalonFX(53);
+  TalonFX climberright= new TalonFX(52);
   
-  TalonFXConfiguration climberleftConfig;
-  TalonFXConfiguration climberrightConfig;
+  TalonFXConfiguration climberleftConfig = new TalonFXConfiguration();
+  TalonFXConfiguration climberrightConfig = new TalonFXConfiguration();
 
-  // SparkMaxConfig climberLeftConfig;
-  // SparkMaxConfig climberRightConfig;
   
   /** Creates a new climber. */
   public climber() {
-    
-    climberleft = new TalonFX(53);
-    climberright = new TalonFX(52);
-
-    climberleftConfig = new TalonFXConfiguration();
-    climberrightConfig = new TalonFXConfiguration();
-
     climberleftConfig.CurrentLimits.withSupplyCurrentLimit(50);
     climberrightConfig.CurrentLimits.withSupplyCurrentLimit(50);
   }
@@ -42,6 +28,8 @@ public class climber extends SubsystemBase {
   public void Climber(double speed) {
     climberleft.set(speed);
     climberright.set(-speed);
+        SmartDashboard.putNumber("Climber", speed);
+
   }
 
   @Override
