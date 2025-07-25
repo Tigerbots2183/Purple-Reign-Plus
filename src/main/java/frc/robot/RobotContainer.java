@@ -1,5 +1,6 @@
 package frc.robot;
 
+import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathConstraints;
@@ -17,14 +18,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.POSES;
 import frc.robot.Constants.StationPOSES;
+import frc.robot.Constants.Swerve;
 import frc.robot.Constants.reefstate;
 import frc.robot.commands.AlignmentLeftPeg;
-import frc.robot.commands.TeleopSwerve;
+
 import frc.robot.commands.AlignmentRightPeg;
 import frc.robot.commands.autoshootlfour;
 import frc.robot.commands.climberCom;
@@ -34,9 +38,8 @@ import frc.robot.commands.elevatorCom;
 import frc.robot.commands.hopperCom;
 import frc.robot.commands.manualElevate;
 import frc.robot.commands.removalcom;
-import frc.robot.commands.stopPathfind;
 import frc.robot.subsystems.OneShotButton;
-import frc.robot.subsystems.Swerve;
+
 import frc.robot.subsystems.algeremover;
 import frc.robot.subsystems.climber;
 import frc.robot.subsystems.coral;
@@ -49,6 +52,15 @@ import java.security.DrbgParameters.NextBytes;
 import java.util.HashMap;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
+import static edu.wpi.first.units.Units.*;
+
+import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.swerve.SwerveRequest;
+import edu.wpi.first.math.geometry.Rotation2d;
+import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a
@@ -59,6 +71,23 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
+  private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max
+                                                                                    // angular velocity
+
+  /* Setting up bindings for necessary control of the swerve drive platform */
+  private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+      .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+      .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+  private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
+  private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+
+  private final Telemetry logger = new Telemetry(MaxSpeed);
+
+  private final CommandXboxController joystick = new CommandXboxController(0);
+
+  public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+
   /* Auto Chooser */
   private final SendableChooser<Command> autoChooser;
 
@@ -102,7 +131,7 @@ public class RobotContainer {
   private final Trigger acuatorout = new Trigger(() -> copilot.getRawAxis(0) < -.2);
 
   /* Subsystems */
-  private final Swerve s_Swerve = new Swerve();
+  // private final Swerve s_Swerve = new Swerve();
   private final climber s_ClimberCom = new climber();
   private final coral s_CoralCom = new coral();
   private final elevator s_ElevatorCom = new elevator();
@@ -138,13 +167,8 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    s_Swerve.setDefaultCommand(
-        new TeleopSwerve(
-            s_Swerve,
-            () -> -driver.getRawAxis(translationAxis),
-            () -> -driver.getRawAxis(strafeAxis),
-            () -> -driver.getRawAxis(rotationAxis),
-            () -> robotCentric.getAsBoolean()));
+    // Note that X is defined as forward according to WPILib convention,
+    // and Y is defined as to the left according to WPILib convention.
 
     // Configure the button bindings
     configureButtonBindings();
@@ -179,15 +203,37 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    drivetrain.setDefaultCommand(
+        // Drivetrain will execute this command periodically
+        drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with
+                                                                                           // negative Y (forward)
+            .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+            .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+        ));
 
-    /* Driver Buttons */
-    zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading())
-      .ignoringDisable(true));
-    align.whileTrue(new AlignmentLeftPeg(s_Swerve));
-    alignr.whileTrue(new AlignmentRightPeg(s_Swerve));
+    // Idle while the robot is disabled. This ensures the configured
+    // neutral mode is applied to the drive motors while disabled.
+    final var idle = new SwerveRequest.Idle();
+    RobotModeTriggers.disabled().whileTrue(
+        drivetrain.applyRequest(() -> idle).ignoringDisable(true));
+
+    joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
+    joystick.b().whileTrue(drivetrain
+        .applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
+
+    // Run SysId routines when holding back/start and X/Y.
+    // Note that each routine should be run exactly once in a single log.
+    joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
+    joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
+    joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
+    joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+
+    // reset the field-centric heading on left bumper press
+    joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+
+    drivetrain.registerTelemetry(logger::telemeterize);
 
     climberButton.whileTrue(new climberCom(-0.4, s_ClimberCom));
-    rclimberButton.whileTrue(new stopPathfind(s_Swerve));
 
     intakeButton.whileTrue(new Intake(-.07, s_CoralCom));
     reverseCoral.whileTrue(new Shoot(-0.125, s_CoralCom));
@@ -284,7 +330,7 @@ public class RobotContainer {
         2,
         4,
         3);
-        // new PathConstraints(null, null, null, null)
+    // new PathConstraints(null, null, null, null)
 
     String startString = posePlotterValues.getAutoString();
     // String startString = posePlotterValues.getAutoStringWithFallback(); //ENABLE
