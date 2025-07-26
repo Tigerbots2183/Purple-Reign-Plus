@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -34,6 +35,7 @@ import frc.robot.commands.autoshootlfour;
 import frc.robot.commands.climberCom;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.Tuneage;
 import frc.robot.commands.elevatorCom;
 import frc.robot.commands.hopperCom;
 import frc.robot.commands.manualElevate;
@@ -86,8 +88,7 @@ public class RobotContainer {
 
   private final CommandXboxController joystick = new CommandXboxController(0);
 
-  public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-
+  public CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
   /* Auto Chooser */
   private final SendableChooser<Command> autoChooser;
 
@@ -100,9 +101,13 @@ public class RobotContainer {
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final int rotationAxis = XboxController.Axis.kRightX.value;
 
+  private final JoystickButton musicButton1 = new JoystickButton(driver, XboxController.Button.kStart.value);
+  private final JoystickButton musicButton2 = new JoystickButton(driver, 7);
+
+
   /* Driver Buttons */
-  private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  // private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
+  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kY.value);
 
   private final JoystickButton climberButton = new JoystickButton(driver, 2);
   private final JoystickButton rclimberButton = new JoystickButton(driver, 3);
@@ -172,7 +177,6 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
-
     NamedCommands.registerCommand("coral", new Intake(-.075, s_CoralCom).withTimeout(.5));
     NamedCommands.registerCommand("coralfast", new Intake(-.075, s_CoralCom).withTimeout(.15));
     NamedCommands.registerCommand("coralplace", new Shoot(-0.12, s_CoralCom).withTimeout(.3));
@@ -217,8 +221,8 @@ public class RobotContainer {
     RobotModeTriggers.disabled().whileTrue(
         drivetrain.applyRequest(() -> idle).ignoringDisable(true));
 
-    joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
-    joystick.b().whileTrue(drivetrain
+    // joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
+    joystick.y().whileTrue(drivetrain
         .applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
 
     // Run SysId routines when holding back/start and X/Y.
@@ -229,12 +233,12 @@ public class RobotContainer {
     joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
     // reset the field-centric heading on left bumper press
-    joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+    robotCentric.onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
     drivetrain.registerTelemetry(logger::telemeterize);
 
     climberButton.whileTrue(new climberCom(-0.4, s_ClimberCom));
-
+    musicButton1.and(musicButton2).toggleOnTrue(new Tuneage(drivetrain).ignoringDisable(true).withInterruptBehavior(Command.InterruptionBehavior.kCancelSelf));
     intakeButton.whileTrue(new Intake(-.07, s_CoralCom));
     reverseCoral.whileTrue(new Shoot(-0.125, s_CoralCom));
 
