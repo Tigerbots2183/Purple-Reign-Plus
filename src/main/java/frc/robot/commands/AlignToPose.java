@@ -16,6 +16,7 @@ public class AlignToPose extends Command {
 
   Pose2d currentPose;
   CommandSwerveDrivetrain s_Drivetrain;
+  Command PathCommand;
 
   public AlignToPose(Pose2d currentPose, CommandSwerveDrivetrain s_Drivetrain) {
     addRequirements(s_Drivetrain);
@@ -27,12 +28,7 @@ public class AlignToPose extends Command {
 
   @Override
   public void initialize() {
-  }
-
-  @Override
-  public void execute() {
-
-    PathConstraints constraints = new PathConstraints(
+    PathConstraints constraints2 = new PathConstraints(
 
         5,
 
@@ -44,22 +40,26 @@ public class AlignToPose extends Command {
 
     );
 
-    Command followLeftPath = AutoBuilder.pathfindToPose(
+    PathCommand = AutoBuilder.pathfindToPose(
         currentPose,
-        constraints,
+        constraints2,
         0.00);
-    followLeftPath.schedule();
+    PathCommand.schedule();
 
   }
 
+  @Override
+  public void execute() {
 
+  }
 
   @Override
   public void end(boolean interrupted) {
+    PathCommand.cancel();
   }
 
   @Override
   public boolean isFinished() {
-    return false;
+    return PathCommand.isFinished();
   }
 }
