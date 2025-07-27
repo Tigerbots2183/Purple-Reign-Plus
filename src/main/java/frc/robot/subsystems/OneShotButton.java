@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.AlignToPose;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
@@ -30,7 +31,7 @@ public class OneShotButton extends SubsystemBase {
   final BooleanPublisher dP;
   String buttonName;
   boolean prev = false;
-  Pose2d sentPos;
+  Command executed;
   PathConstraints constraints = new PathConstraints(
 
       5,
@@ -42,8 +43,10 @@ public class OneShotButton extends SubsystemBase {
       3
 
   );
+  Command followLeftPath;
 
-  public OneShotButton(String buttonName, Pose2d Pose) {
+  public OneShotButton(String buttonName, Command executed) {
+
     // get the default instance of NetworkTables
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     // get the subtable called "touchboard"
@@ -53,7 +56,8 @@ public class OneShotButton extends SubsystemBase {
     BooleanTopic blTPC = datatable.getBooleanTopic(buttonName);
     dP = blTPC.publish();
     dT = datatable.getBooleanTopic(buttonName).subscribe(false);
-    sentPos = Pose;
+
+    this.executed=executed;
   }
 
   public void periodic() {
@@ -63,24 +67,19 @@ public class OneShotButton extends SubsystemBase {
     if (value != prev) {
       prev = value; // save previous value
 
-      if (DriverStation.getAlliance().isPresent()) {
-        if (DriverStation.getAlliance().get() == Alliance.Red) {
-          System.out.println("red");
-          Command followLeftPath = AutoBuilder.pathfindToPose(
-            FlippingUtil.flipFieldPose(sentPos),
-          constraints,
-          0.00);
-          followLeftPath.schedule();
-          return;
-        }
-      }
-
+      // if (DriverStation.getAlliance().isPresent()) {
+      //   if (DriverStation.getAlliance().get() == Alliance.Red) {
+      //     System.out.println("red");
+      //     followLeftPath = AutoBuilder.pathfindToPose(
+      //       FlippingUtil.flipFieldPose(sentPos),
+      //     constraints,
+      //     0.00);
+      //     followLeftPath.schedule();
+      //     return;
+      //   }
+      // }
+      executed.schedule();
       dP.set(false);
-      Command followLeftPath = AutoBuilder.pathfindToPose(
-          sentPos,
-          constraints,
-          0.00);
-      followLeftPath.schedule();
     }
   }
 

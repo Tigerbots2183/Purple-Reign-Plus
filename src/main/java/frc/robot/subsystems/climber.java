@@ -32,6 +32,15 @@ public class climber extends SubsystemBase {
 
   }
 
+  public TalonFX GetLeftKraken(){
+    return climberleft;
+  }
+
+  public TalonFX GetRightKraken(){
+    return climberleft;
+  }
+
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

@@ -28,6 +28,7 @@ import frc.robot.Constants.POSES;
 import frc.robot.Constants.StationPOSES;
 import frc.robot.Constants.Swerve;
 import frc.robot.Constants.reefstate;
+import frc.robot.commands.AlignToPose;
 import frc.robot.commands.AlignmentLeftPeg;
 
 import frc.robot.commands.AlignmentRightPeg;
@@ -41,6 +42,7 @@ import frc.robot.commands.hopperCom;
 import frc.robot.commands.manualElevate;
 import frc.robot.commands.removalcom;
 import frc.robot.subsystems.OneShotButton;
+import frc.robot.commands.AlignToPose;
 
 import frc.robot.subsystems.algeremover;
 import frc.robot.subsystems.climber;
@@ -90,7 +92,7 @@ public class RobotContainer {
 
   public CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
   /* Auto Chooser */
-  private final SendableChooser<Command> autoChooser;
+  // private final SendableChooser<Command> autoChooser;
 
   /* Controllers */
   private final Joystick driver = new Joystick(0);
@@ -104,9 +106,9 @@ public class RobotContainer {
   private final JoystickButton musicButton1 = new JoystickButton(driver, XboxController.Button.kStart.value);
   private final JoystickButton musicButton2 = new JoystickButton(driver, 7);
 
-
   /* Driver Buttons */
-  // private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
+  // private final JoystickButton zeroGyro = new JoystickButton(driver,
+  // XboxController.Button.kY.value);
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kY.value);
 
   private final JoystickButton climberButton = new JoystickButton(driver, 2);
@@ -146,25 +148,27 @@ public class RobotContainer {
   public final sensorsandleds s_ledCom = new sensorsandleds();
 
   private final posePlotterUtil posePlotterValues = new posePlotterUtil();
-  private final OneShotButton PAbtn = new OneShotButton("PAbtn", POSES.REEF_A);
-  private final OneShotButton PBbtn = new OneShotButton("PBbtn", POSES.REEF_B);
-  private final OneShotButton PCbtn = new OneShotButton("PCbtn", POSES.REEF_C);
-  private final OneShotButton PDbtn = new OneShotButton("PDbtn", POSES.REEF_D);
-  private final OneShotButton PEbtn = new OneShotButton("PEbtn", POSES.REEF_F);
-  private final OneShotButton PFbtn = new OneShotButton("PFbtn", POSES.REEF_E);
-  private final OneShotButton PGbtn = new OneShotButton("PGbtn", POSES.REEF_G);
-  private final OneShotButton PHbtn = new OneShotButton("PHbtn", POSES.REEF_H);
-  private final OneShotButton PIbtn = new OneShotButton("PIbtn", POSES.REEF_I);
-  private final OneShotButton PJbtn = new OneShotButton("PJbtn", POSES.REEF_J);
-  private final OneShotButton PKbtn = new OneShotButton("PKbtn", POSES.REEF_K);
-  private final OneShotButton PLbtn = new OneShotButton("PLbtn", POSES.REEF_L);
 
-  private final OneShotButton PLTbtn = new OneShotButton("LTbtn", StationPOSES.Left_top_station);
-  private final OneShotButton PLMbtn = new OneShotButton("LMbtn", StationPOSES.Left_mid_station);
-  private final OneShotButton PLBbtn = new OneShotButton("LBbtn", StationPOSES.Left_bot_station);
-  private final OneShotButton PRBbtn = new OneShotButton("RBbtn", StationPOSES.Right_bot_station);
-  private final OneShotButton PRMbtn = new OneShotButton("RMbtn", StationPOSES.Right_mid_station);
-  private final OneShotButton PRTbtn = new OneShotButton("RTbtn", StationPOSES.Right_top_station);
+  private final OneShotButton PAbtn = new OneShotButton("PAbtn", new AlignToPose(POSES.REEF_A, drivetrain));
+  private final OneShotButton PBbtn = new OneShotButton("PBbtn", new AlignToPose(POSES.REEF_B, drivetrain));
+  private final OneShotButton PCbtn = new OneShotButton("PCbtn", new AlignToPose(POSES.REEF_C, drivetrain));
+  private final OneShotButton PDbtn = new OneShotButton("PDbtn", new AlignToPose(POSES.REEF_D, drivetrain));
+  private final OneShotButton PEbtn = new OneShotButton("PEbtn", new AlignToPose(POSES.REEF_E, drivetrain));
+  private final OneShotButton PFbtn = new OneShotButton("PFbtn", new AlignToPose(POSES.REEF_F, drivetrain));
+  private final OneShotButton PGbtn = new OneShotButton("PGbtn", new AlignToPose(POSES.REEF_G, drivetrain));
+  private final OneShotButton PHbtn = new OneShotButton("PHbtn", new AlignToPose(POSES.REEF_H, drivetrain));
+  private final OneShotButton PIbtn = new OneShotButton("PIbtn", new AlignToPose(POSES.REEF_I, drivetrain));
+  private final OneShotButton PJbtn = new OneShotButton("PJbtn", new AlignToPose(POSES.REEF_J, drivetrain));
+  private final OneShotButton PKbtn = new OneShotButton("PKbtn", new AlignToPose(POSES.REEF_K, drivetrain));
+  private final OneShotButton PLbtn = new OneShotButton("PLbtn", new AlignToPose(POSES.REEF_L, drivetrain));
+
+
+  private final OneShotButton PLTbtn = new OneShotButton("LTbtn", new AlignToPose(StationPOSES.Left_top_station, drivetrain));
+  private final OneShotButton PLMbtn = new OneShotButton("LMbtn", new AlignToPose(StationPOSES.Left_mid_station, drivetrain));
+  private final OneShotButton PLBbtn = new OneShotButton("LBbtn", new AlignToPose(StationPOSES.Left_bot_station, drivetrain));
+  private final OneShotButton PRTbtn = new OneShotButton("RTbtn", new AlignToPose(StationPOSES.Right_top_station, drivetrain));
+  private final OneShotButton PRMbtn = new OneShotButton("RMbtn", new AlignToPose(StationPOSES.Right_mid_station, drivetrain));
+  private final OneShotButton PRBbtn = new OneShotButton("RBbtn", new AlignToPose(StationPOSES.Right_bot_station, drivetrain));
 
   private final limelightalign limelightalign = new limelightalign();
 
@@ -189,8 +193,8 @@ public class RobotContainer {
         new autoshootlfour(-.12, s_ElevatorCom, s_CoralCom, false).withTimeout(2));
 
     // Auto Chooser
-    autoChooser = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    // autoChooser = AutoBuilder.buildAutoChooser();
+    // SmartDashboard.putData("Auto Chooser", autoChooser);
     // SmartDashboard.putBooleanArray("reefl4", reefstate.reefl4);
     SmartDashboard.getBoolean("reefl4", reefstate.reefl4[0]);
 
@@ -207,6 +211,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    // Note that X is defined as forward according to WPILib convention,
+    // and Y is defined as to the left according to WPILib convention.
     drivetrain.setDefaultCommand(
         // Drivetrain will execute this command periodically
         drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with
@@ -238,7 +244,8 @@ public class RobotContainer {
     drivetrain.registerTelemetry(logger::telemeterize);
 
     climberButton.whileTrue(new climberCom(-0.4, s_ClimberCom));
-    musicButton1.and(musicButton2).toggleOnTrue(new Tuneage(drivetrain).ignoringDisable(true).withInterruptBehavior(Command.InterruptionBehavior.kCancelSelf));
+    musicButton1.and(musicButton2).toggleOnTrue(new Tuneage("spj.chrp", drivetrain, s_ClimberCom).ignoringDisable(true)
+        .withInterruptBehavior(Command.InterruptionBehavior.kCancelSelf));
     intakeButton.whileTrue(new Intake(-.07, s_CoralCom));
     reverseCoral.whileTrue(new Shoot(-0.125, s_CoralCom));
 

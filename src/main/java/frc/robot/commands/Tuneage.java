@@ -9,7 +9,7 @@ import com.ctre.phoenix6.configs.AudioConfigs;
 // import com.ctre.phoenix6.configs.AudioConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
-
+import frc.robot.subsystems.climber;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -26,14 +26,21 @@ public class Tuneage extends Command {
   TalonFX Swerve6;
   TalonFX Swerve7;
   TalonFX Swerve8;
-  // TalonFX Climb1;
-  // TalonFX Climb2;
-  
+  TalonFX Climb1;
+  TalonFX Climb2;
+
+  climber s_Climber;
+
+  String file;
+
   Orchestra mOrchestra = new Orchestra();
   AudioConfigs configs = new AudioConfigs();//.withAllowMusicDurDisable(true);
-  public Tuneage(CommandSwerveDrivetrain s_Swerve) {
-    
+  public Tuneage(String file, CommandSwerveDrivetrain s_Swerve, climber s_Climber) {
+    this.file = file;
+
     this.s_Swerve= s_Swerve;
+    this.s_Climber = s_Climber;
+
     // .AllowMusicDurDisable(true);
     configs.AllowMusicDurDisable = true;
     Swerve1 = s_Swerve.getModule(0).getDriveMotor();
@@ -45,6 +52,9 @@ public class Tuneage extends Command {
     Swerve6 = s_Swerve.getModule(1).getSteerMotor();
     Swerve7 = s_Swerve.getModule(2).getSteerMotor();
     Swerve8 = s_Swerve.getModule(3).getSteerMotor();
+
+    Climb1 = s_Climber.GetLeftKraken();
+    Climb2 = s_Climber.GetRightKraken();
     
     Swerve1.getConfigurator().apply(configs);
     Swerve2.getConfigurator().apply(configs);
@@ -54,6 +64,9 @@ public class Tuneage extends Command {
     Swerve6.getConfigurator().apply(configs);
     Swerve7.getConfigurator().apply(configs);
     Swerve8.getConfigurator().apply(configs);
+    Climb1.getConfigurator().apply(configs);
+    Climb2.getConfigurator().apply(configs);
+    
     addRequirements(s_Swerve);
 
         // Use addRequirements() here to declare subsystem dependencies.
@@ -62,7 +75,8 @@ public class Tuneage extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    mOrchestra.addInstrument(Climb1);
+    mOrchestra.addInstrument(Climb2);
     mOrchestra.addInstrument(Swerve1);
     mOrchestra.addInstrument(Swerve2);
     mOrchestra.addInstrument(Swerve3);
@@ -72,13 +86,14 @@ public class Tuneage extends Command {
     mOrchestra.addInstrument(Swerve7);
     mOrchestra.addInstrument(Swerve8);
 
-    mOrchestra.loadMusic("spj.chrp");
+    mOrchestra.loadMusic(file);
     mOrchestra.play();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("TUNEAGE ACTIVATED SWERVE DISABLED");
   }
 
   // Called once the command ends or is interrupted.
