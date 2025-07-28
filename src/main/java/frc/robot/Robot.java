@@ -111,7 +111,7 @@ public class Robot extends LoggedRobot {
   public void robotInit() {
     // DO THIS FIRST
     Pathfinding.setPathfinder(new LocalADStarAK());
-    PathfindingCommand.warmupCommand().schedule();
+    // PathfindingCommand.warmupCommand().schedule();
     // ... remaining robot initializatio
     SmartDashboard.putData("Field", m_field);
   
@@ -130,13 +130,24 @@ public class Robot extends LoggedRobot {
      */
     if (kUseLimelight) {
       var driveState = m_robotContainer.drivetrain.getState();
+      
       double headingDeg = driveState.Pose.getRotation().getDegrees();
       double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
-      LimelightHelpers.SetRobotOrientation("", headingDeg, 0, 0, 0, 0, 0);
+      LimelightHelpers.SetRobotOrientation("limelight", headingDeg, 0, 0, 0, 0, 0);
+      LimelightHelpers.SetRobotOrientation("limelight-right", headingDeg, 0, 0, 0, 0, 0);
+
       var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+      var lrMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-right");
+
       if (llMeasurement != null && llMeasurement.tagCount > 0 && Math.abs(omegaRps) < 2.0) {
         m_robotContainer.drivetrain.addVisionMeasurement(llMeasurement.pose, llMeasurement.timestampSeconds);
       }
+
+      if (lrMeasurement != null && lrMeasurement.tagCount > 0 && Math.abs(omegaRps) < 2.0) {
+        m_robotContainer.drivetrain.addVisionMeasurement(lrMeasurement.pose, llMeasurement.timestampSeconds);
+
+      }
+
     }
   }
 
