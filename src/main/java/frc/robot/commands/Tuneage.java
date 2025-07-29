@@ -33,7 +33,7 @@ public class Tuneage extends Command {
 
   String file;
 
-  Orchestra mOrchestra = new Orchestra();
+  public static Orchestra mOrchestra = new Orchestra();
   AudioConfigs configs = new AudioConfigs();//.withAllowMusicDurDisable(true);
   public Tuneage(String file, CommandSwerveDrivetrain s_Swerve, climber s_Climber) {
     this.file = file;
@@ -75,6 +75,7 @@ public class Tuneage extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    mOrchestra.clearInstruments();
     mOrchestra.addInstrument(Climb1);
     mOrchestra.addInstrument(Climb2);
     mOrchestra.addInstrument(Swerve1);
@@ -85,9 +86,10 @@ public class Tuneage extends Command {
     mOrchestra.addInstrument(Swerve6);
     mOrchestra.addInstrument(Swerve7);
     mOrchestra.addInstrument(Swerve8);
-
     mOrchestra.loadMusic(file);
     mOrchestra.play();
+
+    System.out.println("ACTIVATING TUNAGEEEEEE");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

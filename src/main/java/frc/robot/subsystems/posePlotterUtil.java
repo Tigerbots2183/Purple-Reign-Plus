@@ -9,7 +9,7 @@ import edu.wpi.first.networktables.*;
 /** Add your docs here. */
 public class posePlotterUtil {
     StringSubscriber string_Sub;
-    NetworkTableInstance inst = NetworkTableInstance.getDefault(); // may cause issues
+    NetworkTableInstance inst = NetworkTableInstance.getDefault(); // may cause issues (hasnt so far)
     NetworkTable datatable = inst.getTable("touchboard");
 
     public String getAutoString() {

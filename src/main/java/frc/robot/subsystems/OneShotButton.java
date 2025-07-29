@@ -43,7 +43,6 @@ public class OneShotButton extends SubsystemBase {
       3
 
   );
-  Command followLeftPath;
 
   public OneShotButton(String buttonName, Command executed) {
 

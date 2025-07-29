@@ -52,7 +52,7 @@ public class Robot extends LoggedRobot {
 
   private Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  public RobotContainer m_robotContainer;
 
   private final boolean kUseLimelight = true;
 

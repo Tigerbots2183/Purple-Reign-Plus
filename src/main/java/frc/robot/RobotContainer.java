@@ -63,6 +63,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.JukeboxUtil;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 /**
@@ -277,6 +278,8 @@ public class RobotContainer {
     manual.whileTrue(new manualElevate(s_ElevatorCom, copilot));
     // manual2.whileTrue(new hopperCom(.5,s_HopperCom, copilot));
     // manual.whileTrue(new removalcom(.5,s_algieCom, copilot));
+
+    new JukeboxUtil(drivetrain, s_ClimberCom);
   }
 
   /**
