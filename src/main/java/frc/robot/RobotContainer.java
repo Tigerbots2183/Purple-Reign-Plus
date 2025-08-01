@@ -41,17 +41,23 @@ import frc.robot.commands.elevatorCom;
 import frc.robot.commands.hopperCom;
 import frc.robot.commands.manualElevate;
 import frc.robot.commands.removalcom;
-import frc.robot.subsystems.OneShotButton;
 import frc.robot.commands.AlignToPose;
 
-import frc.robot.subsystems.algeremover;
+import frc.robot.subsystems.algaeremover;
 import frc.robot.subsystems.climber;
 import frc.robot.subsystems.coral;
 import frc.robot.subsystems.elevator;
 import frc.robot.subsystems.hopper;
 import frc.robot.subsystems.limelightalign;
-import frc.robot.subsystems.posePlotterUtil;
 import frc.robot.subsystems.sensorsandleds;
+import frc.robot.subsystems.Touchboard.ActionButton;
+import frc.robot.subsystems.Touchboard.DoubleActionButton;
+
+import frc.robot.subsystems.Touchboard.AxisKnob;
+import frc.robot.subsystems.Touchboard.JukeboxUtil;
+import frc.robot.subsystems.Touchboard.OneShotButton;
+import frc.robot.subsystems.Touchboard.posePlotterUtil;
+
 import java.security.DrbgParameters.NextBytes;
 import java.util.HashMap;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -63,7 +69,6 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.JukeboxUtil;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 /**
@@ -104,13 +109,12 @@ public class RobotContainer {
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-  private final JoystickButton musicButton1 = new JoystickButton(driver, XboxController.Button.kStart.value);
-  private final JoystickButton musicButton2 = new JoystickButton(driver, 7);
+  
 
   /* Driver Buttons */
-  // private final JoystickButton zeroGyro = new JoystickButton(driver,
+  // private final JoystickButton setHeading = new JoystickButton(driver,
   // XboxController.Button.kY.value);
-  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kY.value);
+  private final JoystickButton setHeading = new JoystickButton(driver, XboxController.Button.kY.value);
 
   private final JoystickButton climberButton = new JoystickButton(driver, 2);
   private final JoystickButton rclimberButton = new JoystickButton(driver, 3);
@@ -145,7 +149,7 @@ public class RobotContainer {
   private final elevator s_ElevatorCom = new elevator();
   // private final elevator s_ = new elevator();
   private final hopper s_HopperCom = new hopper();
-  private final algeremover s_algieCom = new algeremover();
+  private final algaeremover s_algaeCom = new algaeremover();
   public final sensorsandleds s_ledCom = new sensorsandleds();
 
   private final posePlotterUtil posePlotterValues = new posePlotterUtil();
@@ -164,7 +168,7 @@ public class RobotContainer {
   private final OneShotButton PLbtn = new OneShotButton("PLbtn", new AlignToPose(POSES.REEF_L, drivetrain));
 
 
-  private final OneShotButton PLTbtn = new OneShotButton("LTbtn", new AlignToPose(StationPOSES.Left_top_station, drivetrain));
+  private final OneShotButton PLTbtm = new OneShotButton("LTbtn", new AlignToPose(StationPOSES.Left_top_station, drivetrain));
   private final OneShotButton PLMbtn = new OneShotButton("LMbtn", new AlignToPose(StationPOSES.Left_mid_station, drivetrain));
   private final OneShotButton PLBbtn = new OneShotButton("LBbtn", new AlignToPose(StationPOSES.Left_bot_station, drivetrain));
   private final OneShotButton PRTbtn = new OneShotButton("RTbtn", new AlignToPose(StationPOSES.Right_top_station, drivetrain));
@@ -173,31 +177,31 @@ public class RobotContainer {
 
   private final limelightalign limelightalign = new limelightalign();
 
+  private final ActionButton shooterButtonAction = new ActionButton("Shoot", new Shoot(0.07, s_CoralCom));
+  private final ActionButton reverseButtonAction = new ActionButton("RevIntake", new Shoot(-0.14, s_CoralCom));
+  private final ActionButton IntakeButtonAction = new ActionButton("Intake", new Intake(-0.07, s_CoralCom));
+
+
+  private final DoubleActionButton L4btn = new DoubleActionButton("L4btn", new elevatorCom(3, s_ElevatorCom, false), new elevatorCom(3, s_ElevatorCom, true));
+  private final DoubleActionButton L3btn = new DoubleActionButton("L3btn", new elevatorCom(2, s_ElevatorCom, false), new elevatorCom(2, s_ElevatorCom, true));
+  private final DoubleActionButton L2btn = new DoubleActionButton("L2btn", new elevatorCom(1, s_ElevatorCom, false), new elevatorCom(1, s_ElevatorCom, true));
+
+  
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
+
+  private final AxisKnob AlgaeAxis = new AxisKnob("ActuatorAxis");
+  
   public RobotContainer() {
     // Note that X is defined as forward according to WPILib convention,
     // and Y is defined as to the left according to WPILib convention.
-
+    
+    AlgaeAxis.setCommand(()-> new removalcom(AlgaeAxis.getValue(), s_algaeCom));
     // Configure the button bindings
     configureButtonBindings();
-    NamedCommands.registerCommand("coral", new Intake(-.075, s_CoralCom).withTimeout(.5));
-    NamedCommands.registerCommand("coralfast", new Intake(-.075, s_CoralCom).withTimeout(.15));
-    NamedCommands.registerCommand("coralplace", new Shoot(-0.12, s_CoralCom).withTimeout(.3));
-    NamedCommands.registerCommand("lfour", new elevatorCom(3, s_ElevatorCom, false).withTimeout(2));
-    NamedCommands.registerCommand("lfourdown", new elevatorCom(3, s_ElevatorCom, true).withTimeout(2.2));
-    NamedCommands.registerCommand("l3", new elevatorCom(2, s_ElevatorCom, true).withTimeout(1));
-    NamedCommands.registerCommand("l2", new elevatorCom(1, s_ElevatorCom, true).withTimeout(1));
-    NamedCommands.registerCommand("lfourfast", new elevatorCom(3, s_ElevatorCom, false).withTimeout(1.682));
-    NamedCommands.registerCommand("lfourcorrect",
-        new autoshootlfour(-.12, s_ElevatorCom, s_CoralCom, false).withTimeout(2));
 
-    // Auto Chooser
-    // autoChooser = AutoBuilder.buildAutoChooser();
-    // SmartDashboard.putData("Auto Chooser", autoChooser);
-    // SmartDashboard.putBooleanArray("reefl4", reefstate.reefl4);
-    SmartDashboard.getBoolean("reefl4", reefstate.reefl4[0]);
 
     // import miracle.java
     // SmartDashboard.putData(reefl4, reefstate.reefl4);
@@ -212,6 +216,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
     // Note that X is defined as forward according to WPILib convention,
     // and Y is defined as to the left according to WPILib convention.
     drivetrain.setDefaultCommand(
@@ -228,25 +233,33 @@ public class RobotContainer {
     RobotModeTriggers.disabled().whileTrue(
         drivetrain.applyRequest(() -> idle).ignoringDisable(true));
 
-    // joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
-    joystick.y().whileTrue(drivetrain
-        .applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
-
-    // Run SysId routines when holding back/start and X/Y.
-    // Note that each routine should be run exactly once in a single log.
-    joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-    joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-    joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-    joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
     // reset the field-centric heading on left bumper press
-    robotCentric.onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+
+
+    setHeading.onTrue(drivetrain.runOnce(()-> {
+      if (DriverStation.getAlliance().isPresent()) {
+        if (DriverStation.getAlliance().get() == Alliance.Red) {
+          drivetrain.resetRotation(Rotation2d.fromDegrees(90));
+        }else{
+          drivetrain.resetRotation(Rotation2d.fromDegrees(-90));
+
+        }
+      }else{
+        drivetrain.resetRotation(Rotation2d.fromDegrees(-90));
+
+      }
+    }).ignoringDisable(true));
+        
+    
+    
+    //.onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
     drivetrain.registerTelemetry(logger::telemeterize);
 
-    climberButton.whileTrue(new climberCom(-0.4, s_ClimberCom));
-    musicButton1.and(musicButton2).toggleOnTrue(new Tuneage("spj.chrp", drivetrain, s_ClimberCom).ignoringDisable(true)
-        .withInterruptBehavior(Command.InterruptionBehavior.kCancelSelf));
+    // climberButton.whileTrue(new climberCom(IntakeTestButton.getValue(), s_ClimberCom));
+    // climberButton.whileTrue(new Intake(()->IntakeTestButton.value, s_CoralCom));
+
     intakeButton.whileTrue(new Intake(-.07, s_CoralCom));
     reverseCoral.whileTrue(new Shoot(-0.125, s_CoralCom));
 
@@ -257,8 +270,8 @@ public class RobotContainer {
     uphopButton.whileTrue(new hopperCom(0.5, s_HopperCom));
     downhopButton.whileTrue(new hopperCom(-.5, s_HopperCom));
 
-    acuatorin.whileTrue(new removalcom(-1, s_algieCom));
-    acuatorout.whileTrue(new removalcom(1, s_algieCom));
+    acuatorin.whileTrue(new removalcom(-1, s_algaeCom));
+    acuatorout.whileTrue(new removalcom(1, s_algaeCom));
 
     // upButton.whileTrue(new elevatorCom(-0.4, 1, s_Elevator, false));
     l2Button.whileTrue(new elevatorCom(1, s_ElevatorCom, false));
@@ -277,7 +290,7 @@ public class RobotContainer {
 
     manual.whileTrue(new manualElevate(s_ElevatorCom, copilot));
     // manual2.whileTrue(new hopperCom(.5,s_HopperCom, copilot));
-    // manual.whileTrue(new removalcom(.5,s_algieCom, copilot));
+    // manual.whileTrue(new removalcom(.5,s_algaeCom, copilot));
 
     new JukeboxUtil(drivetrain, s_ClimberCom);
   }

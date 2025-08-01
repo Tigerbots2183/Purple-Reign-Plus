@@ -5,15 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.algeremover;
+import frc.robot.subsystems.algaeremover;
 
 public class removalcom extends Command {
   double speed;
-  algeremover s_algieCom;
+  algaeremover s_algieCom;
    
 
   //This moves a linear actuator in and out, manually
-  public removalcom(double speed, algeremover s_algieCom) {
+  public removalcom(double speed, algaeremover s_algieCom) {
      addRequirements (s_algieCom);
     this.s_algieCom = s_algieCom;
     this.speed = speed;

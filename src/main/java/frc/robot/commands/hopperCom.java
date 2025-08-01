@@ -20,10 +20,12 @@ public class hopperCom extends Command {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    System.out.println(speed);
+
+  }
   @Override
   public void execute() {
-    
       s_hopperCom.hop(speed);
     
   }
