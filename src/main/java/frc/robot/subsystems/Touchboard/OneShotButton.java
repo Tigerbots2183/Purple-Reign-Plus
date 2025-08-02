@@ -48,7 +48,7 @@ public class OneShotButton extends SubsystemBase {
   public void periodic() {
     boolean value = dT.get();
 
-    if (value != prev) {
+    if (value != prev && value == true) {
       executed.schedule();
       dP.set(false);
     }

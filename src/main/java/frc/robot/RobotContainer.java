@@ -177,8 +177,8 @@ public class RobotContainer {
 
   private final limelightalign limelightalign = new limelightalign();
 
-  private final ActionButton shooterButtonAction = new ActionButton("Shoot", new Shoot(0.07, s_CoralCom));
-  private final ActionButton reverseButtonAction = new ActionButton("RevIntake", new Shoot(-0.14, s_CoralCom));
+  private final ActionButton shooterButtonAction = new ActionButton("Shoot", new Shoot(-0.07, s_CoralCom));
+  private final ActionButton reverseButtonAction = new ActionButton("RevIntake", new Shoot(0.14, s_CoralCom));
   private final ActionButton IntakeButtonAction = new ActionButton("Intake", new Intake(-0.07, s_CoralCom));
 
 

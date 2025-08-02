@@ -4,12 +4,15 @@
 
 package frc.robot.commands;
 
+import javax.sound.midi.Patch;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.util.FlippingUtil;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -32,15 +35,10 @@ public class AlignToPose extends Command {
   @Override
   public void initialize() {
     PathConstraints constraints2 = new PathConstraints(
-
-        5,
-
-        3,
-
+        2,
+        0.75,
         4,
-
         3
-
     );
 
     if (DriverStation.getAlliance().isPresent()) {
@@ -70,6 +68,7 @@ public class AlignToPose extends Command {
   @Override
   public void end(boolean interrupted) {
     PathCommand.cancel();
+    PathCommand = Commands.none();
   }
 
   @Override
