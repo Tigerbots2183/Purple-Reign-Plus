@@ -135,7 +135,6 @@ public class RobotContainer {
 
   private final JoystickButton align = new JoystickButton(driver, 5);
   private final JoystickButton alignr = new JoystickButton(driver, 6);
-  // private final POVButton leftcoralalign = new POVButton(driver, 270);
   // private final JoystickButton autodrive = new JoystickButton(driver, 3);
 
   private final JoystickButton manual = new JoystickButton(copilot, 1);
@@ -154,26 +153,26 @@ public class RobotContainer {
 
   private final posePlotterUtil posePlotterValues = new posePlotterUtil();
 
-  private final OneShotButton PAbtn = new OneShotButton("PAbtn", new AlignToPose(POSES.REEF_A, drivetrain));
-  private final OneShotButton PBbtn = new OneShotButton("PBbtn", new AlignToPose(POSES.REEF_B, drivetrain));
-  private final OneShotButton PCbtn = new OneShotButton("PCbtn", new AlignToPose(POSES.REEF_C, drivetrain));
-  private final OneShotButton PDbtn = new OneShotButton("PDbtn", new AlignToPose(POSES.REEF_D, drivetrain));
-  private final OneShotButton PEbtn = new OneShotButton("PEbtn", new AlignToPose(POSES.REEF_E, drivetrain));
-  private final OneShotButton PFbtn = new OneShotButton("PFbtn", new AlignToPose(POSES.REEF_F, drivetrain));
-  private final OneShotButton PGbtn = new OneShotButton("PGbtn", new AlignToPose(POSES.REEF_G, drivetrain));
-  private final OneShotButton PHbtn = new OneShotButton("PHbtn", new AlignToPose(POSES.REEF_H, drivetrain));
-  private final OneShotButton PIbtn = new OneShotButton("PIbtn", new AlignToPose(POSES.REEF_I, drivetrain));
-  private final OneShotButton PJbtn = new OneShotButton("PJbtn", new AlignToPose(POSES.REEF_J, drivetrain));
-  private final OneShotButton PKbtn = new OneShotButton("PKbtn", new AlignToPose(POSES.REEF_K, drivetrain));
-  private final OneShotButton PLbtn = new OneShotButton("PLbtn", new AlignToPose(POSES.REEF_L, drivetrain));
+  private final OneShotButton PAbtn = new OneShotButton("PAbtn",() -> new AlignToPose(()->POSES.REEF_A, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PBbtn = new OneShotButton("PBbtn",() -> new AlignToPose(()->POSES.REEF_B, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PCbtn = new OneShotButton("PCbtn",() -> new AlignToPose(()->POSES.REEF_C, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PDbtn = new OneShotButton("PDbtn",() -> new AlignToPose(()->POSES.REEF_D, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PEbtn = new OneShotButton("PEbtn",() -> new AlignToPose(()->POSES.REEF_E, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PFbtn = new OneShotButton("PFbtn",() -> new AlignToPose(()->POSES.REEF_F, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PGbtn = new OneShotButton("PGbtn",() -> new AlignToPose(()->POSES.REEF_G, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PHbtn = new OneShotButton("PHbtn",() -> new AlignToPose(()->POSES.REEF_H, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PIbtn = new OneShotButton("PIbtn",() -> new AlignToPose(()->POSES.REEF_I, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PJbtn = new OneShotButton("PJbtn",() -> new AlignToPose(()->POSES.REEF_J, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PKbtn = new OneShotButton("PKbtn",() -> new AlignToPose(()->POSES.REEF_K, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PLbtn = new OneShotButton("PLbtn",() -> new AlignToPose(()->POSES.REEF_L, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
 
-  private final OneShotButton PLTbtm = new OneShotButton("LTbtn", new AlignToPose(StationPOSES.Left_top_station, drivetrain));
-  private final OneShotButton PLMbtn = new OneShotButton("LMbtn", new AlignToPose(StationPOSES.Left_mid_station, drivetrain));
-  private final OneShotButton PLBbtn = new OneShotButton("LBbtn", new AlignToPose(StationPOSES.Left_bot_station, drivetrain));
-  private final OneShotButton PRTbtn = new OneShotButton("RTbtn", new AlignToPose(StationPOSES.Right_top_station, drivetrain));
-  private final OneShotButton PRMbtn = new OneShotButton("RMbtn", new AlignToPose(StationPOSES.Right_mid_station, drivetrain));
-  private final OneShotButton PRBbtn = new OneShotButton("RBbtn", new AlignToPose(StationPOSES.Right_bot_station, drivetrain));
+  private final OneShotButton PLTbtm = new OneShotButton("LTbtn",() -> new AlignToPose(()->StationPOSES.Left_top_station, drivetrain));
+  private final OneShotButton PLMbtn = new OneShotButton("LMbtn",() -> new AlignToPose(()->StationPOSES.Left_mid_station, drivetrain));
+  private final OneShotButton PLBbtn = new OneShotButton("LBbtn",() -> new AlignToPose(()->StationPOSES.Left_bot_station, drivetrain));
+  private final OneShotButton PRTbtn = new OneShotButton("RTbtn",() -> new AlignToPose(()->StationPOSES.Right_top_station, drivetrain));
+  private final OneShotButton PRMbtn = new OneShotButton("RMbtn",() -> new AlignToPose(()->StationPOSES.Right_mid_station, drivetrain));
+  private final OneShotButton PRBbtn = new OneShotButton("RBbtn",() -> new AlignToPose(()->StationPOSES.Right_bot_station, drivetrain));
 
   private final limelightalign limelightalign = new limelightalign();
 
@@ -276,6 +275,11 @@ public class RobotContainer {
     // upButton.whileTrue(new elevatorCom(-0.4, 1, s_Elevator, false));
     l2Button.whileTrue(new elevatorCom(1, s_ElevatorCom, false));
     l2Button.onFalse(new elevatorCom(1, s_ElevatorCom, true));
+
+
+    align.whileTrue(new AlignmentLeftPeg(drivetrain));
+    alignr.whileTrue(new AlignmentRightPeg(drivetrain));
+    
 
     // l3Button.whileTrue(new autoshootlthree(-.09,2, s_ElevatorCom,
     // s_CoralCom,false));

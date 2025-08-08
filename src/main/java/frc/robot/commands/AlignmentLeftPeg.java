@@ -6,6 +6,7 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.util.FlippingUtil;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants.POSES;
@@ -15,7 +16,6 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class AlignmentLeftPeg extends Command {
     CommandSwerveDrivetrain s_Swerve;
-    private SwerveRequest.RobotCentric driveRequest;
 
     // alignment for right peg, references poses constant
     boolean isFinished = false;
@@ -29,6 +29,7 @@ public class AlignmentLeftPeg extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        addRequirements(s_Swerve);
 
         System.out.println("leftBranchPathfinding method called.");
         double aprilTagID = LimelightHelpers.getFiducialID("limelight");
@@ -37,63 +38,74 @@ public class AlignmentLeftPeg extends Command {
         switch ((int) aprilTagID) {
             case 17: {
                 Targetpose = POSES.REEF_C;
+
+
             }
                 break;
 
             case 18: {
                 Targetpose = POSES.REEF_A;
+
             }
                 break;
 
             case 19: {
                 Targetpose = POSES.REEF_K;
+
             }
                 break;
 
             case 20: {
                 Targetpose = POSES.REEF_I;
+
             }
                 break;
 
             case 21: {
                 Targetpose = POSES.REEF_G;
+
             }
                 break;
 
             case 22: {
                 Targetpose = POSES.REEF_E;
+
             }
                 break;
 
             // Red Paths
             case 6: {
                 Targetpose = FlippingUtil.flipFieldPose(POSES.REEF_K);
+
             }
                 break;
 
             case 7: {
                 Targetpose = FlippingUtil.flipFieldPose(POSES.REEF_A);
+
             }
                 break;
 
             case 8: {
                 Targetpose = FlippingUtil.flipFieldPose(POSES.REEF_C);
+
             }
                 break;
 
             case 9: {
                 Targetpose = FlippingUtil.flipFieldPose(POSES.REEF_E);
+
             }
                 break;
 
             case 10: {
                 Targetpose = FlippingUtil.flipFieldPose(POSES.REEF_G);
+
             }
                 break;
 
             case 11: {
                 Targetpose = FlippingUtil.flipFieldPose(POSES.REEF_I);
-
             }
                 break;
 
@@ -108,19 +120,13 @@ public class AlignmentLeftPeg extends Command {
 
     @Override
     public void execute() {
-        addRequirements(s_Swerve);
-
         PathConstraints constraints = new PathConstraints(
-
-        5,
-
-        3,
-
-        4,
-
-        3
-
+            2,
+            0.75,
+            4,
+            3
         );
+    
 
         if (Targetpose != null) {
 
@@ -128,6 +134,7 @@ public class AlignmentLeftPeg extends Command {
                     Targetpose,
                     constraints,
                     0.00);
+            followLeftPath.schedule();
             followLeftPath.schedule();
 
         }
