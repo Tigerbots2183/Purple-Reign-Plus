@@ -52,10 +52,12 @@ import frc.robot.subsystems.limelightalign;
 import frc.robot.subsystems.sensorsandleds;
 import frc.robot.subsystems.Touchboard.ActionButton;
 import frc.robot.subsystems.Touchboard.DoubleActionButton;
-
+import frc.robot.subsystems.Touchboard.Dropdown;
 import frc.robot.subsystems.Touchboard.AxisKnob;
 import frc.robot.subsystems.Touchboard.JukeboxUtil;
+import frc.robot.subsystems.Touchboard.NumberComponent;
 import frc.robot.subsystems.Touchboard.OneShotButton;
+import frc.robot.subsystems.Touchboard.ToggleButton;
 import frc.robot.subsystems.Touchboard.posePlotterUtil;
 
 import java.security.DrbgParameters.NextBytes;
@@ -186,19 +188,17 @@ public class RobotContainer {
   private final DoubleActionButton L3btn = new DoubleActionButton("L3btn", new elevatorCom(2, s_ElevatorCom, false), new elevatorCom(2, s_ElevatorCom, true));
   private final DoubleActionButton L2btn = new DoubleActionButton("L2btn", new elevatorCom(1, s_ElevatorCom, false), new elevatorCom(1, s_ElevatorCom, true));
 
-  
-
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
 
   private final AxisKnob AlgaeAxis = new AxisKnob("ActuatorAxis");
-  
+  private final ToggleButton toggleTester = new ToggleButton("TestToggleButton", new hopperCom(1, s_HopperCom));
+
   public RobotContainer() {
     // Note that X is defined as forward according to WPILib convention,
     // and Y is defined as to the left according to WPILib convention.
-    
-    AlgaeAxis.setCommand(()-> new removalcom(AlgaeAxis.getValue(), s_algaeCom));
+
     // Configure the button bindings
     configureButtonBindings();
 
@@ -216,7 +216,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
+    AlgaeAxis.setCommand(()-> new removalcom(AlgaeAxis.getValue(), s_algaeCom));
     // Note that X is defined as forward according to WPILib convention,
     // and Y is defined as to the left according to WPILib convention.
     drivetrain.setDefaultCommand(

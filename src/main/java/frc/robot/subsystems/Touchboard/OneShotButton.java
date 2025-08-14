@@ -45,6 +45,11 @@ public class OneShotButton extends SubsystemBase {
     this.executed=executed;
   }
 
+  public boolean getValue() {
+    return dT.get();
+  } 
+
+
   public void periodic() {
     boolean value = dT.get();
 
