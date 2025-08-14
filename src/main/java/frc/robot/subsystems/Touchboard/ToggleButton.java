@@ -12,7 +12,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ActionButton extends SubsystemBase {
+public class ToggleButton extends SubsystemBase {
  // This is for our touchscreen buttonboard that I made, once network table topic
   // is set to true by the
   // touchboard, the subscriber reads it, goes to the pose, and sets it back to
@@ -25,7 +25,7 @@ public class ActionButton extends SubsystemBase {
   boolean prev = false;
   Command executed;
 
-  public ActionButton(String buttonName, Command executed) {
+  public ToggleButton(String buttonName, Command executed) {
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     // get the subtable called "touchboard"
     NetworkTable datatable = inst.getTable("touchboard");

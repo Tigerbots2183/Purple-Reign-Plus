@@ -24,6 +24,7 @@ public class AlignToPose extends Command {
   private CommandSwerveDrivetrain s_Drivetrain;
   private Supplier<Command> PathCommand = ()->Commands.none();
 
+
   public AlignToPose(Supplier<Pose2d> currentPose, CommandSwerveDrivetrain s_Drivetrain) {
     PathCommand = ()->Commands.none();
     this.currentPose = currentPose.get();

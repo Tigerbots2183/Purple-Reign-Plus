@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import java.util.function.Supplier;
 import edu.wpi.first.wpilibj2.command.Commands;
 
-public class AxisKnob extends SubsystemBase {
+public class NumberComponent extends SubsystemBase {
   /** Creates a new AxisKnob. */
   public double value = 0;
   String topic;
@@ -24,7 +24,7 @@ public class AxisKnob extends SubsystemBase {
   double prev = 0;
   Supplier<Command> passedCommand = () -> Commands.none();
 
-  public AxisKnob(String topic) {
+  public NumberComponent(String topic) {
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     // get the subtable called "touchboard"
     NetworkTable datatable = inst.getTable("touchboard");

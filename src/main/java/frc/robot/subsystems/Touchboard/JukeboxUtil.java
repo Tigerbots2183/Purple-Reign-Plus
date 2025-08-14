@@ -44,6 +44,10 @@ public class JukeboxUtil extends SubsystemBase {
   
   final BooleanSubscriber musicIsFinishedSubscriber;
   final BooleanPublisher musicIsFinishedPublisher;
+
+  final BooleanSubscriber nextSongSubscriber;
+  final BooleanPublisher nextSongPublisher;
+
   private Boolean prev = false;
   
   final StringSubscriber currentMusicFileSubscriber;
@@ -78,6 +82,9 @@ public class JukeboxUtil extends SubsystemBase {
     
     musicIsFinishedPublisher = datatable.getBooleanTopic("musicIsFinished").publish();
     musicIsFinishedSubscriber = datatable.getBooleanTopic("musicIsFinished").subscribe(false);
+
+    nextSongPublisher =  datatable.getBooleanTopic("goToNextSong").publish();
+    nextSongSubscriber = datatable.getBooleanTopic("goToNextSong").subscribe(false);
 
   }
 
@@ -126,7 +133,7 @@ public class JukeboxUtil extends SubsystemBase {
 
 
     }
-    if(Tuneage.mOrchestra.isPlaying() == false && prev == false){
+    if(Tuneage.mOrchestra.isPlaying() == false && prev == false && nextSongSubscriber.get()){
       musicIsFinishedPublisher.set(true);
       System.out.println("Music Finished");
       prev = true;
