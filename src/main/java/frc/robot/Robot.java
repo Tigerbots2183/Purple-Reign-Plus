@@ -111,7 +111,7 @@ public class Robot extends LoggedRobot {
   public void robotInit() {
     // DO THIS FIRST
     Pathfinding.setPathfinder(new LocalADStarAK());
-    // PathfindingCommand.warmupCommand().schedule();
+    PathfindingCommand.warmupCommand().schedule();
     // ... remaining robot initializatio
     SmartDashboard.putData("Field", m_field);
   

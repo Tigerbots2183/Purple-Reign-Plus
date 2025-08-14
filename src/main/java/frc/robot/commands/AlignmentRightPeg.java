@@ -4,6 +4,7 @@ import org.w3c.dom.ranges.DocumentRange;
 
 import com.ctre.phoenix6.swerve.SwerveDrivetrain;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.util.FlippingUtil;
 
@@ -17,7 +18,6 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class AlignmentRightPeg extends Command {
     CommandSwerveDrivetrain s_Swerve;
-    private SwerveRequest.RobotCentric driveRequest;
 
     // alignment for right peg, references poses constant
     boolean isFinished = false;
@@ -113,12 +113,11 @@ public class AlignmentRightPeg extends Command {
     public void execute() {
 
         PathConstraints constraints = new PathConstraints(
-                5,
-                3,
-                4,
-                3
-        );
-        driveRequest.withVelocityX(0).withVelocityY(0);
+        2,
+        0.75,
+        4,
+        3
+    );
         
 
         // = new PathConstraints(
@@ -134,12 +133,14 @@ public class AlignmentRightPeg extends Command {
         // );
 
         if (Targetpose != null) {
-
+        
             Command followLeftPath = AutoBuilder.pathfindToPose(
                     Targetpose,
                     constraints,
-                    0.01);
+                    0.00);
             followLeftPath.schedule();
+            followLeftPath.schedule();
+
 
         }
     }
@@ -147,7 +148,6 @@ public class AlignmentRightPeg extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-
         cancel();
 
     }

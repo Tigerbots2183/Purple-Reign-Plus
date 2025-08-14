@@ -5,6 +5,7 @@
 package frc.robot.subsystems.Touchboard;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.AlignToPose;
 
@@ -15,7 +16,7 @@ import com.pathplanner.lib.util.FlippingUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.DriverStation;
-
+import java.util.function.Supplier;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 public class OneShotButton extends SubsystemBase {
@@ -31,9 +32,9 @@ public class OneShotButton extends SubsystemBase {
   final BooleanPublisher dP;
   String buttonName;
   boolean prev = false;
-  Command executed;
-
-  public OneShotButton(String buttonName, Command executed) {
+  Supplier<Command> executed = ()->Commands.none();
+  
+  public OneShotButton(String buttonName, Supplier<Command> executed) {
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     // get the subtable called "touchboard"
     NetworkTable datatable = inst.getTable("touchboard");
@@ -53,8 +54,8 @@ public class OneShotButton extends SubsystemBase {
   public void periodic() {
     boolean value = dT.get();
 
-    if (value != prev) {
-      executed.schedule();
+    if (value != prev && value == true) {
+      executed.get().schedule();
       dP.set(false);
     }
   }
