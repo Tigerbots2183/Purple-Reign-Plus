@@ -36,7 +36,7 @@ import frc.robot.commands.autoshootlfour;
 import frc.robot.commands.climberCom;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Shoot;
-import frc.robot.commands.Tuneage;
+import frc.robot.commands.MusicCommand;
 import frc.robot.commands.elevatorCom;
 import frc.robot.commands.hopperCom;
 import frc.robot.commands.manualElevate;
@@ -364,10 +364,8 @@ public class RobotContainer {
     // new PathConstraints(null, null, null, null)
 
     String startString = posePlotterValues.getAutoString();
-    // String startString = posePlotterValues.getAutoStringWithFallback(); //ENABLE
-    // FOR COMP I SWEAR PLEASE ENABLE FOR COMP YOU WILL FORGET SO
-    // ENABLE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+    // String startString = posePlotterValues.getAutoStringWithFallback();
+    
     System.out.println(startString);
     String[] stringArr = startString.split("-");
     Command cmd = Commands.none();

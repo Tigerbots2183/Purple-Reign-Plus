@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
-import frc.robot.commands.Tuneage;
+import frc.robot.commands.MusicCommand;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.climber;
 
@@ -96,7 +96,7 @@ public class JukeboxUtil extends SubsystemBase {
   public void periodic() {
 
     if(newFileSubscriber.get()){
-      Command musicCom = new Tuneage(currentMusicFileSubscriber.get(), driveMotors, climberMotors);
+      Command musicCom = new MusicCommand(currentMusicFileSubscriber.get(), driveMotors, climberMotors);
       musicCom.schedule();
       musicIsFinishedPublisher.set(false);
       
@@ -107,33 +107,33 @@ public class JukeboxUtil extends SubsystemBase {
     }
 
     if(stopSubscriber.get()){
-      Tuneage.mOrchestra.stop();
+      MusicCommand.mOrchestra.stop();
       stopPublisher.set(false);
       System.out.println("MusicStopped");
     }
 
     if(pauseSubscriber.get()){
-      Tuneage.mOrchestra.pause();
+      MusicCommand.mOrchestra.pause();
       pausePublisher.set(false);
       System.out.println("MusicPaused");
 
     }
 
     if(playSubscriber.get()){
-      Tuneage.mOrchestra.play();
+      MusicCommand.mOrchestra.play();
       playPublisher.set(false);
       System.out.println("MusicPlayed");
     }
 
     if(restartSubscriber.get()){
-      Command musicCom = new Tuneage(currentMusicFileSubscriber.get(), driveMotors, climberMotors);
+      Command musicCom = new MusicCommand(currentMusicFileSubscriber.get(), driveMotors, climberMotors);
       musicCom.schedule();
       System.out.println("restarted");
       restartPublisher.set(false);
 
 
     }
-    if(Tuneage.mOrchestra.isPlaying() == false && prev == false && nextSongSubscriber.get()){
+    if(MusicCommand.mOrchestra.isPlaying() == false && prev == false && nextSongSubscriber.get()){
       musicIsFinishedPublisher.set(true);
       System.out.println("Music Finished");
       prev = true;
