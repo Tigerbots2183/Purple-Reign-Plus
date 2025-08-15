@@ -36,7 +36,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.POSES;
 import frc.robot.subsystems.*;
-import frc.robot.commands.Tuneage;
+import frc.robot.commands.MusicCommand;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to

@@ -13,8 +13,8 @@ import frc.robot.subsystems.climber;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class Tuneage extends Command {
-  /** Creates a new Tuneage. */
+public class MusicCommand extends Command {
+  /** Creates a new MusicCommand. */
 
   
   CommandSwerveDrivetrain s_Swerve;
@@ -35,7 +35,7 @@ public class Tuneage extends Command {
 
   public static Orchestra mOrchestra = new Orchestra();
   AudioConfigs configs = new AudioConfigs();//.withAllowMusicDurDisable(true);
-  public Tuneage(String file, CommandSwerveDrivetrain s_Swerve, climber s_Climber) {
+  public MusicCommand(String file, CommandSwerveDrivetrain s_Swerve, climber s_Climber) {
     this.file = file;
 
     this.s_Swerve= s_Swerve;
@@ -89,13 +89,13 @@ public class Tuneage extends Command {
     mOrchestra.loadMusic(file);
     mOrchestra.play();
 
-    System.out.println("ACTIVATING TUNAGEEEEEE");
+    System.out.println("ACTIVATING MUSICCOMMAND");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("TUNEAGE ACTIVATED SWERVE DISABLED");
+    System.out.println("MusicCommand ACTIVATED SWERVE DISABLED");
   }
 
   // Called once the command ends or is interrupted.
