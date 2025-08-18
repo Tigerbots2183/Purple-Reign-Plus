@@ -36,7 +36,6 @@ import frc.robot.commands.autoshootlfour;
 import frc.robot.commands.climberCom;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Shoot;
-import frc.robot.commands.MusicCommand;
 import frc.robot.commands.elevatorCom;
 import frc.robot.commands.hopperCom;
 import frc.robot.commands.manualElevate;
@@ -227,7 +226,22 @@ public class RobotContainer {
     posePlotterUtil.addCommandPair("T", ()-> new Intake(-.07, s_CoralCom));
     posePlotterUtil.addCommandPair("S", ()-> new Shoot(-.12, s_CoralCom));
 
+    JukeboxUtil jukebox = new JukeboxUtil();
+    jukebox.addTalon(drivetrain.getModule(0).getDriveMotor());
+    jukebox.addTalon(drivetrain.getModule(1).getDriveMotor());
+    jukebox.addTalon(drivetrain.getModule(2).getDriveMotor());
+    jukebox.addTalon(drivetrain.getModule(3).getDriveMotor());
 
+    jukebox.addTalon(drivetrain.getModule(0).getSteerMotor());
+    jukebox.addTalon(drivetrain.getModule(1).getSteerMotor());
+    jukebox.addTalon(drivetrain.getModule(2).getSteerMotor());
+    jukebox.addTalon(drivetrain.getModule(3).getSteerMotor());
+
+    jukebox.addTalon(s_ClimberCom.GetLeftKraken());
+    jukebox.addTalon(s_ClimberCom.GetRightKraken());
+
+
+    
     // import miracle.java
     // SmartDashboard.putData(reefl4, reefstate.reefl4);
   }
@@ -322,7 +336,6 @@ public class RobotContainer {
     // manual2.whileTrue(new hopperCom(.5,s_HopperCom, copilot));
     // manual.whileTrue(new removalcom(.5,s_algaeCom, copilot));
 
-    new JukeboxUtil(drivetrain, s_ClimberCom);
   }
 
   /**

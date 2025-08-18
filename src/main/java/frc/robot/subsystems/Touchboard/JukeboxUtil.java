@@ -6,6 +6,9 @@ package frc.robot.subsystems.Touchboard;
 
 import java.io.FilenameFilter;
 
+import com.ctre.phoenix6.Orchestra;
+import com.ctre.phoenix6.configs.AudioConfigs;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.fasterxml.jackson.databind.ser.std.StringSerializer;
 
 import edu.wpi.first.networktables.BooleanPublisher;
@@ -19,14 +22,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
-import frc.robot.commands.MusicCommand;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.climber;
 
 public class JukeboxUtil extends SubsystemBase {
   /** Creates a new JukeboxUtil. */
 
-  
+  private Orchestra mOrchestra = new Orchestra();
+  private AudioConfigs configs = new AudioConfigs();
+
   final BooleanSubscriber newFileSubscriber;
   final BooleanPublisher newFilePublisher;
   
@@ -53,11 +57,11 @@ public class JukeboxUtil extends SubsystemBase {
   final StringSubscriber currentMusicFileSubscriber;
   CommandSwerveDrivetrain driveMotors;
   climber climberMotors;
-  public JukeboxUtil(CommandSwerveDrivetrain driveMotors, climber climbMotors) {
+  public JukeboxUtil() {
     // get the default instance of NetworkTables
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
-    this.driveMotors = driveMotors;
-    this.climberMotors = climbMotors;
+
+
     // get the subtable called "touchboard"
     NetworkTable datatable = inst.getTable("touchboard");
 
@@ -89,15 +93,19 @@ public class JukeboxUtil extends SubsystemBase {
   }
 
  
-
+  public void addTalon(TalonFX newMotor){
+    configs.AllowMusicDurDisable = true;
+    newMotor.getConfigurator().apply(configs);
+    mOrchestra.addInstrument(newMotor);
+  }
 
 
   @Override
   public void periodic() {
 
     if(newFileSubscriber.get()){
-      Command musicCom = new MusicCommand(currentMusicFileSubscriber.get(), driveMotors, climberMotors);
-      musicCom.schedule();
+      mOrchestra.loadMusic(currentMusicFileSubscriber.get());
+      mOrchestra.play();
       musicIsFinishedPublisher.set(false);
       
       newFilePublisher.set(false);
@@ -107,33 +115,32 @@ public class JukeboxUtil extends SubsystemBase {
     }
 
     if(stopSubscriber.get()){
-      MusicCommand.mOrchestra.stop();
+      mOrchestra.stop();
       stopPublisher.set(false);
       System.out.println("MusicStopped");
     }
 
     if(pauseSubscriber.get()){
-      MusicCommand.mOrchestra.pause();
+      mOrchestra.pause();
       pausePublisher.set(false);
       System.out.println("MusicPaused");
 
     }
 
     if(playSubscriber.get()){
-      MusicCommand.mOrchestra.play();
+      mOrchestra.play();
       playPublisher.set(false);
       System.out.println("MusicPlayed");
     }
 
     if(restartSubscriber.get()){
-      Command musicCom = new MusicCommand(currentMusicFileSubscriber.get(), driveMotors, climberMotors);
-      musicCom.schedule();
+      mOrchestra.loadMusic(currentMusicFileSubscriber.get());
+      mOrchestra.play();
       System.out.println("restarted");
       restartPublisher.set(false);
-
-
     }
-    if(MusicCommand.mOrchestra.isPlaying() == false && prev == false && nextSongSubscriber.get()){
+
+    if(mOrchestra.isPlaying() == false && prev == false && nextSongSubscriber.get()){
       musicIsFinishedPublisher.set(true);
       System.out.println("Music Finished");
       prev = true;
