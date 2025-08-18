@@ -34,8 +34,10 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants.POSES;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.Touchboard.posePlotterUtil;
 import frc.robot.commands.MusicCommand;
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -194,19 +196,14 @@ public class Robot extends LoggedRobot {
    */
   @Override
   public void autonomousInit() {
-
+    m_autonomousCommand = Commands.none();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
   }
 
   /** This function is called periodically during autonomous. */
