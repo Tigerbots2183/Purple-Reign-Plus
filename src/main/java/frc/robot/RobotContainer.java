@@ -191,7 +191,6 @@ public class RobotContainer {
    */
 
   private final AxisKnob AlgaeAxis = new AxisKnob("ActuatorAxis");
-  private final ToggleButton toggleTester = new ToggleButton("TestToggleButton", new hopperCom(1, s_HopperCom));
 
   public RobotContainer() {
     // Note that X is defined as forward according to WPILib convention,
@@ -240,6 +239,7 @@ public class RobotContainer {
     jukebox.addTalon(s_ClimberCom.GetLeftKraken());
     jukebox.addTalon(s_ClimberCom.GetRightKraken());
 
+    
 
     
     // import miracle.java

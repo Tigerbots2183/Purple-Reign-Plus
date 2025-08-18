@@ -4,21 +4,14 @@
 
 package frc.robot.subsystems.Touchboard;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import java.io.Console;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import com.pathplanner.lib.commands.*;
-
-/** Add your docs here. */
 public class posePlotterUtil {
     private static StringSubscriber string_Sub;
     private static NetworkTableInstance inst = NetworkTableInstance.getDefault(); // may cause issues (hasnt so far)

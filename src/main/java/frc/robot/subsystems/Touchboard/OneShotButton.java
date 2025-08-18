@@ -7,60 +7,45 @@ package frc.robot.subsystems.Touchboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.AlignToPose;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.util.FlippingUtil;
-
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.*;
-import edu.wpi.first.wpilibj.DriverStation;
 import java.util.function.Supplier;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 public class OneShotButton extends SubsystemBase {
-  /** Creates a new OneShotButton. */
 
-  // This is for our touchscreen buttonboard that I made, once network table topic
-  // is set to true by the
-  // touchboard, the subscriber reads it, goes to the pose, and sets it back to
-  // false, (in which the touchboard
-  // animates the button to show that the action was successfull.)
-
-  final BooleanSubscriber dT;
-  final BooleanPublisher dP;
+  final BooleanSubscriber dataSubscriber;
+  final BooleanPublisher dataPublisher;
+  
   String buttonName;
   boolean prev = false;
+
   Supplier<Command> executed = ()->Commands.none();
   
   public OneShotButton(String buttonName, Supplier<Command> executed) {
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
-    // get the subtable called "touchboard"
     NetworkTable datatable = inst.getTable("touchboard");
-    // subscribe to the topic in "touchboard" to start command when button pressed and set it back to false.
-    BooleanTopic blTPC = datatable.getBooleanTopic(buttonName);
-    dP = blTPC.publish();
-    dT = datatable.getBooleanTopic(buttonName).subscribe(false);
+
+    dataPublisher = datatable.getBooleanTopic(buttonName).publish();
+    dataSubscriber = datatable.getBooleanTopic(buttonName).subscribe(false);
 
     this.executed=executed;
   }
 
   public boolean getValue() {
-    return dT.get();
+    return dataSubscriber.get();
   } 
 
-
   public void periodic() {
-    boolean value = dT.get();
+    boolean value = dataSubscriber.get();
 
     if (value != prev && value == true) {
+      //ensures it dosent accidentally get executed twice from packet loss or network lag
       executed.get().schedule();
-      dP.set(false);
+      dataPublisher.set(false);
     }
   }
 
   public void close() {
-    dT.close();
+    dataSubscriber.close();
   }
 }

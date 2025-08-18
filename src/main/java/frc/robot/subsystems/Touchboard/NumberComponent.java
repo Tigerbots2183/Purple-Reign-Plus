@@ -10,29 +10,27 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.DoubleSubscriber;
-import edu.wpi.first.networktables.DoubleTopic;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.function.Supplier;
 import edu.wpi.first.wpilibj2.command.Commands;
 
 public class NumberComponent extends SubsystemBase {
-  /** Creates a new AxisKnob. */
   public double value = 0;
-  String topic;
-  DoubleSubscriber Ds;
-  DoublePublisher Dp;
   double prev = 0;
+
+  String topic;
+  
+  DoubleSubscriber dataSubscriber;
+  DoublePublisher dataPublisher;
+
   Supplier<Command> passedCommand = () -> Commands.none();
 
   public NumberComponent(String topic) {
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
-    // get the subtable called "touchboard"
     NetworkTable datatable = inst.getTable("touchboard");
-    // subscribe to the topic in "touchboard" to start command when button pressed
-    // and set it back to false.
-    DoubleTopic DblTPC = datatable.getDoubleTopic(topic);
-    Dp = DblTPC.publish();
-    Ds = datatable.getDoubleTopic(topic).subscribe(0);
+
+    dataPublisher = datatable.getDoubleTopic(topic).publish();
+    dataSubscriber = datatable.getDoubleTopic(topic).subscribe(0);
     
     this.topic = topic;
   }
@@ -42,18 +40,17 @@ public class NumberComponent extends SubsystemBase {
   }
 
   public double getValue() {
-    return Ds.get();
+    return dataSubscriber.get();
   }
 
   @Override
   public void periodic() {
-    value = Ds.get();
+    value = dataSubscriber.get();
 
     if (value != prev) {
       prev = value;
       passedCommand.get().schedule();
 
     }
-    // This method will be called once per scheduler run
   }
 }

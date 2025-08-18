@@ -4,26 +4,17 @@
 
 package frc.robot.subsystems.Touchboard;
 
-import java.io.FilenameFilter;
 
 import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.configs.AudioConfigs;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.fasterxml.jackson.databind.ser.std.StringSerializer;
 
 import edu.wpi.first.networktables.BooleanPublisher;
 import edu.wpi.first.networktables.BooleanSubscriber;
-import edu.wpi.first.networktables.BooleanTopic;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.StringPublisher;
 import edu.wpi.first.networktables.StringSubscriber;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.climber;
 
 public class JukeboxUtil extends SubsystemBase {
   /** Creates a new JukeboxUtil. */
@@ -55,18 +46,11 @@ public class JukeboxUtil extends SubsystemBase {
   private Boolean prev = false;
   
   final StringSubscriber currentMusicFileSubscriber;
-  CommandSwerveDrivetrain driveMotors;
-  climber climberMotors;
+
   public JukeboxUtil() {
-    // get the default instance of NetworkTables
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
-
-
-    // get the subtable called "touchboard"
     NetworkTable datatable = inst.getTable("touchboard");
 
-    // subscribe to the topic in "touchboard" to start command when button pressed
-    // and set back to false
     currentMusicFileSubscriber = datatable.getStringTopic("currentMusicFile").subscribe("");
 
     newFilePublisher =  datatable.getBooleanTopic("newFile").publish();
@@ -94,6 +78,7 @@ public class JukeboxUtil extends SubsystemBase {
 
  
   public void addTalon(TalonFX newMotor){
+    //Sets config and adds to orchestra
     configs.AllowMusicDurDisable = true;
     newMotor.getConfigurator().apply(configs);
     mOrchestra.addInstrument(newMotor);
