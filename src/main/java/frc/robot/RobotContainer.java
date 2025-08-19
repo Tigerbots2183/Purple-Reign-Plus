@@ -152,8 +152,6 @@ public class RobotContainer {
   private final algaeremover s_algaeCom = new algaeremover();
   public final sensorsandleds s_ledCom = new sensorsandleds();
 
-  private final posePlotterUtil posePlotterValues = new posePlotterUtil();
-
   private final OneShotButton PAbtn = new OneShotButton("PAbtn",() -> new AlignToPose(POSES.REEF_A, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
   private final OneShotButton PBbtn = new OneShotButton("PBbtn",() -> new AlignToPose(POSES.REEF_B, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
   private final OneShotButton PCbtn = new OneShotButton("PCbtn",() -> new AlignToPose(POSES.REEF_C, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
@@ -344,10 +342,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    // return new exampleAuto(s_Swerve);
-    // return new PathPlannerAuto("example");
-    // return autoChooser.getSelected();
 
     return posePlotterUtil.getAuto();
   }
