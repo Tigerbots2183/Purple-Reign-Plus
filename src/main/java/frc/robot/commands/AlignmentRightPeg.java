@@ -1,6 +1,10 @@
 package frc.robot.commands;
 
+import org.w3c.dom.ranges.DocumentRange;
+
+import com.ctre.phoenix6.swerve.SwerveDrivetrain;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.util.FlippingUtil;
 
@@ -9,17 +13,18 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.POSES;
 import frc.robot.LimelightHelpers;
-import frc.robot.subsystems.Swerve;
-
+import com.ctre.phoenix6.swerve.SwerveRequest;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class AlignmentRightPeg extends Command {
-    Swerve s_Swerve;
+    CommandSwerveDrivetrain s_Swerve;
+
     // alignment for right peg, references poses constant
     boolean isFinished = false;
 
     private Pose2d Targetpose = null;
 
-    public AlignmentRightPeg(Swerve s_Swerve) {
+    public AlignmentRightPeg( CommandSwerveDrivetrain s_Swerve){
         this.s_Swerve = s_Swerve;
     }
 
@@ -107,13 +112,13 @@ public class AlignmentRightPeg extends Command {
     @Override
     public void execute() {
 
-        s_Swerve.drive(new Translation2d(0, 0), 0, false, false);
         PathConstraints constraints = new PathConstraints(
-                5,
-                3,
-                4,
-                3
-        );
+        2,
+        0.75,
+        4,
+        3
+    );
+        
 
         // = new PathConstraints(
 
@@ -128,12 +133,14 @@ public class AlignmentRightPeg extends Command {
         // );
 
         if (Targetpose != null) {
-
+        
             Command followLeftPath = AutoBuilder.pathfindToPose(
                     Targetpose,
                     constraints,
-                    0.01);
+                    0.00);
             followLeftPath.schedule();
+            followLeftPath.schedule();
+
 
         }
     }
@@ -141,7 +148,6 @@ public class AlignmentRightPeg extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-
         cancel();
 
     }

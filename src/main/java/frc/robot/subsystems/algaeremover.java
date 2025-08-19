@@ -11,14 +11,14 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class algeremover extends SubsystemBase {
+public class algaeremover extends SubsystemBase {
   SparkMax removal= new SparkMax(58, MotorType.kBrushed);
   
   SparkMaxConfig removalConfig= new SparkMaxConfig();
   
   //Linear actuator move in and out 
   
-  public algeremover() {
+  public algaeremover() {
     removalConfig.smartCurrentLimit(30);
   }
   public void remove(double speed) {
