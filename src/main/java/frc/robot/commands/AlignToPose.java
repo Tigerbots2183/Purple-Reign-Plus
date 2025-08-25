@@ -22,12 +22,12 @@ public class AlignToPose extends Command {
 
   private Pose2d currentPose;
   private CommandSwerveDrivetrain s_Drivetrain;
-  private Supplier<Command> PathCommand = ()->Commands.none();
+  private Command PathCommand = Commands.none();
 
 
-  public AlignToPose(Supplier<Pose2d> currentPose, CommandSwerveDrivetrain s_Drivetrain) {
-    PathCommand = ()->Commands.none();
-    this.currentPose = currentPose.get();
+  public AlignToPose(Pose2d currentPose, CommandSwerveDrivetrain s_Drivetrain) {
+    PathCommand = Commands.none();
+    this.currentPose = currentPose;
     this.s_Drivetrain = s_Drivetrain;
 
   }
@@ -46,22 +46,22 @@ public class AlignToPose extends Command {
 
     if (DriverStation.getAlliance().isPresent()) {
       if (DriverStation.getAlliance().get() == Alliance.Red) {
-        PathCommand =()-> AutoBuilder.pathfindToPose(
+        PathCommand =AutoBuilder.pathfindToPose(
             FlippingUtil.flipFieldPose(currentPose),
             constraints2,
             0.00);
 
-        PathCommand.get().schedule();
+        PathCommand.schedule();
 
         return;
       }
     }
 
-    PathCommand =()-> AutoBuilder.pathfindToPose(
+    PathCommand = AutoBuilder.pathfindToPose(
         currentPose,
         constraints2,
         0.00);
-        PathCommand.get().schedule();
+        PathCommand.schedule();
 
 
   }
@@ -74,11 +74,11 @@ public class AlignToPose extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    PathCommand.get().cancel();
+    PathCommand.cancel();
   }
 
   @Override
   public boolean isFinished() {
-    return PathCommand.get().isFinished();
+    return PathCommand.isFinished();
   }
 }

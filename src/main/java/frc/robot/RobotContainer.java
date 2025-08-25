@@ -36,7 +36,6 @@ import frc.robot.commands.autoshootlfour;
 import frc.robot.commands.climberCom;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Shoot;
-import frc.robot.commands.MusicCommand;
 import frc.robot.commands.elevatorCom;
 import frc.robot.commands.hopperCom;
 import frc.robot.commands.manualElevate;
@@ -153,28 +152,26 @@ public class RobotContainer {
   private final algaeremover s_algaeCom = new algaeremover();
   public final sensorsandleds s_ledCom = new sensorsandleds();
 
-  private final posePlotterUtil posePlotterValues = new posePlotterUtil();
-
-  private final OneShotButton PAbtn = new OneShotButton("PAbtn",() -> new AlignToPose(()->POSES.REEF_A, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PBbtn = new OneShotButton("PBbtn",() -> new AlignToPose(()->POSES.REEF_B, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PCbtn = new OneShotButton("PCbtn",() -> new AlignToPose(()->POSES.REEF_C, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PDbtn = new OneShotButton("PDbtn",() -> new AlignToPose(()->POSES.REEF_D, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PEbtn = new OneShotButton("PEbtn",() -> new AlignToPose(()->POSES.REEF_E, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PFbtn = new OneShotButton("PFbtn",() -> new AlignToPose(()->POSES.REEF_F, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PGbtn = new OneShotButton("PGbtn",() -> new AlignToPose(()->POSES.REEF_G, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PHbtn = new OneShotButton("PHbtn",() -> new AlignToPose(()->POSES.REEF_H, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PIbtn = new OneShotButton("PIbtn",() -> new AlignToPose(()->POSES.REEF_I, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PJbtn = new OneShotButton("PJbtn",() -> new AlignToPose(()->POSES.REEF_J, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PKbtn = new OneShotButton("PKbtn",() -> new AlignToPose(()->POSES.REEF_K, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PLbtn = new OneShotButton("PLbtn",() -> new AlignToPose(()->POSES.REEF_L, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PAbtn = new OneShotButton("PAbtn",() -> new AlignToPose(POSES.REEF_A, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PBbtn = new OneShotButton("PBbtn",() -> new AlignToPose(POSES.REEF_B, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PCbtn = new OneShotButton("PCbtn",() -> new AlignToPose(POSES.REEF_C, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PDbtn = new OneShotButton("PDbtn",() -> new AlignToPose(POSES.REEF_D, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PEbtn = new OneShotButton("PEbtn",() -> new AlignToPose(POSES.REEF_E, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PFbtn = new OneShotButton("PFbtn",() -> new AlignToPose(POSES.REEF_F, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PGbtn = new OneShotButton("PGbtn",() -> new AlignToPose(POSES.REEF_G, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PHbtn = new OneShotButton("PHbtn",() -> new AlignToPose(POSES.REEF_H, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PIbtn = new OneShotButton("PIbtn",() -> new AlignToPose(POSES.REEF_I, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PJbtn = new OneShotButton("PJbtn",() -> new AlignToPose(POSES.REEF_J, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PKbtn = new OneShotButton("PKbtn",() -> new AlignToPose(POSES.REEF_K, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PLbtn = new OneShotButton("PLbtn",() -> new AlignToPose(POSES.REEF_L, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
 
-  private final OneShotButton PLTbtm = new OneShotButton("LTbtn",() -> new AlignToPose(()->StationPOSES.Left_top_station, drivetrain));
-  private final OneShotButton PLMbtn = new OneShotButton("LMbtn",() -> new AlignToPose(()->StationPOSES.Left_mid_station, drivetrain));
-  private final OneShotButton PLBbtn = new OneShotButton("LBbtn",() -> new AlignToPose(()->StationPOSES.Left_bot_station, drivetrain));
-  private final OneShotButton PRTbtn = new OneShotButton("RTbtn",() -> new AlignToPose(()->StationPOSES.Right_top_station, drivetrain));
-  private final OneShotButton PRMbtn = new OneShotButton("RMbtn",() -> new AlignToPose(()->StationPOSES.Right_mid_station, drivetrain));
-  private final OneShotButton PRBbtn = new OneShotButton("RBbtn",() -> new AlignToPose(()->StationPOSES.Right_bot_station, drivetrain));
+  private final OneShotButton PLTbtm = new OneShotButton("LTbtn",() -> new AlignToPose(StationPOSES.Left_top_station, drivetrain));
+  private final OneShotButton PLMbtn = new OneShotButton("LMbtn",() -> new AlignToPose(StationPOSES.Left_mid_station, drivetrain));
+  private final OneShotButton PLBbtn = new OneShotButton("LBbtn",() -> new AlignToPose(StationPOSES.Left_bot_station, drivetrain));
+  private final OneShotButton PRTbtn = new OneShotButton("RTbtn",() -> new AlignToPose(StationPOSES.Right_top_station, drivetrain));
+  private final OneShotButton PRMbtn = new OneShotButton("RMbtn",() -> new AlignToPose(StationPOSES.Right_mid_station, drivetrain));
+  private final OneShotButton PRBbtn = new OneShotButton("RBbtn",() -> new AlignToPose(StationPOSES.Right_bot_station, drivetrain));
 
   private final limelightalign limelightalign = new limelightalign();
 
@@ -192,7 +189,6 @@ public class RobotContainer {
    */
 
   private final AxisKnob AlgaeAxis = new AxisKnob("ActuatorAxis");
-  private final ToggleButton toggleTester = new ToggleButton("TestToggleButton", new hopperCom(1, s_HopperCom));
 
   public RobotContainer() {
     // Note that X is defined as forward according to WPILib convention,
@@ -201,7 +197,49 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
+    posePlotterUtil.addCommandPair("A", ()-> new AlignToPose( POSES.REEF_A, drivetrain));
+    posePlotterUtil.addCommandPair("B", ()-> new AlignToPose( POSES.REEF_B, drivetrain));
+    posePlotterUtil.addCommandPair("C", ()-> new AlignToPose( POSES.REEF_C, drivetrain));
+    posePlotterUtil.addCommandPair("D", ()-> new AlignToPose( POSES.REEF_D, drivetrain));
+    posePlotterUtil.addCommandPair("E", ()-> new AlignToPose( POSES.REEF_E, drivetrain));
+    posePlotterUtil.addCommandPair("F", ()-> new AlignToPose( POSES.REEF_F, drivetrain));
+    posePlotterUtil.addCommandPair("G", ()-> new AlignToPose( POSES.REEF_G, drivetrain));
+    posePlotterUtil.addCommandPair("H", ()-> new AlignToPose( POSES.REEF_H, drivetrain));
+    posePlotterUtil.addCommandPair("I", ()-> new AlignToPose( POSES.REEF_I, drivetrain));
+    posePlotterUtil.addCommandPair("J", ()-> new AlignToPose( POSES.REEF_J, drivetrain));
+    posePlotterUtil.addCommandPair("K", ()-> new AlignToPose( POSES.REEF_K, drivetrain));
+    posePlotterUtil.addCommandPair("L", ()-> new AlignToPose( POSES.REEF_L, drivetrain));
+    posePlotterUtil.addCommandPair("LT", ()-> new AlignToPose( StationPOSES.Left_top_station, drivetrain));
+    posePlotterUtil.addCommandPair("LM", ()-> new AlignToPose( StationPOSES.Left_mid_station, drivetrain));
+    posePlotterUtil.addCommandPair("LB", ()-> new AlignToPose( StationPOSES.Left_bot_station, drivetrain));
+    posePlotterUtil.addCommandPair("RT", ()-> new AlignToPose( StationPOSES.Right_top_station, drivetrain));
+    posePlotterUtil.addCommandPair("RM", ()-> new AlignToPose( StationPOSES.Right_mid_station, drivetrain));
+    posePlotterUtil.addCommandPair("RB", ()-> new AlignToPose( StationPOSES.Right_bot_station, drivetrain));
+    posePlotterUtil.addCommandPair("4S", ()-> new autoshootlfour(-.12, s_ElevatorCom, s_CoralCom, false).withTimeout(2));
+    posePlotterUtil.addCommandPair("4", ()-> new elevatorCom(3, s_ElevatorCom, false));
+    posePlotterUtil.addCommandPair("3", ()-> new elevatorCom(2, s_ElevatorCom, false));
+    posePlotterUtil.addCommandPair("2", ()-> new elevatorCom(1, s_ElevatorCom, false));
+    posePlotterUtil.addCommandPair("0", ()-> new elevatorCom(1, s_ElevatorCom, true));
+    posePlotterUtil.addCommandPair("T", ()-> new Intake(-.07, s_CoralCom));
+    posePlotterUtil.addCommandPair("S", ()-> new Shoot(-.12, s_CoralCom));
 
+    JukeboxUtil jukebox = new JukeboxUtil();
+    jukebox.addTalon(drivetrain.getModule(0).getDriveMotor());
+    jukebox.addTalon(drivetrain.getModule(1).getDriveMotor());
+    jukebox.addTalon(drivetrain.getModule(2).getDriveMotor());
+    jukebox.addTalon(drivetrain.getModule(3).getDriveMotor());
+
+    jukebox.addTalon(drivetrain.getModule(0).getSteerMotor());
+    jukebox.addTalon(drivetrain.getModule(1).getSteerMotor());
+    jukebox.addTalon(drivetrain.getModule(2).getSteerMotor());
+    jukebox.addTalon(drivetrain.getModule(3).getSteerMotor());
+
+    jukebox.addTalon(s_ClimberCom.GetLeftKraken());
+    jukebox.addTalon(s_ClimberCom.GetRightKraken());
+
+    
+
+    
     // import miracle.java
     // SmartDashboard.putData(reefl4, reefstate.reefl4);
   }
@@ -296,7 +334,6 @@ public class RobotContainer {
     // manual2.whileTrue(new hopperCom(.5,s_HopperCom, copilot));
     // manual.whileTrue(new removalcom(.5,s_algaeCom, copilot));
 
-    new JukeboxUtil(drivetrain, s_ClimberCom);
   }
 
   /**
@@ -305,154 +342,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    // return new exampleAuto(s_Swerve);
-    // return new PathPlannerAuto("example");
-    // return autoChooser.getSelected();
-    HashMap<String, Pose2d> poses = new HashMap<String, Pose2d>();
 
-    poses.put("A", POSES.REEF_A);
-    poses.put("B", POSES.REEF_B);
-    poses.put("C", POSES.REEF_C);
-    poses.put("D", POSES.REEF_D);
-    poses.put("E", POSES.REEF_E);
-    poses.put("F", POSES.REEF_F);
-    poses.put("G", POSES.REEF_G);
-    poses.put("H", POSES.REEF_H);
-    poses.put("I", POSES.REEF_I);
-    poses.put("J", POSES.REEF_J);
-    poses.put("K", POSES.REEF_K);
-    poses.put("L", POSES.REEF_L);
-
-    poses.put("LT", StationPOSES.Left_top_station);
-    poses.put("LM", StationPOSES.Left_mid_station);
-    poses.put("LB", StationPOSES.Left_bot_station);
-    poses.put("RT", StationPOSES.Right_top_station);
-    poses.put("RM", StationPOSES.Right_mid_station);
-    poses.put("RB", StationPOSES.Right_bot_station);
-
-    if (DriverStation.getAlliance().isPresent()) {
-      if (DriverStation.getAlliance().get() == Alliance.Red) {
-        System.out.println("red");
-        poses.put("A", FlippingUtil.flipFieldPose(POSES.REEF_A));
-        poses.put("B", FlippingUtil.flipFieldPose(POSES.REEF_B));
-        poses.put("C", FlippingUtil.flipFieldPose(POSES.REEF_C));
-        poses.put("D", FlippingUtil.flipFieldPose(POSES.REEF_D));
-        poses.put("E", FlippingUtil.flipFieldPose(POSES.REEF_E));
-        poses.put("F", FlippingUtil.flipFieldPose(POSES.REEF_F));
-        poses.put("G", FlippingUtil.flipFieldPose(POSES.REEF_G));
-        poses.put("H", FlippingUtil.flipFieldPose(POSES.REEF_H));
-        poses.put("I", FlippingUtil.flipFieldPose(POSES.REEF_I));
-        poses.put("J", FlippingUtil.flipFieldPose(POSES.REEF_J));
-        poses.put("K", FlippingUtil.flipFieldPose(POSES.REEF_K));
-        poses.put("L", FlippingUtil.flipFieldPose(POSES.REEF_L));
-
-        poses.put("LT", FlippingUtil.flipFieldPose(StationPOSES.Left_top_station));
-        poses.put("LM", FlippingUtil.flipFieldPose(StationPOSES.Left_mid_station));
-        poses.put("LB", FlippingUtil.flipFieldPose(StationPOSES.Left_bot_station));
-        poses.put("RT", FlippingUtil.flipFieldPose(StationPOSES.Right_top_station));
-        poses.put("RM", FlippingUtil.flipFieldPose(StationPOSES.Right_mid_station));
-        poses.put("RB", FlippingUtil.flipFieldPose(StationPOSES.Right_bot_station));
-      }
-    }
-
-    PathConstraints constraints = new PathConstraints(
-        3,
-        2,
-        4,
-        3);
-    // new PathConstraints(null, null, null, null)
-
-    String startString = posePlotterValues.getAutoString();
-    // String startString = posePlotterValues.getAutoStringWithFallback();
-    
-    System.out.println(startString);
-    String[] stringArr = startString.split("-");
-    Command cmd = Commands.none();
-    Command parralelCmd = Commands.none();
-    Command nextCommand = Commands.none();
-    Boolean currentParralel = false;
-    for (String a : stringArr) {
-
-      if (a.contains("4S")) {
-        nextCommand = new autoshootlfour(-.12, s_ElevatorCom, s_CoralCom, false).withTimeout(2);
-      } else if (a.contains("4")) {
-        nextCommand = new elevatorCom(3, s_ElevatorCom, false);
-      } else if (a.contains("T")) {
-        // cmd = cmd.andThen(Commands.runOnce(() -> System.out.println(a)));
-        nextCommand = new Intake(-.07, s_CoralCom);
-
-      } else if (a.contains("S")) {
-        nextCommand = (new Shoot(-.12, s_CoralCom));
-
-      } else if (a.contains("3")) {
-        nextCommand = new elevatorCom(2, s_ElevatorCom, false);
-      } else if (a.contains("2")) {
-        nextCommand = new elevatorCom(1, s_ElevatorCom, false);
-      } else if (a.contains("0")) {
-        nextCommand = new elevatorCom(1, s_ElevatorCom, true);
-      } else if (a.matches("[A-L]")) {
-        nextCommand = AutoBuilder.pathfindToPose(
-            poses.get(a),
-            constraints,
-            0.00);
-      } else if (a.contains("LT")) {
-        nextCommand = AutoBuilder.pathfindToPose(
-            poses.get(a),
-            constraints,
-            0.00);
-      } else if (a.contains("LM")) {
-        System.out.println(a);
-        nextCommand = AutoBuilder.pathfindToPose(
-            poses.get(a),
-            constraints,
-            0.00);
-      } else if (a.contains("LB")) {
-        nextCommand = AutoBuilder.pathfindToPose(
-            poses.get(a),
-            constraints,
-            0.00);
-      } else if (a.contains("RT")) {
-        nextCommand = AutoBuilder.pathfindToPose(
-            poses.get(a),
-            constraints,
-            0.00);
-      } else if (a.contains("RM")) {
-        nextCommand = AutoBuilder.pathfindToPose(
-            poses.get(a),
-            constraints,
-            0.00);
-      } else if (a.contains("RB")) {
-        nextCommand = AutoBuilder.pathfindToPose(
-            poses.get(a),
-            constraints,
-            0.00);
-      }
-
-      else if (stringArr.length == 0) {
-        System.out.println("No Command!! Consider turning on fallback if at competition!!!!!!!!!!!!!!!");
-      } else {
-        System.out.println(a + "UNDEFINED COMMAND");
-        nextCommand = Commands.none();
-      }
-
-      if (a.contains("+")) {
-        // cmd = cmd.andThen(Commands.runOnce(()->System.out.println(a +
-        // "Simultaneous")));
-        parralelCmd = parralelCmd.alongWith(nextCommand);
-        currentParralel = true;
-
-        continue;
-      } else if (currentParralel) {
-        parralelCmd = parralelCmd.alongWith(nextCommand);
-        cmd = cmd.andThen(parralelCmd);
-        parralelCmd = Commands.none();
-        currentParralel = false;
-      } else {
-        cmd = cmd.andThen(nextCommand);
-      }
-    }
-    ;
-    return cmd;
+    return posePlotterUtil.getAuto();
   }
 }
+
+  
