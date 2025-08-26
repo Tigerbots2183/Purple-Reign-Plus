@@ -128,7 +128,7 @@ public class Robot extends LoggedRobot {
       double headingDeg = driveState.Pose.getRotation().getDegrees();
       double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
       LimelightHelpers.SetRobotOrientation("limelight", headingDeg, 0, 0, 0, 0, 0);
-      LimelightHelpers.SetRobotOrientation("limelight-right", headingDeg, 0, 0, 0, 0, 0);
+      // LimelightHelpers.SetRobotOrientation("limelight-right", headingDeg, 0, 0, 0, 0, 0);
 
       var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
       var lrMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-right");
@@ -138,7 +138,8 @@ public class Robot extends LoggedRobot {
       }
 
       if (lrMeasurement != null && lrMeasurement.tagCount > 0 && Math.abs(omegaRps) < 2.0) {
-        m_robotContainer.drivetrain.addVisionMeasurement(lrMeasurement.pose, llMeasurement.timestampSeconds);
+        System.out.print("TEST");
+        m_robotContainer.drivetrain.addVisionMeasurement(lrMeasurement.pose, lrMeasurement.timestampSeconds);
 
       }
 
