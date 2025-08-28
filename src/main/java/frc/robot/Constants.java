@@ -16,6 +16,7 @@ package frc.robot;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
+import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -27,6 +28,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 import frc.lib.util.COTSTalonFXSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 import edu.wpi.first.wpilibj.DriverStation;
+
 /**
  * This class defines the runtime mode used by AdvantageKit. The mode is always
  * "real" when running
@@ -49,6 +51,12 @@ public final class Constants {
     REPLAY
   }
 
+  public static final PathConstraints PathingConstraint = new PathConstraints(
+    4,
+    2,
+    4,
+    3);
+  
   public static final double stickDeadband = 0.1;
 
   public static final class Swerve {
@@ -187,11 +195,15 @@ public final class Constants {
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
+
+ 
+
   public static class POSES {
     public static final Pose2d RESET_POSE = new Pose2d(3.192, 4.025, new Rotation2d());
 
     // Blue branch poses
-    public static Pose2d REEF_A = new Pose2d(3.40, 4.23, Rotation2d.fromDegrees(90)); // new Pose2d(3.18, 4.22,                                                                           // Rotation2d.fromDegrees(90));
+    public static Pose2d REEF_A = new Pose2d(3.40, 4.23, Rotation2d.fromDegrees(90)); // new Pose2d(3.18, 4.22, //
+                                                                                      // Rotation2d.fromDegrees(90));
     public static Pose2d REEF_B = new Pose2d(3.21, 3.90, Rotation2d.fromDegrees(90));
     public static Pose2d REEF_C = new Pose2d(3.67, 2.98, Rotation2d.fromDegrees(150));
     public static Pose2d REEF_D = new Pose2d(3.91, 2.89, Rotation2d.fromDegrees(150));
@@ -204,6 +216,7 @@ public final class Constants {
     public static Pose2d REEF_K = new Pose2d(4.01, 5.27, Rotation2d.fromDegrees(30));
     public static Pose2d REEF_L = new Pose2d(3.75, 5.07, Rotation2d.fromDegrees(30));
 
+
   }
 
   public static class StationPOSES {
@@ -212,7 +225,7 @@ public final class Constants {
     public static final Pose2d Left_top_station = new Pose2d(1.55, 7.45, Rotation2d.fromDegrees(30));
     public static final Pose2d Left_mid_station = new Pose2d(1.18, 7.10, Rotation2d.fromDegrees(30));
     public static final Pose2d Left_bot_station = new Pose2d(0.62, 6.73, Rotation2d.fromDegrees(30));
-    
+
     public static final Pose2d Right_top_station = new Pose2d(1.41, 0.73, Rotation2d.fromDegrees(150));
     public static final Pose2d Right_mid_station = new Pose2d(1.08, 1.19, Rotation2d.fromDegrees(150));
     public static final Pose2d Right_bot_station = new Pose2d(0.61, 1.55, Rotation2d.fromDegrees(150));

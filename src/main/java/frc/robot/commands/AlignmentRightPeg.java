@@ -10,8 +10,10 @@ import com.pathplanner.lib.util.FlippingUtil;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.ExponentialProfile.Constraints;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.POSES;
+import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -112,33 +114,12 @@ public class AlignmentRightPeg extends Command {
     @Override
     public void execute() {
 
-        PathConstraints constraints = new PathConstraints(
-        2,
-        0.75,
-        4,
-        3
-    );
-        
-
-        // = new PathConstraints(
-
-        // 5,
-
-        // 3,
-
-        // 4,
-
-        // 3
-
-        // );
-
         if (Targetpose != null) {
         
             Command followLeftPath = AutoBuilder.pathfindToPose(
                     Targetpose,
-                    constraints,
+                    Constants.PathingConstraint,
                     0.00);
-            followLeftPath.schedule();
             followLeftPath.schedule();
 
 

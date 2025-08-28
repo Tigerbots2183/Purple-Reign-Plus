@@ -6,15 +6,27 @@ package frc.robot.commands;
 
 import javax.sound.midi.Patch;
 
+import org.ejml.simple.ConstMatrix;
+
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathfindThenFollowPath;
+import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.FlippingUtil;
 import java.util.function.Supplier;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.units.LinearVelocityUnit;
+import edu.wpi.first.units.VelocityUnit;
+import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.units.measure.Velocity;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Constants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import edu.wpi.first.wpilibj.DriverStation;
+
+import com.pathplanner.lib.pathfinding.Pathfinding;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -23,7 +35,7 @@ public class AlignToPose extends Command {
   private Pose2d currentPose;
   private CommandSwerveDrivetrain s_Drivetrain;
   private Command PathCommand = Commands.none();
-
+  
 
   public AlignToPose(Pose2d currentPose, CommandSwerveDrivetrain s_Drivetrain) {
     PathCommand = Commands.none();
@@ -36,19 +48,11 @@ public class AlignToPose extends Command {
   public void initialize() {
     addRequirements(s_Drivetrain);
 
-
-    PathConstraints constraints2 = new PathConstraints(
-        4,
-        2,
-        4,
-        3
-    );
-
     if (DriverStation.getAlliance().isPresent()) {
       if (DriverStation.getAlliance().get() == Alliance.Red) {
         PathCommand =AutoBuilder.pathfindToPose(
             FlippingUtil.flipFieldPose(currentPose),
-            constraints2,
+            Constants.PathingConstraint,
             0.00);
 
         PathCommand.schedule();
@@ -59,7 +63,7 @@ public class AlignToPose extends Command {
 
     PathCommand = AutoBuilder.pathfindToPose(
         currentPose,
-        constraints2,
+        Constants.PathingConstraint,
         0.00);
         PathCommand.schedule();
 
@@ -81,4 +85,7 @@ public class AlignToPose extends Command {
   public boolean isFinished() {
     return PathCommand.isFinished();
   }
+
+
+
 }
