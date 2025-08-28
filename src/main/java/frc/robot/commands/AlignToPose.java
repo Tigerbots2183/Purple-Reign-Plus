@@ -38,8 +38,8 @@ public class AlignToPose extends Command {
 
 
     PathConstraints constraints2 = new PathConstraints(
+        4,
         2,
-        0.75,
         4,
         3
     );

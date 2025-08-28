@@ -180,7 +180,7 @@ public class RobotContainer {
   private final ActionButton IntakeButtonAction = new ActionButton("Intake", new Intake(-0.07, s_CoralCom));
 
 
-  private final DoubleActionButton L4btn = new DoubleActionButton("L4btn", new elevatorCom(3, s_ElevatorCom, false), new elevatorCom(3, s_ElevatorCom, true));
+  private final DoubleActionButton L4btn = new DoubleActionButton("L4btn", new autoshootlfour(-.12, s_ElevatorCom, s_CoralCom, false), new elevatorCom(3, s_ElevatorCom, true));
   private final DoubleActionButton L3btn = new DoubleActionButton("L3btn", new elevatorCom(2, s_ElevatorCom, false), new elevatorCom(2, s_ElevatorCom, true));
   private final DoubleActionButton L2btn = new DoubleActionButton("L2btn", new elevatorCom(1, s_ElevatorCom, false), new elevatorCom(1, s_ElevatorCom, true));
 
@@ -219,7 +219,7 @@ public class RobotContainer {
     posePlotterUtil.addCommandPair("4", ()-> new elevatorCom(3, s_ElevatorCom, false));
     posePlotterUtil.addCommandPair("3", ()-> new elevatorCom(2, s_ElevatorCom, false));
     posePlotterUtil.addCommandPair("2", ()-> new elevatorCom(1, s_ElevatorCom, false));
-    posePlotterUtil.addCommandPair("0", ()-> new elevatorCom(1, s_ElevatorCom, true));
+    posePlotterUtil.addCommandPair("0", ()-> new elevatorCom(3, s_ElevatorCom, true));
     posePlotterUtil.addCommandPair("T", ()-> new Intake(-.07, s_CoralCom));
     posePlotterUtil.addCommandPair("S", ()-> new Shoot(-.12, s_CoralCom));
 

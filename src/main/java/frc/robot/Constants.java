@@ -193,15 +193,15 @@ public final class Constants {
     // Blue branch poses
     public static Pose2d REEF_A = new Pose2d(3.40, 4.23, Rotation2d.fromDegrees(90)); // new Pose2d(3.18, 4.22,                                                                           // Rotation2d.fromDegrees(90));
     public static Pose2d REEF_B = new Pose2d(3.21, 3.90, Rotation2d.fromDegrees(90));
-    public static Pose2d REEF_C = new Pose2d(3.95, 3.14, Rotation2d.fromDegrees(150));
-    public static Pose2d REEF_D = new Pose2d(3.94, 2.87, Rotation2d.fromDegrees(150));
+    public static Pose2d REEF_C = new Pose2d(3.67, 2.98, Rotation2d.fromDegrees(150));
+    public static Pose2d REEF_D = new Pose2d(3.91, 2.89, Rotation2d.fromDegrees(150));
     public static Pose2d REEF_E = new Pose2d(4.95, 2.82, Rotation2d.fromDegrees(-150));
     public static Pose2d REEF_F = new Pose2d(5.24, 2.98, Rotation2d.fromDegrees(-150));
     public static Pose2d REEF_G = new Pose2d(5.76, 3.81, Rotation2d.fromDegrees(-90));
     public static Pose2d REEF_H = new Pose2d(5.77, 4.16, Rotation2d.fromDegrees(-90));
     public static Pose2d REEF_I = new Pose2d(5.36, 4.84, Rotation2d.fromDegrees(-30));
     public static Pose2d REEF_J = new Pose2d(5.03, 5.19, Rotation2d.fromDegrees(-30));
-    public static Pose2d REEF_K = new Pose2d(4.10, 5.15, Rotation2d.fromDegrees(30));
+    public static Pose2d REEF_K = new Pose2d(4.01, 5.27, Rotation2d.fromDegrees(30));
     public static Pose2d REEF_L = new Pose2d(3.75, 5.07, Rotation2d.fromDegrees(30));
 
   }
@@ -209,9 +209,9 @@ public final class Constants {
   public static class StationPOSES {
     public static final Pose2d RESET_POSE = new Pose2d(3.192, 4.025, new Rotation2d());
 
-    public static final Pose2d Left_top_station = new Pose2d(1.75, 7.33, Rotation2d.fromDegrees(30));
-    public static final Pose2d Left_mid_station = new Pose2d(1.35, 6.95, Rotation2d.fromDegrees(30));
-    public static final Pose2d Left_bot_station = new Pose2d(0.83, 6.68, Rotation2d.fromDegrees(30));
+    public static final Pose2d Left_top_station = new Pose2d(1.55, 7.45, Rotation2d.fromDegrees(30));
+    public static final Pose2d Left_mid_station = new Pose2d(1.18, 7.10, Rotation2d.fromDegrees(30));
+    public static final Pose2d Left_bot_station = new Pose2d(0.62, 6.73, Rotation2d.fromDegrees(30));
     
     public static final Pose2d Right_top_station = new Pose2d(1.41, 0.73, Rotation2d.fromDegrees(150));
     public static final Pose2d Right_mid_station = new Pose2d(1.08, 1.19, Rotation2d.fromDegrees(150));
