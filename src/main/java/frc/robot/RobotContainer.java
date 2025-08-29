@@ -1,23 +1,14 @@
 package frc.robot;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.util.FlippingUtil;
 
-import edu.wpi.first.math.geometry.Pose2d;
 // import com.pathplanner.lib.auto.NamedCommands;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -26,21 +17,17 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.POSES;
 import frc.robot.Constants.StationPOSES;
-import frc.robot.Constants.Swerve;
-import frc.robot.Constants.reefstate;
 import frc.robot.commands.AlignToPose;
 import frc.robot.commands.AlignmentLeftPeg;
 
 import frc.robot.commands.AlignmentRightPeg;
 import frc.robot.commands.autoshootlfour;
-import frc.robot.commands.climberCom;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.elevatorCom;
 import frc.robot.commands.hopperCom;
 import frc.robot.commands.manualElevate;
 import frc.robot.commands.removalcom;
-import frc.robot.commands.AlignToPose;
 
 import frc.robot.subsystems.algaeremover;
 import frc.robot.subsystems.climber;
@@ -51,26 +38,20 @@ import frc.robot.subsystems.limelightalign;
 import frc.robot.subsystems.sensorsandleds;
 import frc.robot.subsystems.Touchboard.ActionButton;
 import frc.robot.subsystems.Touchboard.DoubleActionButton;
-import frc.robot.subsystems.Touchboard.Dropdown;
 import frc.robot.subsystems.Touchboard.AxisKnob;
 import frc.robot.subsystems.Touchboard.JukeboxUtil;
-import frc.robot.subsystems.Touchboard.NumberComponent;
 import frc.robot.subsystems.Touchboard.OneShotButton;
-import frc.robot.subsystems.Touchboard.ToggleButton;
 import frc.robot.subsystems.Touchboard.posePlotterUtil;
 
-import java.security.DrbgParameters.NextBytes;
-import java.util.HashMap;
+
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
-import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -154,7 +135,7 @@ public class RobotContainer {
 
   private final OneShotButton PAbtn = new OneShotButton("PAbtn",() -> new AlignToPose(POSES.REEF_A, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
   private final OneShotButton PBbtn = new OneShotButton("PBbtn",() -> new AlignToPose(POSES.REEF_B, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PCbtn = new OneShotButton("PCbtn",() -> new AlignToPose(POSES.REEF_C, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PCbtn = new OneShotButton("PCbtn",() -> new AlignToPose(POSES.REEF_C, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf)); 
   private final OneShotButton PDbtn = new OneShotButton("PDbtn",() -> new AlignToPose(POSES.REEF_D, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
   private final OneShotButton PEbtn = new OneShotButton("PEbtn",() -> new AlignToPose(POSES.REEF_E, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
   private final OneShotButton PFbtn = new OneShotButton("PFbtn",() -> new AlignToPose(POSES.REEF_F, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));

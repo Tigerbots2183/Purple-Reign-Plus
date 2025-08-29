@@ -15,7 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 import frc.robot.Constants;
+
+import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.pathfinding.Pathfinder;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.FlippingUtil;
 
@@ -112,16 +115,5 @@ public class posePlotterUtil {
         return newAuto;
     }
 
-    public PathPlannerPath PathfindPrefire(Pose2d StartPose, Pose2d TargetPose) {
-        Pathfinding.setStartPosition(StartPose.getTranslation());
-
-        if (DriverStation.getAlliance().isPresent()) {
-            if (DriverStation.getAlliance().get() == Alliance.Red) {
-                Pathfinding.setGoalPosition(FlippingUtil.flipFieldPose(TargetPose).getTranslation());
-            }
-        }
-
-        return Pathfinding.getCurrentPath(Constants.PathingConstraint, null);
-    }
-
+ 
 }

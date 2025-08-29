@@ -5,55 +5,46 @@
 package frc.robot.commands;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 
-import java.util.function.Supplier;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class FollowPath extends Command {
-  /** Creates a new FollowPath. */
- 
-  private Supplier<PathPlannerPath> currentPath;
-  private Command pathCommand = Commands.none();
+import frc.robot.Constants;
 
-  public FollowPath(Supplier<PathPlannerPath> currentPath) {
-    pathCommand = Commands.none();
-    this.currentPath = currentPath;
+/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
+public class executeQueuedPath extends Command {
+  /** Creates a new executeQueuedPath. */
+  private Pose2d targetPose;
+
+  public executeQueuedPath(Pose2d targetPose) {
+    this.targetPose = targetPose;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(Pathfinding.isNewPathAvailable()){
-      pathCommand = AutoBuilder.followPath(currentPath.get());
-      pathCommand.schedule();
-    }
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Pathfinding.isNewPathAvailable()){
-      pathCommand = AutoBuilder.followPath(currentPath.get());
-      pathCommand.schedule();
-    }
+    AutoBuilder.followPath(Pathfinding.getCurrentPath(Constants.PathingConstraint,new GoalEndState(0.00, Rotation2d.fromDegrees(0))));
+  
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    pathCommand.cancel();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-
-    return pathCommand.isFinished();
+    return false;
   }
-
-
 }

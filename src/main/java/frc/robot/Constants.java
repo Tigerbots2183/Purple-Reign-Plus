@@ -51,11 +51,11 @@ public final class Constants {
     REPLAY
   }
 
-  public static final PathConstraints PathingConstraint = new PathConstraints(
-    4,
-    2,
-    4,
-    3);
+ public static final PathConstraints PathingConstraint = new PathConstraints(
+      4,
+      2,
+      4,
+      3);
   
   public static final double stickDeadband = 0.1;
 
