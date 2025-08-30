@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-
+import frc.robot.Constants;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class AlignToPose extends Command {
 
@@ -37,18 +37,11 @@ public class AlignToPose extends Command {
     addRequirements(s_Drivetrain);
 
 
-    PathConstraints constraints2 = new PathConstraints(
-        3,
-        2,
-        4,
-        3
-    );
-
     if (DriverStation.getAlliance().isPresent()) {
       if (DriverStation.getAlliance().get() == Alliance.Red) {
         PathCommand =AutoBuilder.pathfindToPose(
             FlippingUtil.flipFieldPose(currentPose),
-            constraints2,
+            Constants.PathfindContraints,
             0.00);
 
         PathCommand.schedule();
@@ -59,7 +52,7 @@ public class AlignToPose extends Command {
 
     PathCommand = AutoBuilder.pathfindToPose(
         currentPose,
-        constraints2,
+        Constants.PathfindContraints,
         0.00);
         PathCommand.schedule();
 

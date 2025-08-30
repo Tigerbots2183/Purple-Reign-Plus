@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 
 package frc.robot;
-
+import com.pathplanner.lib.path.PathConstraints;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
@@ -187,6 +187,14 @@ public final class Constants {
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
+
+  public static final PathConstraints PathfindContraints = new PathConstraints(
+    3,
+    2,
+    4,
+    3
+);
+
   public static class POSES {
     public static final Pose2d RESET_POSE = new Pose2d(3.192, 4.025, new Rotation2d());
 
