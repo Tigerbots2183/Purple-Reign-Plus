@@ -191,7 +191,7 @@ public final class Constants {
     public static final Pose2d RESET_POSE = new Pose2d(3.192, 4.025, new Rotation2d());
 
     // Blue branch poses
-    public static Pose2d REEF_A = new Pose2d(3.40, 4.23, Rotation2d.fromDegrees(90)); // new Pose2d(3.18, 4.22,                                                                           // Rotation2d.fromDegrees(90));
+    public static Pose2d REEF_A = new Pose2d(3.19, 4.24, Rotation2d.fromDegrees(90)); // new Pose2d(3.18, 4.22,                                                                           // Rotation2d.fromDegrees(90));
     public static Pose2d REEF_B = new Pose2d(3.21, 3.90, Rotation2d.fromDegrees(90));
     public static Pose2d REEF_C = new Pose2d(3.67, 2.98, Rotation2d.fromDegrees(150));
     public static Pose2d REEF_D = new Pose2d(3.91, 2.89, Rotation2d.fromDegrees(150));
