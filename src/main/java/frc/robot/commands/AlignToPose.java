@@ -35,7 +35,7 @@ public class AlignToPose extends Command {
 
   @Override
   public void initialize() {
-    addRequirements(s_Drivetrain);
+    addRequirements(s_Drivetrain); 
     
     if (DriverStation.getAlliance().isPresent()) {
       if (DriverStation.getAlliance().get() == Alliance.Red) {

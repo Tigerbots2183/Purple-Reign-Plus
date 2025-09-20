@@ -1,23 +1,14 @@
 package frc.robot;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.util.FlippingUtil;
 
-import edu.wpi.first.math.geometry.Pose2d;
 // import com.pathplanner.lib.auto.NamedCommands;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -26,51 +17,36 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.POSES;
 import frc.robot.Constants.StationPOSES;
-import frc.robot.Constants.Swerve;
-import frc.robot.Constants.reefstate;
 import frc.robot.commands.AlignToPose;
-import frc.robot.commands.AlignmentLeftPeg;
-
-import frc.robot.commands.AlignmentRightPeg;
+import frc.robot.commands.AlignNearestPeg;
 import frc.robot.commands.autoshootlfour;
-import frc.robot.commands.climberCom;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.elevatorCom;
 import frc.robot.commands.hopperCom;
 import frc.robot.commands.manualElevate;
 import frc.robot.commands.removalcom;
-import frc.robot.commands.AlignToPose;
 
 import frc.robot.subsystems.algaeremover;
-import frc.robot.subsystems.climber;
 import frc.robot.subsystems.coral;
 import frc.robot.subsystems.elevator;
 import frc.robot.subsystems.hopper;
-import frc.robot.subsystems.limelightalign;
 import frc.robot.subsystems.sensorsandleds;
 import frc.robot.subsystems.Touchboard.ActionButton;
 import frc.robot.subsystems.Touchboard.DoubleActionButton;
-import frc.robot.subsystems.Touchboard.Dropdown;
 import frc.robot.subsystems.Touchboard.AxisKnob;
 import frc.robot.subsystems.Touchboard.JukeboxUtil;
-import frc.robot.subsystems.Touchboard.NumberComponent;
 import frc.robot.subsystems.Touchboard.OneShotButton;
-import frc.robot.subsystems.Touchboard.ToggleButton;
 import frc.robot.subsystems.Touchboard.posePlotterUtil;
 
-import java.security.DrbgParameters.NextBytes;
-import java.util.HashMap;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
-import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -144,7 +120,6 @@ public class RobotContainer {
 
   /* Subsystems */
   // private final Swerve s_Swerve = new Swerve();
-  private final climber s_ClimberCom = new climber();
   private final coral s_CoralCom = new coral();
   private final elevator s_ElevatorCom = new elevator();
   // private final elevator s_ = new elevator();
@@ -167,13 +142,12 @@ public class RobotContainer {
 
 
   private final OneShotButton PLTbtm = new OneShotButton("LTbtn",() -> new AlignToPose(StationPOSES.Left_top_station, drivetrain));
-  private final OneShotButton PLMbtn = new OneShotButton("LMbtn",() -> new AlignToPose(StationPOSES.Left_mid_station, drivetrain));
+  private final OneShotButton PLMbtn = new OneShotButton("LMbtn",() -> new AlignNearestPeg("left",drivetrain));
   private final OneShotButton PLBbtn = new OneShotButton("LBbtn",() -> new AlignToPose(StationPOSES.Left_bot_station, drivetrain));
   private final OneShotButton PRTbtn = new OneShotButton("RTbtn",() -> new AlignToPose(StationPOSES.Right_top_station, drivetrain));
-  private final OneShotButton PRMbtn = new OneShotButton("RMbtn",() -> new AlignToPose(StationPOSES.Right_mid_station, drivetrain));
+  private final OneShotButton PRMbtn = new OneShotButton("RMbtn",() -> new AlignNearestPeg("right", drivetrain));
   private final OneShotButton PRBbtn = new OneShotButton("RBbtn",() -> new AlignToPose(StationPOSES.Right_bot_station, drivetrain));
 
-  private final limelightalign limelightalign = new limelightalign();
 
   private final ActionButton shooterButtonAction = new ActionButton("Shoot", new Shoot(-0.07, s_CoralCom));
   private final ActionButton reverseButtonAction = new ActionButton("RevIntake", new Shoot(0.14, s_CoralCom));
@@ -234,8 +208,6 @@ public class RobotContainer {
     jukebox.addTalon(drivetrain.getModule(2).getSteerMotor());
     jukebox.addTalon(drivetrain.getModule(3).getSteerMotor());
 
-    jukebox.addTalon(s_ClimberCom.GetLeftKraken());
-    jukebox.addTalon(s_ClimberCom.GetRightKraken());
 
     
 
@@ -315,8 +287,8 @@ public class RobotContainer {
     l2Button.onFalse(new elevatorCom(1, s_ElevatorCom, true));
 
 
-    align.whileTrue(new AlignmentLeftPeg(drivetrain));
-    alignr.whileTrue(new AlignmentRightPeg(drivetrain));
+    align.whileTrue(new AlignNearestPeg("left", drivetrain));
+    alignr.whileTrue(new AlignNearestPeg("right", drivetrain));
     
 
     // l3Button.whileTrue(new autoshootlthree(-.09,2, s_ElevatorCom,

@@ -19,6 +19,7 @@ import com.ctre.phoenix6.signals.SensorDirectionValue;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -224,6 +225,12 @@ public final class Constants {
     public static final Pose2d Right_top_station = new Pose2d(1.41, 0.73, Rotation2d.fromDegrees(150));
     public static final Pose2d Right_mid_station = new Pose2d(1.08, 1.19, Rotation2d.fromDegrees(150));
     public static final Pose2d Right_bot_station = new Pose2d(0.61, 1.55, Rotation2d.fromDegrees(150));
+  }
+
+  public static class QuestNavConstants{
+    public static final Pose2d initalPose2dBlue = new Pose2d(0,0, Rotation2d.fromDegrees(0)); 
+    public static final Pose2d initalPose2dRed = new Pose2d(0,0, Rotation2d.fromDegrees(0)); 
+    public static final Transform2d ROBOT_TO_QUEST = new Transform2d(0,0,Rotation2d.fromDegrees(90));
   }
 
   public static class reefstate {
