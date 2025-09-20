@@ -6,6 +6,8 @@ package frc.robot.commands;
 
 import javax.sound.midi.Patch;
 
+import com.pathplanner.lib.pathfinding.Pathfinder;
+import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.util.FlippingUtil;
@@ -24,7 +26,6 @@ public class AlignToPose extends Command {
   private CommandSwerveDrivetrain s_Drivetrain;
   private Command PathCommand = Commands.none();
 
-
   public AlignToPose(Pose2d currentPose, CommandSwerveDrivetrain s_Drivetrain) {
     PathCommand = Commands.none();
     this.currentPose = currentPose;
@@ -35,8 +36,7 @@ public class AlignToPose extends Command {
   @Override
   public void initialize() {
     addRequirements(s_Drivetrain);
-
-
+    
     if (DriverStation.getAlliance().isPresent()) {
       if (DriverStation.getAlliance().get() == Alliance.Red) {
         PathCommand =AutoBuilder.pathfindToPose(
@@ -62,7 +62,6 @@ public class AlignToPose extends Command {
   @Override
   public void execute() {
     // this.PathCommand.schedule();
-
   }
 
   @Override
