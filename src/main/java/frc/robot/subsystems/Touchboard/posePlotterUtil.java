@@ -23,6 +23,7 @@ public class posePlotterUtil {
         string_Sub = datatable.getStringTopic("posePlotterFinalString").subscribe(defaultAuto);
 
         String currentString = string_Sub.get();
+        string_Sub.close();
 
         return currentString;
 
@@ -35,6 +36,7 @@ public class posePlotterUtil {
     public static int stringStatus() {
         string_Sub = datatable.getStringTopic("posePlotterFinalString").subscribe("NA");
         String currentString = string_Sub.get();
+        string_Sub.close();
         if (currentString == "NA") {
             return 404;
         } else if (currentString == "unset") {
@@ -60,6 +62,7 @@ public class posePlotterUtil {
         Command parralelCmd = Commands.none();
         Command nextCommand = Commands.none();
         Boolean currentParralel = false;
+        string_Sub.close();
 
         for (String currentValue : stringArr) {
 

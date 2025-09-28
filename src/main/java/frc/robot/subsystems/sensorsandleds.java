@@ -42,16 +42,9 @@ public class sensorsandleds extends SubsystemBase {
   @Override
   public void periodic() {
     //leds.updateDutyCycle(0);
-    input.get();
-    wall.get();
-    reef.get();
     Logger.recordOutput("coral have", input.get());
-    Logger.recordOutput("coral station", wall.get());
-    Logger.recordOutput("reef", reef.get());
 
     SmartDashboard.putBoolean("coral have", input.get());
-    SmartDashboard.putBoolean("coral station", wall.get());
-    SmartDashboard.putBoolean("reef", reef.get());
     // This method will be called once per scheduler run
   }
 }

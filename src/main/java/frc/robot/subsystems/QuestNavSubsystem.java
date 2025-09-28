@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import java.io.File;
+import java.util.Optional;
 
 import com.ctre.phoenix6.Utils;
 
@@ -38,6 +39,7 @@ public class QuestNavSubsystem extends SubsystemBase {
   Pose2d robotPoseRed = Constants.QuestNavConstants.initalPose2dRed.transformBy(Constants.QuestNavConstants.ROBOT_TO_QUEST);;
   StructPublisher<Pose2d> posePublisher = NetworkTableInstance.getDefault().getStructTopic("/QuestPose", Pose2d.struct).publish();
 
+  Boolean haveQuest = false; 
 
   // Send the reset operation
 
@@ -57,8 +59,16 @@ public class QuestNavSubsystem extends SubsystemBase {
     }
   }
 
+  public boolean haveQuest(){
+    return questNav.isTracking();
+  }
 
-
+  public int questPercent(){
+    if(questNav.getBatteryPercent().isPresent()){
+      return questNav.getBatteryPercent().getAsInt();
+    }
+    return 0;
+  }
   
   @Override
   public void periodic() {
@@ -69,6 +79,10 @@ public class QuestNavSubsystem extends SubsystemBase {
         0.02, // Trust down to 2cm in Y direction
         0.035 // Trust down to 2 degrees rotational
     );
+
+    if(questNav.getBatteryPercent().isPresent()){
+      SmartDashboard.putNumber("QuestPercent", questNav.getBatteryPercent().getAsInt());
+    }
 
     if (questNav.isTracking()) {
       // Get the latest pose data frames from the Quest
@@ -89,7 +103,6 @@ public class QuestNavSubsystem extends SubsystemBase {
         s_Drivetrain.addVisionMeasurement(robotPose,timestamp, QUESTNAV_STD_DEVS);
       }
     } else {
-      System.out.println("No quest");
     }
   }
 }

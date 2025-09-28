@@ -87,8 +87,6 @@ public class RobotContainer {
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-  
-
   /* Driver Buttons */
   // private final JoystickButton setHeading = new JoystickButton(driver,
   // XboxController.Button.kY.value);
@@ -127,43 +125,60 @@ public class RobotContainer {
   private final hopper s_HopperCom = new hopper();
   private final algaeremover s_algaeCom = new algaeremover();
   public final sensorsandleds s_ledCom = new sensorsandleds();
-  private final QuestNavSubsystem questNavSubsystem = new QuestNavSubsystem(drivetrain);
-  
-  // priPvate final OneShotButton PAbtn = new OneShotButton("PAbtn",() -> new AlignToPose(POSES.REEF_A, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  // private final OneShotButton PBbtn = new OneShotButton("PBbtn",() -> new AlignToPose(POSES.REEF_B, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  
-  private final OneShotButton PAbtnTest = new OneShotButton("PAbtn",() -> new AlignNearestPeg("left", drivetrain));
-  private final OneShotButton PBbtnTest = new OneShotButton("PBbtn",() -> new AlignNearestPeg("right", drivetrain));
+  public final QuestNavSubsystem questNavSubsystem = new QuestNavSubsystem(drivetrain);
 
-  
-  private final OneShotButton PCbtn = new OneShotButton("PCbtn",() -> new AlignToPose(POSES.REEF_C, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PDbtn = new OneShotButton("PDbtn",() -> new AlignToPose(POSES.REEF_D, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PEbtn = new OneShotButton("PEbtn",() -> new AlignToPose(POSES.REEF_E, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PFbtn = new OneShotButton("PFbtn",() -> new AlignToPose(POSES.REEF_F, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PGbtn = new OneShotButton("PGbtn",() -> new AlignToPose(POSES.REEF_G, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PHbtn = new OneShotButton("PHbtn",() -> new AlignToPose(POSES.REEF_H, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PIbtn = new OneShotButton("PIbtn",() -> new AlignToPose(POSES.REEF_I, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PJbtn = new OneShotButton("PJbtn",() -> new AlignToPose(POSES.REEF_J, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PKbtn = new OneShotButton("PKbtn",() -> new AlignToPose(POSES.REEF_K, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PLbtn = new OneShotButton("PLbtn",() -> new AlignToPose(POSES.REEF_L, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  // priPvate final OneShotButton PAbtn = new OneShotButton("PAbtn",() -> new
+  // AlignToPose(POSES.REEF_A,
+  // drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  // private final OneShotButton PBbtn = new OneShotButton("PBbtn",() -> new
+  // AlignToPose(POSES.REEF_B,
+  // drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
+  private final OneShotButton PAbtnTest = new OneShotButton("PAbtn", () -> new AlignNearestPeg("left", drivetrain));
+  private final OneShotButton PBbtnTest = new OneShotButton("PBbtn", () -> new AlignNearestPeg("right", drivetrain));
 
-  private final OneShotButton PLTbtm = new OneShotButton("LTbtn",() -> new AlignToPose(StationPOSES.Left_top_station, drivetrain));
-  private final OneShotButton PLMbtn = new OneShotButton("LMbtn",() -> new AlignNearestPeg("left",drivetrain));
-  private final OneShotButton PLBbtn = new OneShotButton("LBbtn",() -> new AlignToPose(StationPOSES.Left_bot_station, drivetrain));
-  private final OneShotButton PRTbtn = new OneShotButton("RTbtn",() -> new AlignToPose(StationPOSES.Right_top_station, drivetrain));
-  private final OneShotButton PRMbtn = new OneShotButton("RMbtn",() -> new AlignNearestPeg("right", drivetrain));
-  private final OneShotButton PRBbtn = new OneShotButton("RBbtn",() -> new AlignToPose(StationPOSES.Right_bot_station, drivetrain));
+  private final OneShotButton PCbtn = new OneShotButton("PCbtn",
+      () -> new AlignToPose(POSES.REEF_C, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PDbtn = new OneShotButton("PDbtn",
+      () -> new AlignToPose(POSES.REEF_D, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PEbtn = new OneShotButton("PEbtn",
+      () -> new AlignToPose(POSES.REEF_E, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PFbtn = new OneShotButton("PFbtn",
+      () -> new AlignToPose(POSES.REEF_F, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PGbtn = new OneShotButton("PGbtn",
+      () -> new AlignToPose(POSES.REEF_G, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PHbtn = new OneShotButton("PHbtn",
+      () -> new AlignToPose(POSES.REEF_H, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PIbtn = new OneShotButton("PIbtn",
+      () -> new AlignToPose(POSES.REEF_I, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PJbtn = new OneShotButton("PJbtn",
+      () -> new AlignToPose(POSES.REEF_J, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PKbtn = new OneShotButton("PKbtn",
+      () -> new AlignToPose(POSES.REEF_K, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  private final OneShotButton PLbtn = new OneShotButton("PLbtn",
+      () -> new AlignToPose(POSES.REEF_L, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
+  private final OneShotButton PLTbtm = new OneShotButton("LTbtn",
+      () -> new AlignToPose(StationPOSES.Left_top_station, drivetrain));
+  private final OneShotButton PLMbtn = new OneShotButton("LMbtn", () -> new AlignNearestPeg("left", drivetrain));
+  private final OneShotButton PLBbtn = new OneShotButton("LBbtn",
+      () -> new AlignToPose(StationPOSES.Left_bot_station, drivetrain));
+  private final OneShotButton PRTbtn = new OneShotButton("RTbtn",
+      () -> new AlignToPose(StationPOSES.Right_top_station, drivetrain));
+  private final OneShotButton PRMbtn = new OneShotButton("RMbtn", () -> new AlignNearestPeg("right", drivetrain));
+  private final OneShotButton PRBbtn = new OneShotButton("RBbtn",
+      () -> new AlignToPose(StationPOSES.Right_bot_station, drivetrain));
 
   private final ActionButton shooterButtonAction = new ActionButton("Shoot", new Shoot(-0.07, s_CoralCom));
   private final ActionButton reverseButtonAction = new ActionButton("RevIntake", new Shoot(0.14, s_CoralCom));
   private final ActionButton IntakeButtonAction = new ActionButton("Intake", new Intake(-0.07, s_CoralCom));
 
-
-  private final DoubleActionButton L4btn = new DoubleActionButton("L4btn", new autoshootlfour(-.12, s_ElevatorCom, s_CoralCom, false), new elevatorCom(3, s_ElevatorCom, true));
-  private final DoubleActionButton L3btn = new DoubleActionButton("L3btn", new elevatorCom(2, s_ElevatorCom, false), new elevatorCom(2, s_ElevatorCom, true));
-  private final DoubleActionButton L2btn = new DoubleActionButton("L2btn", new elevatorCom(1, s_ElevatorCom, false), new elevatorCom(1, s_ElevatorCom, true));
+  private final DoubleActionButton L4btn = new DoubleActionButton("L4btn",
+      new autoshootlfour(-.12, s_ElevatorCom, s_CoralCom, false), new elevatorCom(3, s_ElevatorCom, true));
+  private final DoubleActionButton L3btn = new DoubleActionButton("L3btn", new elevatorCom(2, s_ElevatorCom, false),
+      new elevatorCom(2, s_ElevatorCom, true));
+  private final DoubleActionButton L2btn = new DoubleActionButton("L2btn", new elevatorCom(1, s_ElevatorCom, false),
+      new elevatorCom(1, s_ElevatorCom, true));
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -178,32 +193,33 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    posePlotterUtil.addCommandPair("A", ()-> new AlignToPose( POSES.REEF_A, drivetrain));
-    posePlotterUtil.addCommandPair("B", ()-> new AlignToPose( POSES.REEF_B, drivetrain));
+    posePlotterUtil.addCommandPair("A", () -> new AlignToPose(POSES.REEF_A, drivetrain));
+    posePlotterUtil.addCommandPair("B", () -> new AlignToPose(POSES.REEF_B, drivetrain));
 
-    posePlotterUtil.addCommandPair("C", ()-> new AlignToPose( POSES.REEF_C, drivetrain));
-    posePlotterUtil.addCommandPair("D", ()-> new AlignToPose( POSES.REEF_D, drivetrain));
-    posePlotterUtil.addCommandPair("E", ()-> new AlignToPose( POSES.REEF_E, drivetrain));
-    posePlotterUtil.addCommandPair("F", ()-> new AlignToPose( POSES.REEF_F, drivetrain));
-    posePlotterUtil.addCommandPair("G", ()-> new AlignToPose( POSES.REEF_G, drivetrain));
-    posePlotterUtil.addCommandPair("H", ()-> new AlignToPose( POSES.REEF_H, drivetrain));
-    posePlotterUtil.addCommandPair("I", ()-> new AlignToPose( POSES.REEF_I, drivetrain));
-    posePlotterUtil.addCommandPair("J", ()-> new AlignToPose( POSES.REEF_J, drivetrain));
-    posePlotterUtil.addCommandPair("K", ()-> new AlignToPose( POSES.REEF_K, drivetrain));
-    posePlotterUtil.addCommandPair("L", ()-> new AlignToPose( POSES.REEF_L, drivetrain));
-    posePlotterUtil.addCommandPair("LT", ()-> new AlignToPose( StationPOSES.Left_top_station, drivetrain));
-    posePlotterUtil.addCommandPair("LM", ()-> new AlignToPose( StationPOSES.Left_mid_station, drivetrain));
-    posePlotterUtil.addCommandPair("LB", ()-> new AlignToPose( StationPOSES.Left_bot_station, drivetrain));
-    posePlotterUtil.addCommandPair("RT", ()-> new AlignToPose( StationPOSES.Right_top_station, drivetrain));
-    posePlotterUtil.addCommandPair("RM", ()-> new AlignToPose( StationPOSES.Right_mid_station, drivetrain));
-    posePlotterUtil.addCommandPair("RB", ()-> new AlignToPose( StationPOSES.Right_bot_station, drivetrain));
-    posePlotterUtil.addCommandPair("4S", ()-> new autoshootlfour(-.12, s_ElevatorCom, s_CoralCom, false).withTimeout(2));
-    posePlotterUtil.addCommandPair("4", ()-> new elevatorCom(3, s_ElevatorCom, false));
-    posePlotterUtil.addCommandPair("3", ()-> new elevatorCom(2, s_ElevatorCom, false));
-    posePlotterUtil.addCommandPair("2", ()-> new elevatorCom(1, s_ElevatorCom, false));
-    posePlotterUtil.addCommandPair("0", ()-> new elevatorCom(3, s_ElevatorCom, true));
-    posePlotterUtil.addCommandPair("T", ()-> new Intake(-.07, s_CoralCom));
-    posePlotterUtil.addCommandPair("S", ()-> new Shoot(-.12, s_CoralCom));
+    posePlotterUtil.addCommandPair("C", () -> new AlignToPose(POSES.REEF_C, drivetrain));
+    posePlotterUtil.addCommandPair("D", () -> new AlignToPose(POSES.REEF_D, drivetrain));
+    posePlotterUtil.addCommandPair("E", () -> new AlignToPose(POSES.REEF_E, drivetrain));
+    posePlotterUtil.addCommandPair("F", () -> new AlignToPose(POSES.REEF_F, drivetrain));
+    posePlotterUtil.addCommandPair("G", () -> new AlignToPose(POSES.REEF_G, drivetrain));
+    posePlotterUtil.addCommandPair("H", () -> new AlignToPose(POSES.REEF_H, drivetrain));
+    posePlotterUtil.addCommandPair("I", () -> new AlignToPose(POSES.REEF_I, drivetrain));
+    posePlotterUtil.addCommandPair("J", () -> new AlignToPose(POSES.REEF_J, drivetrain));
+    posePlotterUtil.addCommandPair("K", () -> new AlignToPose(POSES.REEF_K, drivetrain));
+    posePlotterUtil.addCommandPair("L", () -> new AlignToPose(POSES.REEF_L, drivetrain));
+    posePlotterUtil.addCommandPair("LT", () -> new AlignToPose(StationPOSES.Left_top_station, drivetrain));
+    posePlotterUtil.addCommandPair("LM", () -> new AlignToPose(StationPOSES.Left_mid_station, drivetrain));
+    posePlotterUtil.addCommandPair("LB", () -> new AlignToPose(StationPOSES.Left_bot_station, drivetrain));
+    posePlotterUtil.addCommandPair("RT", () -> new AlignToPose(StationPOSES.Right_top_station, drivetrain));
+    posePlotterUtil.addCommandPair("RM", () -> new AlignToPose(StationPOSES.Right_mid_station, drivetrain));
+    posePlotterUtil.addCommandPair("RB", () -> new AlignToPose(StationPOSES.Right_bot_station, drivetrain));
+    posePlotterUtil.addCommandPair("4S",
+        () -> new autoshootlfour(-.12, s_ElevatorCom, s_CoralCom, false).withTimeout(2));
+    posePlotterUtil.addCommandPair("4", () -> new elevatorCom(3, s_ElevatorCom, false));
+    posePlotterUtil.addCommandPair("3", () -> new elevatorCom(2, s_ElevatorCom, false));
+    posePlotterUtil.addCommandPair("2", () -> new elevatorCom(1, s_ElevatorCom, false));
+    posePlotterUtil.addCommandPair("0", () -> new elevatorCom(3, s_ElevatorCom, true));
+    posePlotterUtil.addCommandPair("T", () -> new Intake(-.07, s_CoralCom));
+    posePlotterUtil.addCommandPair("S", () -> new Shoot(-.12, s_CoralCom));
 
     JukeboxUtil jukebox = new JukeboxUtil();
     jukebox.addTalon(drivetrain.getModule(0).getDriveMotor());
@@ -216,10 +232,6 @@ public class RobotContainer {
     jukebox.addTalon(drivetrain.getModule(2).getSteerMotor());
     jukebox.addTalon(drivetrain.getModule(3).getSteerMotor());
 
-
-    
-
-    
     // import miracle.java
     // SmartDashboard.putData(reefl4, reefstate.reefl4);
   }
@@ -233,7 +245,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    AlgaeAxis.setCommand(()-> new removalcom(AlgaeAxis.getValue(), s_algaeCom));
+    AlgaeAxis.setCommand(() -> new removalcom(AlgaeAxis.getValue(), s_algaeCom));
     // Note that X is defined as forward according to WPILib convention,
     // and Y is defined as to the left according to WPILib convention.
     drivetrain.setDefaultCommand(
@@ -250,31 +262,30 @@ public class RobotContainer {
     RobotModeTriggers.disabled().whileTrue(
         drivetrain.applyRequest(() -> idle).ignoringDisable(true));
 
-
     // reset the field-centric heading on left bumper press
 
-
-    setHeading.onTrue(drivetrain.runOnce(()-> {
+    setHeading.onTrue(drivetrain.runOnce(() -> {
       if (DriverStation.getAlliance().isPresent()) {
         if (DriverStation.getAlliance().get() == Alliance.Red) {
           drivetrain.resetRotation(Rotation2d.fromDegrees(90));
-        }else{
+        } else {
           drivetrain.resetRotation(Rotation2d.fromDegrees(-90));
 
         }
-      }else{
+      } else {
         drivetrain.resetRotation(Rotation2d.fromDegrees(-90));
 
       }
     }).ignoringDisable(true));
-        
-    
-    
-    //.onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+
+
+
+    // .onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
     drivetrain.registerTelemetry(logger::telemeterize);
 
-    // climberButton.whileTrue(new climberCom(IntakeTestButton.getValue(), s_ClimberCom));
+    // climberButton.whileTrue(new climberCom(IntakeTestButton.getValue(),
+    // s_ClimberCom));
     // climberButton.whileTrue(new Intake(()->IntakeTestButton.value, s_CoralCom));
 
     intakeButton.whileTrue(new Intake(-.07, s_CoralCom));
@@ -294,14 +305,12 @@ public class RobotContainer {
     l2Button.whileTrue(new elevatorCom(1, s_ElevatorCom, false));
     l2Button.onFalse(new elevatorCom(1, s_ElevatorCom, true));
 
-
     align.whileTrue(new AlignNearestPeg("left", drivetrain));
     alignr.whileTrue(new AlignNearestPeg("right", drivetrain));
-    
 
     // l3Button.whileTrue(new autoshootlthree(-.09,2, s_ElevatorCom,
     // s_CoralCom,false));
-    // l3Button.onFalse(new autoshootlthree(0,2, s_ElevatorCom, s_CoralCom,true));
+    // l3Button.onFalse(new autoshootfqlthree(0,2, s_ElevatorCom, s_CoralCom,true));
 
     l3Button.whileTrue(new elevatorCom(2, s_ElevatorCom, false));
     l3Button.onFalse(new elevatorCom(2, s_ElevatorCom, true));
@@ -326,5 +335,3 @@ public class RobotContainer {
     return posePlotterUtil.getAuto();
   }
 }
-
-  
