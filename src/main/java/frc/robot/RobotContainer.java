@@ -129,8 +129,13 @@ public class RobotContainer {
   public final sensorsandleds s_ledCom = new sensorsandleds();
   private final QuestNavSubsystem questNavSubsystem = new QuestNavSubsystem(drivetrain);
   
-  private final OneShotButton PAbtn = new OneShotButton("PAbtn",() -> new AlignToPose(POSES.REEF_A, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-  private final OneShotButton PBbtn = new OneShotButton("PBbtn",() -> new AlignToPose(POSES.REEF_B, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  // priPvate final OneShotButton PAbtn = new OneShotButton("PAbtn",() -> new AlignToPose(POSES.REEF_A, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  // private final OneShotButton PBbtn = new OneShotButton("PBbtn",() -> new AlignToPose(POSES.REEF_B, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  
+  private final OneShotButton PAbtnTest = new OneShotButton("PAbtn",() -> new AlignNearestPeg("left", drivetrain));
+  private final OneShotButton PBbtnTest = new OneShotButton("PBbtn",() -> new AlignNearestPeg("right", drivetrain));
+
+  
   private final OneShotButton PCbtn = new OneShotButton("PCbtn",() -> new AlignToPose(POSES.REEF_C, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
   private final OneShotButton PDbtn = new OneShotButton("PDbtn",() -> new AlignToPose(POSES.REEF_D, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
   private final OneShotButton PEbtn = new OneShotButton("PEbtn",() -> new AlignToPose(POSES.REEF_E, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
@@ -175,6 +180,7 @@ public class RobotContainer {
 
     posePlotterUtil.addCommandPair("A", ()-> new AlignToPose( POSES.REEF_A, drivetrain));
     posePlotterUtil.addCommandPair("B", ()-> new AlignToPose( POSES.REEF_B, drivetrain));
+
     posePlotterUtil.addCommandPair("C", ()-> new AlignToPose( POSES.REEF_C, drivetrain));
     posePlotterUtil.addCommandPair("D", ()-> new AlignToPose( POSES.REEF_D, drivetrain));
     posePlotterUtil.addCommandPair("E", ()-> new AlignToPose( POSES.REEF_E, drivetrain));

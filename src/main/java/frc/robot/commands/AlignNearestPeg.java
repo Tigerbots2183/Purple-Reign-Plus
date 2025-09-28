@@ -4,10 +4,14 @@
 
 package frc.robot.commands;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.swerve.jni.SwerveJNI.DriveState;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
 import com.pathplanner.lib.util.FlippingUtil;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -19,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Constants.POSES;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Touchboard.posePlotterUtil;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class AlignNearestPeg extends Command {
@@ -35,8 +40,13 @@ public class AlignNearestPeg extends Command {
   Rotation2d angleFromReef;
   Boolean ReverseAngle = false;
 
+   /**
+     * Aligns to nearest peg based on rotation
+     * @param side Reef side, "left" or 'right'.
+     * @param drivetrain CTRE swerve reference..
+     */
   public AlignNearestPeg(String side, CommandSwerveDrivetrain drivetrain) {
-    // addRequirements(drivetrain);
+    addRequirements(drivetrain);
     this.side = side;
     this.drivetrain = drivetrain;
 
@@ -110,19 +120,33 @@ public class AlignNearestPeg extends Command {
       }
     }
 
+    Pose2d startPose = new Pose2d(drivetrain.getState().Pose.getTranslation(), angleFromReef);
+    Pose2d editedPose;
+    GoalEndState endRotation;
+
+
     if (side.equals("left")) {
-      PathCommand = AutoBuilder.pathfindToPose(
-          NearestLeftPegPose,
-          Constants.PathfindContraints,
-          0.00);
-      PathCommand.schedule();
+      editedPose = new Pose2d(NearestLeftPegPose.getTranslation(), angleFromReef);
+      endRotation = new GoalEndState(0, NearestLeftPegPose.getRotation());
+
     } else {
-      PathCommand = AutoBuilder.pathfindToPose(
-          NearestRightPegPose,
-          Constants.PathfindContraints,
-          0.00);
-      PathCommand.schedule();
+      editedPose = new Pose2d(NearestRightPegPose.getTranslation(), angleFromReef);
+      endRotation = new GoalEndState(0, NearestRightPegPose.getRotation());
+
     }
+
+    List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(startPose, editedPose);
+
+    PathPlannerPath path = new PathPlannerPath(
+        waypoints,
+        Constants.PathfindContraints,
+        null, // The ideal starting state, this is only relevant for pre-planned paths, so can be null for on-the-fly paths.
+        endRotation // Goal end state. You can set a holonomic rotation here. If using a differential drivetrain, the rotation will have no effect.
+    );  
+
+    path.preventFlipping = true;
+
+    AutoBuilder.followPath(path).schedule();
 
   }
 
