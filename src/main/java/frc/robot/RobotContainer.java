@@ -29,6 +29,7 @@ import frc.robot.commands.removalcom;
 
 import frc.robot.subsystems.algaeremover;
 import frc.robot.subsystems.coral;
+import frc.robot.subsystems.QuestNavSubsystem;
 import frc.robot.subsystems.elevator;
 import frc.robot.subsystems.hopper;
 import frc.robot.subsystems.sensorsandleds;
@@ -126,7 +127,8 @@ public class RobotContainer {
   private final hopper s_HopperCom = new hopper();
   private final algaeremover s_algaeCom = new algaeremover();
   public final sensorsandleds s_ledCom = new sensorsandleds();
-
+  private final QuestNavSubsystem questNavSubsystem = new QuestNavSubsystem(drivetrain);
+  
   private final OneShotButton PAbtn = new OneShotButton("PAbtn",() -> new AlignToPose(POSES.REEF_A, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
   private final OneShotButton PBbtn = new OneShotButton("PBbtn",() -> new AlignToPose(POSES.REEF_B, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
   private final OneShotButton PCbtn = new OneShotButton("PCbtn",() -> new AlignToPose(POSES.REEF_C, drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));

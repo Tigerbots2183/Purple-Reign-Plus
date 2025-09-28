@@ -13,6 +13,7 @@
 
 package frc.robot;
 import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.util.FlippingUtil;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
@@ -228,9 +229,11 @@ public final class Constants {
   }
 
   public static class QuestNavConstants{
-    public static final Pose2d initalPose2dBlue = new Pose2d(0,0, Rotation2d.fromDegrees(0)); 
-    public static final Pose2d initalPose2dRed = new Pose2d(0,0, Rotation2d.fromDegrees(0)); 
-    public static final Transform2d ROBOT_TO_QUEST = new Transform2d(0,0,Rotation2d.fromDegrees(90));
+    public static final Pose2d initalPose2dBlue = new Pose2d(3.25,4, Rotation2d.fromDegrees(-90)); 
+    public static final Pose2d initalPose2dRed = FlippingUtil.flipFieldPose(initalPose2dBlue); 
+    public static final Transform2d ROBOT_TO_QUEST = new Transform2d(-0.254,-0.311,Rotation2d.fromDegrees(-90));
+    // public static final Transform2d ROBOT_TO_QUEST = new Transform2d(-0.311, 0.254, Rotation2d.fromDegrees(0));
+
   }
 
   public static class reefstate {

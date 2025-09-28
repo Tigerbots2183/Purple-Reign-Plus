@@ -6,11 +6,16 @@ package frc.robot.subsystems;
 
 import java.io.File;
 
+import com.ctre.phoenix6.Utils;
+
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.VecBuilder;
 import gg.questnav.questnav.PoseFrame;
@@ -31,6 +36,7 @@ public class QuestNavSubsystem extends SubsystemBase {
   // Assume this is the requested reset pose
   Pose2d robotPoseBlue = Constants.QuestNavConstants.initalPose2dBlue.transformBy(Constants.QuestNavConstants.ROBOT_TO_QUEST);;
   Pose2d robotPoseRed = Constants.QuestNavConstants.initalPose2dRed.transformBy(Constants.QuestNavConstants.ROBOT_TO_QUEST);;
+  StructPublisher<Pose2d> posePublisher = NetworkTableInstance.getDefault().getStructTopic("/QuestPose", Pose2d.struct).publish();
 
 
   // Send the reset operation
@@ -56,6 +62,7 @@ public class QuestNavSubsystem extends SubsystemBase {
   
   @Override
   public void periodic() {
+
     questNav.commandPeriodic();
     Matrix<N3, N1> QUESTNAV_STD_DEVS = VecBuilder.fill(
         0.02, // Trust down to 2cm in X direction
@@ -73,14 +80,16 @@ public class QuestNavSubsystem extends SubsystemBase {
         Pose2d questPose = questFrame.questPose();
         // Get timestamp for when the data was sent
         double timestamp = questFrame.dataTimestamp();
-
         // Transform by the mount pose to get your robot pose
         Pose2d robotPose = questPose.transformBy(Constants.QuestNavConstants.ROBOT_TO_QUEST.inverse());
+        posePublisher.set(robotPose);
 
         // You can put some sort of filtering here if you would like!
         // Add the measurement to our estimator
-        s_Drivetrain.addVisionMeasurement(robotPose, timestamp, QUESTNAV_STD_DEVS);
+        s_Drivetrain.addVisionMeasurement(robotPose,timestamp, QUESTNAV_STD_DEVS);
       }
+    } else {
+      System.out.println("No quest");
     }
   }
 }
