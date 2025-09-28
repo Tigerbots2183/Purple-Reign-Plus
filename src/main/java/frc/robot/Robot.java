@@ -122,28 +122,28 @@ public class Robot extends LoggedRobot {
      * This example is sufficient to show that vision integration is possible, though exact implementation
      * of how to use vision should be tuned per-robot and to the team's specification.
      */
-    if (kUseLimelight) {
-      var driveState = m_robotContainer.drivetrain.getState();
+    // if (kUseLimelight) {
+    //   var driveState = m_robotContainer.drivetrain.getState();
       
-      double headingDeg = driveState.Pose.getRotation().getDegrees();
-      double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
-      LimelightHelpers.SetRobotOrientation("limelight", headingDeg, 0, 0, 0, 0, 0);
-      LimelightHelpers.SetRobotOrientation("limelight-right", headingDeg, 0, 0, 0, 0, 0);
+    //   double headingDeg = driveState.Pose.getRotation().getDegrees();
+    //   double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
+    //   LimelightHelpers.SetRobotOrientation("limelight", headingDeg, 0, 0, 0, 0, 0);
+    //   LimelightHelpers.SetRobotOrientation("limelight-right", headingDeg, 0, 0, 0, 0, 0);
 
-      var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
-      var lrMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-right");
+    //   var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+    //   var lrMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-right");
 
-      if (llMeasurement != null && llMeasurement.tagCount > 0 && Math.abs(omegaRps) < 2.0) {
-        m_robotContainer.drivetrain.addVisionMeasurement(llMeasurement.pose, llMeasurement.timestampSeconds);
-      }
+    //   if (llMeasurement != null && llMeasurement.tagCount > 0 && Math.abs(omegaRps) < 2.0) {
+    //     m_robotContainer.drivetrain.addVisionMeasurement(llMeasurement.pose, llMeasurement.timestampSeconds);
+    //   }
 
-      if (lrMeasurement != null && lrMeasurement.tagCount > 0 && Math.abs(omegaRps) < 2.0) {
-        System.out.print("TEST");
-        m_robotContainer.drivetrain.addVisionMeasurement(lrMeasurement.pose, lrMeasurement.timestampSeconds);
+    //   if (lrMeasurement != null && lrMeasurement.tagCount > 0 && Math.abs(omegaRps) < 2.0) {
+    //     System.out.print("TEST");
+    //     m_robotContainer.drivetrain.addVisionMeasurement(lrMeasurement.pose, lrMeasurement.timestampSeconds);
 
-      }
+    //   }
 
-    }
+    // }
   }
 
 
@@ -156,32 +156,7 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically when disabled. */
   @Override
   public void disabledPeriodic() {
-    // sensorsandleds;
-    if ((limelightaligntwo.tagValue2 == 9 || limelightaligntwo.tagValue2 == 10 || limelightaligntwo.tagValue2 == 11
-    || limelightaligntwo.tagValue2 == 6 || limelightaligntwo.tagValue2 == 7 || limelightaligntwo.tagValue2 == 8
-    || limelightaligntwo.tagValue2 == 20 || limelightaligntwo.tagValue2 == 21 || limelightaligntwo.tagValue2 == 22
-    || limelightaligntwo.tagValue2 == 17 || limelightaligntwo.tagValue2 == 18 || limelightaligntwo.tagValue2 == 19
-    || limelightalign.tagValue == 9 || limelightalign.tagValue == 10 || limelightalign.tagValue == 11
-    || limelightalign.tagValue == 6 || limelightalign.tagValue == 7 || limelightalign.tagValue == 8
-    || limelightalign.tagValue == 20 || limelightalign.tagValue == 21 || limelightalign.tagValue == 22
-    || limelightalign.tagValue == 17 || limelightalign.tagValue == 18 || limelightalign.tagValue == 19)
-    && sensorsandleds.wall.get() == false) {
-  // coral station
-  sensorsandleds.leds.updateDutyCycle(.07);
-} else if (limelightaligntwo.tagValue2 == 9 || limelightaligntwo.tagValue2 == 10
-    || limelightaligntwo.tagValue2 == 11 || limelightaligntwo.tagValue2 == 6 || limelightaligntwo.tagValue2 == 7
-    || limelightaligntwo.tagValue2 == 8 || limelightaligntwo.tagValue2 == 20 || limelightaligntwo.tagValue2 == 21
-    || limelightaligntwo.tagValue2 == 22 || limelightaligntwo.tagValue2 == 17 || limelightaligntwo.tagValue2 == 18
-    || limelightaligntwo.tagValue2 == 19 || limelightalign.tagValue == 9 || limelightalign.tagValue == 10
-    || limelightalign.tagValue == 11 || limelightalign.tagValue == 6 || limelightalign.tagValue == 7
-    || limelightalign.tagValue == 8 || limelightalign.tagValue == 20 || limelightalign.tagValue == 21
-    || limelightalign.tagValue == 22 || limelightalign.tagValue == 17 || limelightalign.tagValue == 18
-    || limelightalign.tagValue == 19) {
-  // coral station
-  sensorsandleds.leds.updateDutyCycle(.13);
-} else {
-  sensorsandleds.leds.updateDutyCycle(.09);
-}
+ 
   }
 
   /**
@@ -203,32 +178,8 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
+    sensorsandleds.leds.updateDutyCycle(.09);
 
-    if ((limelightaligntwo.tagValue2 == 9 || limelightaligntwo.tagValue2 == 10 || limelightaligntwo.tagValue2 == 11
-        || limelightaligntwo.tagValue2 == 6 || limelightaligntwo.tagValue2 == 7 || limelightaligntwo.tagValue2 == 8
-        || limelightaligntwo.tagValue2 == 20 || limelightaligntwo.tagValue2 == 21 || limelightaligntwo.tagValue2 == 22
-        || limelightaligntwo.tagValue2 == 17 || limelightaligntwo.tagValue2 == 18 || limelightaligntwo.tagValue2 == 19
-        || limelightalign.tagValue == 9 || limelightalign.tagValue == 10 || limelightalign.tagValue == 11
-        || limelightalign.tagValue == 6 || limelightalign.tagValue == 7 || limelightalign.tagValue == 8
-        || limelightalign.tagValue == 20 || limelightalign.tagValue == 21 || limelightalign.tagValue == 22
-        || limelightalign.tagValue == 17 || limelightalign.tagValue == 18 || limelightalign.tagValue == 19)
-        && sensorsandleds.wall.get() == false) {
-      // coral station
-      sensorsandleds.leds.updateDutyCycle(.07);
-    } else if (limelightaligntwo.tagValue2 == 9 || limelightaligntwo.tagValue2 == 10
-        || limelightaligntwo.tagValue2 == 11 || limelightaligntwo.tagValue2 == 6 || limelightaligntwo.tagValue2 == 7
-        || limelightaligntwo.tagValue2 == 8 || limelightaligntwo.tagValue2 == 20 || limelightaligntwo.tagValue2 == 21
-        || limelightaligntwo.tagValue2 == 22 || limelightaligntwo.tagValue2 == 17 || limelightaligntwo.tagValue2 == 18
-        || limelightaligntwo.tagValue2 == 19 || limelightalign.tagValue == 9 || limelightalign.tagValue == 10
-        || limelightalign.tagValue == 11 || limelightalign.tagValue == 6 || limelightalign.tagValue == 7
-        || limelightalign.tagValue == 8 || limelightalign.tagValue == 20 || limelightalign.tagValue == 21
-        || limelightalign.tagValue == 22 || limelightalign.tagValue == 17 || limelightalign.tagValue == 18
-        || limelightalign.tagValue == 19) {
-      // coral station
-      sensorsandleds.leds.updateDutyCycle(.13);
-    } else {
-      sensorsandleds.leds.updateDutyCycle(.09);
-    }
   }
 
   /** This function is called once when teleop is enabled. */
@@ -247,41 +198,7 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    if ((limelightaligntwo.tagValue2 == 9 || limelightaligntwo.tagValue2 == 10 || limelightaligntwo.tagValue2 == 11
-        || limelightaligntwo.tagValue2 == 6 || limelightaligntwo.tagValue2 == 7 || limelightaligntwo.tagValue2 == 8
-        || limelightaligntwo.tagValue2 == 20 || limelightaligntwo.tagValue2 == 21 || limelightaligntwo.tagValue2 == 22
-        || limelightaligntwo.tagValue2 == 17 || limelightaligntwo.tagValue2 == 18 || limelightaligntwo.tagValue2 == 19
-        || limelightalign.tagValue == 9 || limelightalign.tagValue == 10 || limelightalign.tagValue == 11
-        || limelightalign.tagValue == 6 || limelightalign.tagValue == 7 || limelightalign.tagValue == 8
-        || limelightalign.tagValue == 20 || limelightalign.tagValue == 21 || limelightalign.tagValue == 22
-        || limelightalign.tagValue == 17 || limelightalign.tagValue == 18 || limelightalign.tagValue == 19)
-        && sensorsandleds.wall.get() == false) {
-      // coral station
-      sensorsandleds.leds.updateDutyCycle(.07);
-    } else if (limelightaligntwo.tagValue2 == 9 || limelightaligntwo.tagValue2 == 10
-        || limelightaligntwo.tagValue2 == 11 || limelightaligntwo.tagValue2 == 6 || limelightaligntwo.tagValue2 == 7
-        || limelightaligntwo.tagValue2 == 8 || limelightaligntwo.tagValue2 == 20 || limelightaligntwo.tagValue2 == 21
-        || limelightaligntwo.tagValue2 == 22 || limelightaligntwo.tagValue2 == 17 || limelightaligntwo.tagValue2 == 18
-        || limelightaligntwo.tagValue2 == 19 || limelightalign.tagValue == 9 || limelightalign.tagValue == 10
-        || limelightalign.tagValue == 11 || limelightalign.tagValue == 6 || limelightalign.tagValue == 7
-        || limelightalign.tagValue == 8 || limelightalign.tagValue == 20 || limelightalign.tagValue == 21
-        || limelightalign.tagValue == 22 || limelightalign.tagValue == 17 || limelightalign.tagValue == 18
-        || limelightalign.tagValue == 19) {
-      // coral station
-      sensorsandleds.leds.updateDutyCycle(.13);
-    } else if (sensorsandleds.wall.get() == false) {
-      // coral station
-      sensorsandleds.leds.updateDutyCycle(.15);
-    } else if (sensorsandleds.reef.get() == false) {
-      // at reef
-      sensorsandleds.leds.updateDutyCycle(.07);
-    } else if (sensorsandleds.input.get() == false) {
-      // coral aquired
-      sensorsandleds.leds.updateDutyCycle(.17);
-    } else {
-      // peice
-      sensorsandleds.leds.updateDutyCycle(.01);
-    }
+  
   }
 
   /** This function is called once when test mode is enabled. */
