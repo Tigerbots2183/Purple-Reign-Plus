@@ -23,7 +23,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import com.pathplanner.lib.commands.PathfindingCommand;
 import com.pathplanner.lib.pathfinding.Pathfinding;
-
+import frc.robot.subsystems.Touchboard.posePlotterUtil;  
 import edu.wpi.first.math.util.Units;
 // import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.*;
+import gg.questnav.questnav.QuestNav;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to
@@ -156,7 +157,44 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically when disabled. */
   @Override
   public void disabledPeriodic() {
- 
+    
+    if(m_robotContainer.drivetrain.getState().Pose.getRotation().getDegrees() > 1 || m_robotContainer.drivetrain.getState().Pose.getRotation().getDegrees() < -1 ){
+      m_robotContainer.s_ledCom.led(23);
+      SmartDashboard.putBoolean("Heading Check", true);
+    } else{
+      m_robotContainer.s_ledCom.led(28);
+      SmartDashboard.putBoolean("Heading Check", false);
+      
+    }
+
+    if(m_robotContainer.questNavSubsystem.haveQuest()){
+
+      if(m_robotContainer.questNavSubsystem.questPercent() < 15){
+        m_robotContainer.s_ledCom.led(35);
+        
+      }else{
+        m_robotContainer.s_ledCom.led(33);
+
+      }
+      SmartDashboard.putBoolean("Quest Check", true);
+    } else { 
+      m_robotContainer.s_ledCom.led(38);
+      SmartDashboard.putBoolean("Quest Check", false);
+
+    }
+
+
+
+    if(posePlotterUtil.stringStatus() == 200){
+      m_robotContainer.s_ledCom.led(43);
+      SmartDashboard.putBoolean("Auto Check", true);
+      
+    } else{
+      m_robotContainer.s_ledCom.led(48);
+      SmartDashboard.putBoolean("Auto Check", false);
+
+    }
+
   }
 
   /**
