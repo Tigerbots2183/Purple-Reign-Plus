@@ -23,8 +23,11 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import com.pathplanner.lib.commands.PathfindingCommand;
 import com.pathplanner.lib.pathfinding.Pathfinding;
-import frc.robot.subsystems.Touchboard.posePlotterUtil;  
+import frc.robot.subsystems.Touchboard.posePlotterUtil;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 // import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -110,6 +113,8 @@ public class Robot extends LoggedRobot {
     PathfindingCommand.warmupCommand().schedule();
     // ... remaining robot initializatio
     SmartDashboard.putData("Field", m_field);
+
+    CameraServer.startAutomaticCapture(0);
   
   }
 
@@ -142,8 +147,8 @@ public class Robot extends LoggedRobot {
     //     System.out.print("TEST");
     //     m_robotContainer.drivetrain.addVisionMeasurement(lrMeasurement.pose, lrMeasurement.timestampSeconds);
 
-    //   }
-
+        //   }
+        
     // }
   }
 

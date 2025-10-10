@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import java.io.File;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import com.ctre.phoenix6.Utils;
 
@@ -59,6 +60,25 @@ public class QuestNavSubsystem extends SubsystemBase {
     }
   }
 
+  public void setPose(Pose2d position){
+    questNav.setPose(position);
+  }
+
+  
+ 
+  public void setInitialPose(){
+    if(DriverStation.getAlliance().isPresent()){
+      //If there is a driver station, check which one
+      if(DriverStation.getAlliance().get() == Alliance.Red){ 
+        questNav.setPose(robotPoseRed);
+      } else {
+        questNav.setPose(robotPoseBlue);
+      }
+    } else{
+      questNav.setPose( robotPoseBlue );
+    }
+  }
+
   public boolean haveQuest(){
     return questNav.isTracking();
   }
@@ -74,6 +94,7 @@ public class QuestNavSubsystem extends SubsystemBase {
   public void periodic() {
 
     questNav.commandPeriodic();
+
     Matrix<N3, N1> QUESTNAV_STD_DEVS = VecBuilder.fill(
         0.02, // Trust down to 2cm in X direction
         0.02, // Trust down to 2cm in Y direction
@@ -102,7 +123,6 @@ public class QuestNavSubsystem extends SubsystemBase {
         // Add the measurement to our estimator
         s_Drivetrain.addVisionMeasurement(robotPose,timestamp, QUESTNAV_STD_DEVS);
       }
-    } else {
     }
   }
 }

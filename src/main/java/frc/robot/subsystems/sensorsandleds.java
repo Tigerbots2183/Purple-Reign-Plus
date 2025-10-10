@@ -11,14 +11,23 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.cscore.CvSource;
+import edu.wpi.first.cscore.UsbCamera;
+
+
 
 public class sensorsandleds extends SubsystemBase {
+  public static CameraServer coralcam;
   public static  DigitalOutput leds;
  public static DigitalInput input;
  public static DigitalInput wall;
  public static DigitalInput reef;
+ 
   /** Creates a new sensorsandleds. */
   public sensorsandleds() {
+    UsbCamera usbCamera = new UsbCamera("USB CAMERA 1", 0);
     reef = new DigitalInput(7);
     input = new DigitalInput(2);
     wall = new DigitalInput(4);

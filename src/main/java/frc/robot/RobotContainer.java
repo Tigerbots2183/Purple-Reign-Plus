@@ -104,6 +104,10 @@ public class RobotContainer {
   private final JoystickButton l3Button = new JoystickButton(copilot, 3);
   private final JoystickButton l4Button = new JoystickButton(copilot, 4);
 
+private final JoystickButton setPoseBtn = new JoystickButton(driver, 7);
+private final JoystickButton goBackBtn = new JoystickButton(driver, 8);
+
+
   private final POVButton uphopButton = new POVButton(driver, 0);
   private final POVButton downhopButton = new POVButton(driver, 180);
   // private final POVButton removeoutButton = new POVButton(driver, 90);
@@ -308,6 +312,10 @@ public class RobotContainer {
     align.whileTrue(new AlignNearestPeg("left", drivetrain));
     alignr.whileTrue(new AlignNearestPeg("right", drivetrain));
 
+    setPoseBtn.whileTrue(questNavSubsystem.runOnce(()->{
+        questNavSubsystem.setInitialPose();
+    }));
+    goBackBtn.whileTrue(new AlignToPose(POSES.CenterReef, drivetrain));
     // l3Button.whileTrue(new autoshootlthree(-.09,2, s_ElevatorCom,
     // s_CoralCom,false));
     // l3Button.onFalse(new autoshootfqlthree(0,2, s_ElevatorCom, s_CoralCom,true));

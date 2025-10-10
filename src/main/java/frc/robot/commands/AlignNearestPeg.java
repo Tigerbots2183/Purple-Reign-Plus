@@ -58,7 +58,6 @@ public class AlignNearestPeg extends Command {
       }
     }
 
-    CurrentPose = drivetrain.getState().Pose;
 
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -67,6 +66,7 @@ public class AlignNearestPeg extends Command {
   @Override
   public void initialize() {
     // Math.atan2(y, x);
+    CurrentPose = drivetrain.getState().Pose;
 
     
     if(ReverseAngle){
@@ -124,6 +124,8 @@ public class AlignNearestPeg extends Command {
     Pose2d editedPose;
     GoalEndState endRotation;
 
+
+    
 
     if (side.equals("left")) {
       editedPose = new Pose2d(NearestLeftPegPose.getTranslation(), angleFromReef);
