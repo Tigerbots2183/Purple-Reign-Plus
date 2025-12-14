@@ -7,18 +7,29 @@ package frc.robot.subsystems;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.util.PixelFormat;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.cscore.CvSource;
+import edu.wpi.first.cscore.UsbCamera;
+
+
 
 public class sensorsandleds extends SubsystemBase {
+  public static CameraServer coralcam;
   public static  DigitalOutput leds;
  public static DigitalInput input;
  public static DigitalInput wall;
  public static DigitalInput reef;
+ 
   /** Creates a new sensorsandleds. */
   public sensorsandleds() {
+    UsbCamera usbCamera = new UsbCamera("USB CAMERA 1", 0);
+   
     reef = new DigitalInput(7);
     input = new DigitalInput(2);
     wall = new DigitalInput(4);
@@ -42,16 +53,9 @@ public class sensorsandleds extends SubsystemBase {
   @Override
   public void periodic() {
     //leds.updateDutyCycle(0);
-    input.get();
-    wall.get();
-    reef.get();
     Logger.recordOutput("coral have", input.get());
-    Logger.recordOutput("coral station", wall.get());
-    Logger.recordOutput("reef", reef.get());
 
     SmartDashboard.putBoolean("coral have", input.get());
-    SmartDashboard.putBoolean("coral station", wall.get());
-    SmartDashboard.putBoolean("reef", reef.get());
     // This method will be called once per scheduler run
   }
 }

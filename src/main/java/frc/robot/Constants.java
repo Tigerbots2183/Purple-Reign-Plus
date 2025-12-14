@@ -12,13 +12,15 @@
 // GNU General Public License for more details.
 
 package frc.robot;
-
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.util.FlippingUtil;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -174,7 +176,7 @@ public final class Constants {
 
   public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be tuned
     // to specific robot
-    public static final double kMaxSpeedMetersPerSecond = 4;
+    public static final double kMaxSpeedMetersPerSecond = 5;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
@@ -187,35 +189,53 @@ public final class Constants {
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
+
+  public static final PathConstraints PathfindContraints = new PathConstraints(
+    3,
+    2,
+    4,
+    3
+);
+
   public static class POSES {
     public static final Pose2d RESET_POSE = new Pose2d(3.192, 4.025, new Rotation2d());
 
     // Blue branch poses
-    public static Pose2d REEF_A = new Pose2d(3.22, 4.24, Rotation2d.fromDegrees(90)); // new Pose2d(3.18, 4.22,                                                                           // Rotation2d.fromDegrees(90));
-    public static Pose2d REEF_B = new Pose2d(3.19, 3.90, Rotation2d.fromDegrees(90));
-    public static Pose2d REEF_C = new Pose2d(3.67, 3.03, Rotation2d.fromDegrees(150));
-    public static Pose2d REEF_D = new Pose2d(3.96, 2.86, Rotation2d.fromDegrees(150));
+    public static Pose2d REEF_A = new Pose2d(3.18, 4.22, Rotation2d.fromDegrees(89.85)); // new Pose2d(3.18, 4.22,                                                                           // Rotation2d.fromDegrees(90));
+    public static Pose2d REEF_B = new Pose2d(3.17, 3.90, Rotation2d.fromDegrees(89.85));
+    public static Pose2d REEF_C = new Pose2d(3.67, 2.98, Rotation2d.fromDegrees(150));
+    public static Pose2d REEF_D = new Pose2d(3.91, 2.89, Rotation2d.fromDegrees(150));
     public static Pose2d REEF_E = new Pose2d(4.95, 2.82, Rotation2d.fromDegrees(-150));
     public static Pose2d REEF_F = new Pose2d(5.24, 2.98, Rotation2d.fromDegrees(-150));
     public static Pose2d REEF_G = new Pose2d(5.76, 3.81, Rotation2d.fromDegrees(-90));
     public static Pose2d REEF_H = new Pose2d(5.77, 4.16, Rotation2d.fromDegrees(-90));
     public static Pose2d REEF_I = new Pose2d(5.36, 4.84, Rotation2d.fromDegrees(-30));
     public static Pose2d REEF_J = new Pose2d(5.03, 5.19, Rotation2d.fromDegrees(-30));
-    public static Pose2d REEF_K = new Pose2d(4.02, 5.23, Rotation2d.fromDegrees(30));
-    public static Pose2d REEF_L = new Pose2d(3.73, 5.07, Rotation2d.fromDegrees(30));
+    public static Pose2d REEF_K = new Pose2d(4.01, 5.27, Rotation2d.fromDegrees(30));
+    public static Pose2d REEF_L = new Pose2d(3.75, 5.07, Rotation2d.fromDegrees(30));
 
+    public static Pose2d CenterReef = new Pose2d(0.63,4.38,Rotation2d.fromDegrees(90.62));
   }
 
   public static class StationPOSES {
     public static final Pose2d RESET_POSE = new Pose2d(3.192, 4.025, new Rotation2d());
 
-    public static final Pose2d Left_top_station = new Pose2d(1.75, 7.33, Rotation2d.fromDegrees(30));
-    public static final Pose2d Left_mid_station = new Pose2d(1.35, 6.95, Rotation2d.fromDegrees(30));
-    public static final Pose2d Left_bot_station = new Pose2d(0.83, 6.68, Rotation2d.fromDegrees(30));
+    public static final Pose2d Left_top_station = new Pose2d(1.55, 7.45, Rotation2d.fromDegrees(30));
+    public static final Pose2d Left_mid_station = new Pose2d(1.18, 7.10, Rotation2d.fromDegrees(30));
+    public static final Pose2d Left_bot_station = new Pose2d(0.62, 6.73, Rotation2d.fromDegrees(30));
     
     public static final Pose2d Right_top_station = new Pose2d(1.41, 0.73, Rotation2d.fromDegrees(150));
     public static final Pose2d Right_mid_station = new Pose2d(1.08, 1.19, Rotation2d.fromDegrees(150));
     public static final Pose2d Right_bot_station = new Pose2d(0.61, 1.55, Rotation2d.fromDegrees(150));
+  }
+
+  public static class QuestNavConstants{
+    public static final Pose2d initalPose2dBlue = new Pose2d(3.25,4, Rotation2d.fromDegrees(-90)); 
+    public static final Pose2d initalPose2dRed = FlippingUtil.flipFieldPose(initalPose2dBlue); 
+    public static final Transform2d ROBOT_TO_QUEST = new Transform2d(-0.24,-0.314,Rotation2d.fromDegrees(-90));
+    // public static final Transform2d ROBOT_TO_QUEST = new Transform2d(-0.23-,-0.298,Rotation2d.fromDegrees(-90));
+
+
   }
 
   public static class reefstate {
