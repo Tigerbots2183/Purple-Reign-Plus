@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems.Touchboard;
 
-
 import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.configs.AudioConfigs;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -14,7 +13,12 @@ import edu.wpi.first.networktables.BooleanSubscriber;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StringSubscriber;
+import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.util.struct.Struct;
+import edu.wpi.first.util.struct.StructGenerator;
+import edu.wpi.first.util.struct.StructSerializable;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import java.lang.Class;
 
 public class JukeboxUtil extends SubsystemBase {
   /** Creates a new JukeboxUtil. */
@@ -22,9 +26,11 @@ public class JukeboxUtil extends SubsystemBase {
   private Orchestra mOrchestra = new Orchestra();
   private AudioConfigs configs = new AudioConfigs();
 
+
+
   final BooleanSubscriber newFileSubscriber;
   final BooleanPublisher newFilePublisher;
-  
+
   final BooleanSubscriber stopSubscriber;
   final BooleanPublisher stopPublisher;
 
@@ -36,7 +42,7 @@ public class JukeboxUtil extends SubsystemBase {
 
   final BooleanSubscriber restartSubscriber;
   final BooleanPublisher restartPublisher;
-  
+
   final BooleanSubscriber musicIsFinishedSubscriber;
   final BooleanPublisher musicIsFinishedPublisher;
 
@@ -44,12 +50,26 @@ public class JukeboxUtil extends SubsystemBase {
   final BooleanPublisher nextSongPublisher;
 
   private Boolean prev = false;
-  
+
   final StringSubscriber currentMusicFileSubscriber;
 
+ 
+
   public JukeboxUtil() {
+  
+
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     NetworkTable datatable = inst.getTable("touchboard");
+ 
+    record newRecord(int x, double y, float z, boolean bool) implements StructSerializable {
+      public static final Struct<newRecord> struct = StructGenerator.genRecord(newRecord.class);
+    };
+ 
+    StructPublisher<newRecord> testPublishing = datatable.getStructTopic("ExampleFullStruct", newRecord.struct).publish();
+
+    newRecord example = new newRecord(6, 6.7, 6.945f, true);
+
+    testPublishing.set(example);
 
     currentMusicFileSubscriber = datatable.getStringTopic("currentMusicFile").subscribe("");
 
@@ -76,56 +96,54 @@ public class JukeboxUtil extends SubsystemBase {
 
   }
 
- 
-  public void addTalon(TalonFX newMotor){
-    //Sets config and adds to orchestra
+  public void addTalon(TalonFX newMotor) {
+    // Sets config and adds to orchestra
     configs.AllowMusicDurDisable = true;
     newMotor.getConfigurator().apply(configs);
     mOrchestra.addInstrument(newMotor);
   }
 
-
   @Override
   public void periodic() {
 
-    if(newFileSubscriber.get()){
+    if (newFileSubscriber.get()) {
       mOrchestra.loadMusic(currentMusicFileSubscriber.get());
       mOrchestra.play();
       musicIsFinishedPublisher.set(false);
-      
+
       newFilePublisher.set(false);
       System.out.println("fileLoaded");
       System.out.println(currentMusicFileSubscriber.get());
       prev = false;
     }
 
-    if(stopSubscriber.get()){
+    if (stopSubscriber.get()) {
       mOrchestra.stop();
       stopPublisher.set(false);
       System.out.println("MusicStopped");
     }
 
-    if(pauseSubscriber.get()){
+    if (pauseSubscriber.get()) {
       mOrchestra.pause();
       pausePublisher.set(false);
       System.out.println("MusicPaused");
 
     }
 
-    if(playSubscriber.get()){
+    if (playSubscriber.get()) {
       mOrchestra.play();
       playPublisher.set(false);
       System.out.println("MusicPlayed");
     }
 
-    if(restartSubscriber.get()){
+    if (restartSubscriber.get()) {
       mOrchestra.loadMusic(currentMusicFileSubscriber.get());
       mOrchestra.play();
       System.out.println("restarted");
       restartPublisher.set(false);
     }
 
-    if(mOrchestra.isPlaying() == false && prev == false && nextSongSubscriber.get()){
+    if (mOrchestra.isPlaying() == false && prev == false && nextSongSubscriber.get()) {
       musicIsFinishedPublisher.set(true);
       System.out.println("Music Finished");
       prev = true;

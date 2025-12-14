@@ -232,7 +232,7 @@ public final class Constants {
   public static class QuestNavConstants{
     public static final Pose2d initalPose2dBlue = new Pose2d(3.25,4, Rotation2d.fromDegrees(-90)); 
     public static final Pose2d initalPose2dRed = FlippingUtil.flipFieldPose(initalPose2dBlue); 
-    public static final Transform2d ROBOT_TO_QUEST = new Transform2d(-0.24,-0.324,Rotation2d.fromDegrees(-90));
+    public static final Transform2d ROBOT_TO_QUEST = new Transform2d(-0.24,-0.314,Rotation2d.fromDegrees(-90));
     // public static final Transform2d ROBOT_TO_QUEST = new Transform2d(-0.23-,-0.298,Rotation2d.fromDegrees(-90));
 
 

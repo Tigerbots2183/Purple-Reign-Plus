@@ -26,6 +26,7 @@ import com.pathplanner.lib.pathfinding.Pathfinding;
 import frc.robot.subsystems.Touchboard.posePlotterUtil;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.hal.AllianceStationID;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 // import edu.wpi.first.math.util.Units;
@@ -113,13 +114,14 @@ public class Robot extends LoggedRobot {
     PathfindingCommand.warmupCommand().schedule();
     // ... remaining robot initializatio
     SmartDashboard.putData("Field", m_field);
-
+    
     CameraServer.startAutomaticCapture(0);
-  
   }
 
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+    
+    
     /*
      * This example of adding Limelight is very simple and may not be sufficient for on-field use.
      * Users typically need to provide a standard deviation that scales with the distance to target
@@ -162,32 +164,6 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically when disabled. */
   @Override
   public void disabledPeriodic() {
-    
-    if(m_robotContainer.drivetrain.getState().Pose.getRotation().getDegrees() > 1 || m_robotContainer.drivetrain.getState().Pose.getRotation().getDegrees() < -1 ){
-      m_robotContainer.s_ledCom.led(23);
-      SmartDashboard.putBoolean("Heading Check", true);
-    } else{
-      m_robotContainer.s_ledCom.led(28);
-      SmartDashboard.putBoolean("Heading Check", false);
-      
-    }
-
-    if(m_robotContainer.questNavSubsystem.haveQuest()){
-
-      if(m_robotContainer.questNavSubsystem.questPercent() < 15){
-        m_robotContainer.s_ledCom.led(35);
-        
-      }else{
-        m_robotContainer.s_ledCom.led(33);
-
-      }
-      SmartDashboard.putBoolean("Quest Check", true);
-    } else { 
-      m_robotContainer.s_ledCom.led(38);
-      SmartDashboard.putBoolean("Quest Check", false);
-
-    }
-
 
 
     if(posePlotterUtil.stringStatus() == 200){

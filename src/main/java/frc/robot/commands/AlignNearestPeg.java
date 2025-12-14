@@ -31,7 +31,7 @@ public class AlignNearestPeg extends Command {
 
   String side;
 
-  CommandSwerveDrivetrain drivetrain;
+  Supplier<CommandSwerveDrivetrain> drivetrain;
   Pose2d CenterReef = new Pose2d(4.475, 4.026, Rotation2d.fromDegrees(0));
   Pose2d CurrentPose;
   Pose2d NearestLeftPegPose;
@@ -45,8 +45,8 @@ public class AlignNearestPeg extends Command {
      * @param side Reef side, "left" or 'right'.
      * @param drivetrain CTRE swerve reference..
      */
-  public AlignNearestPeg(String side, CommandSwerveDrivetrain drivetrain) {
-    addRequirements(drivetrain);
+  public AlignNearestPeg(String side, Supplier<CommandSwerveDrivetrain> drivetrain) {
+    addRequirements(drivetrain.get());
     this.side = side;
     this.drivetrain = drivetrain;
 
@@ -66,7 +66,7 @@ public class AlignNearestPeg extends Command {
   @Override
   public void initialize() {
     // Math.atan2(y, x);
-    CurrentPose = drivetrain.getState().Pose;
+    CurrentPose = drivetrain.get().getState().Pose;
 
     
     if(ReverseAngle){
@@ -120,12 +120,15 @@ public class AlignNearestPeg extends Command {
       }
     }
 
-    Pose2d startPose = new Pose2d(drivetrain.getState().Pose.getTranslation(), angleFromReef);
+    if(ReverseAngle){
+      angleFromReef = Rotation2d.fromDegrees(angleFromReef.getDegrees() + 180);
+    }
+
+    Pose2d startPose = new Pose2d(drivetrain.get().getState().Pose.getTranslation(), angleFromReef);
     Pose2d editedPose;
     GoalEndState endRotation;
 
 
-    
 
     if (side.equals("left")) {
       editedPose = new Pose2d(NearestLeftPegPose.getTranslation(), angleFromReef);

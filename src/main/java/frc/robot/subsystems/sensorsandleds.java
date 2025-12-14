@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.util.PixelFormat;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,6 +29,7 @@ public class sensorsandleds extends SubsystemBase {
   /** Creates a new sensorsandleds. */
   public sensorsandleds() {
     UsbCamera usbCamera = new UsbCamera("USB CAMERA 1", 0);
+   
     reef = new DigitalInput(7);
     input = new DigitalInput(2);
     wall = new DigitalInput(4);

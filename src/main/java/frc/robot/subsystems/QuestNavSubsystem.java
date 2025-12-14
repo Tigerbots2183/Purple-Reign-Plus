@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import java.io.Console;
 import java.io.File;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -123,6 +124,8 @@ public class QuestNavSubsystem extends SubsystemBase {
         // Add the measurement to our estimator
         s_Drivetrain.addVisionMeasurement(robotPose,timestamp, QUESTNAV_STD_DEVS);
       }
+    } else {
+      System.out.println("No QUEST");
     }
   }
 }
